@@ -90,59 +90,130 @@
     <div class="sparkle absolute top-1/2 left-1/6 w-1 h-1 bg-accent rounded-full opacity-40"></div>
   </div>
   
-  <!-- Dodecahedron (D12 Style) - Centered Behind Hero Text -->
+  <!-- Mystical Crystal - Centered Behind Hero Text -->
   <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
-    <div class="dodecahedron-container">
-      <svg class="dodecahedron-svg" width="120" height="120" viewBox="-100 -100 200 200">
+    <div class="crystal-container">
+      <svg class="crystal-svg" width="120" height="160" viewBox="-60 -80 120 160">
         <defs>
-          <!-- Enhanced gradients for realistic 3D lighting -->
-          <linearGradient id="face-light" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#F4E4BC;stop-opacity:0.9"/>
-            <stop offset="50%" style="stop-color:#E6D3A3;stop-opacity:0.7"/>
-            <stop offset="100%" style="stop-color:#D4C194;stop-opacity:0.5"/>
+          <!-- Enhanced gradients for realistic crystal lighting -->
+          <linearGradient id="crystal-light" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#E8D5FF;stop-opacity:0.9"/>
+            <stop offset="30%" style="stop-color:#D4BDFF;stop-opacity:0.8"/>
+            <stop offset="70%" style="stop-color:#C4A5FF;stop-opacity:0.6"/>
+            <stop offset="100%" style="stop-color:#B794F6;stop-opacity:0.4"/>
           </linearGradient>
           
-          <linearGradient id="face-medium" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#E6D3A3;stop-opacity:0.8"/>
-            <stop offset="50%" style="stop-color:#D4C194;stop-opacity:0.6"/>
-            <stop offset="100%" style="stop-color:#C5B285;stop-opacity:0.4"/>
+          <linearGradient id="crystal-medium" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#D4BDFF;stop-opacity:0.8"/>
+            <stop offset="50%" style="stop-color:#C4A5FF;stop-opacity:0.7"/>
+            <stop offset="100%" style="stop-color:#A88BFA;stop-opacity:0.5"/>
           </linearGradient>
           
-          <linearGradient id="face-shadow" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#C5B285;stop-opacity:0.7"/>
-            <stop offset="50%" style="stop-color:#B8A577;stop-opacity:0.5"/>
-            <stop offset="100%" style="stop-color:#A69668;stop-opacity:0.3"/>
+          <linearGradient id="crystal-deep" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#A88BFA;stop-opacity:0.7"/>
+            <stop offset="50%" style="stop-color:#9B7DF7;stop-opacity:0.6"/>
+            <stop offset="100%" style="stop-color:#8B6CF4;stop-opacity:0.4"/>
           </linearGradient>
           
-          <!-- Subtle drop shadow filter -->
-          <filter id="dodecaShadow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="2" dy="4" stdDeviation="3" flood-opacity="0.2" flood-color="#8B7355"/>
+          <linearGradient id="crystal-shadow" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#8B6CF4;stop-opacity:0.6"/>
+            <stop offset="50%" style="stop-color:#7C5CE3;stop-opacity:0.5"/>
+            <stop offset="100%" style="stop-color:#6B5B95;stop-opacity:0.3"/>
+          </linearGradient>
+          
+          <!-- Inner glow effect -->
+          <radialGradient id="crystal-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style="stop-color:#E8D5FF;stop-opacity:0.3"/>
+            <stop offset="70%" style="stop-color:#D4BDFF;stop-opacity:0.1"/>
+            <stop offset="100%" style="stop-color:#C4A5FF;stop-opacity:0.05"/>
+          </radialGradient>
+          
+          <!-- Crystal shadow filter -->
+          <filter id="crystalShadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="6" stdDeviation="8" flood-opacity="0.3" flood-color="#8B6CF4"/>
+            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.2" flood-color="#6B5B95"/>
+          </filter>
+          
+          <!-- Inner light filter -->
+          <filter id="innerGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMerge> 
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
           </filter>
         </defs>
         
-        <!-- Dodecahedron faces with enhanced lighting -->
-        <g class="dodecahedron-3d" filter="url(#dodecaShadow)">
-          <!-- Top faces (lightest - catching most light) -->
-          <polygon class="d12-face face-top" points="0,-90 27.1,-55.5 16.7,-9.5 -16.7,-9.5 -27.1,-55.5" fill="url(#face-light)" stroke="#B8A577" stroke-width="0.5"/>
-          <polygon class="d12-face face-top" points="27.1,-55.5 69.1,-55.5 85.3,-18.5 16.7,-9.5 0,-90" fill="url(#face-light)" stroke="#B8A577" stroke-width="0.5"/>
+        <!-- Crystal structure with mystical lighting -->
+        <g class="crystal-3d" filter="url(#crystalShadow)">
+          <!-- Inner glow base -->
+          <ellipse cx="0" cy="0" rx="25" ry="60" fill="url(#crystal-glow)" filter="url(#innerGlow)"/>
           
-          <!-- Upper middle faces (medium lighting) -->
-          <polygon class="d12-face face-middle" points="69.1,-55.5 69.1,0 85.3,36.5 85.3,-18.5 27.1,-55.5" fill="url(#face-medium)" stroke="#A69668" stroke-width="0.6"/>
-          <polygon class="d12-face face-middle" points="69.1,0 27.1,55.5 16.7,9.5 85.3,36.5 69.1,-55.5" fill="url(#face-medium)" stroke="#A69668" stroke-width="0.6"/>
-          <polygon class="d12-face face-middle" points="-69.1,-55.5 -27.1,-55.5 -16.7,-9.5 -85.3,-18.5 -69.1,0" fill="url(#face-medium)" stroke="#A69668" stroke-width="0.6"/>
+          <!-- Top pyramid point -->
+          <polygon class="crystal-face crystal-top" 
+                   points="0,-75 15,-45 0,-35 -15,-45" 
+                   fill="url(#crystal-light)" 
+                   stroke="#E8D5FF" 
+                   stroke-width="0.3"/>
           
-          <!-- Lower middle faces (darker) -->
-          <polygon class="d12-face face-shadow" points="27.1,55.5 0,90 -16.7,9.5 16.7,9.5 69.1,0" fill="url(#face-shadow)" stroke="#8B7355" stroke-width="0.7"/>
-          <polygon class="d12-face face-shadow" points="0,90 -27.1,55.5 -69.1,0 -16.7,9.5 27.1,55.5" fill="url(#face-shadow)" stroke="#8B7355" stroke-width="0.7"/>
-          <polygon class="d12-face face-shadow" points="-27.1,55.5 -69.1,0 -85.3,36.5 -85.3,-18.5 0,90" fill="url(#face-shadow)" stroke="#8B7355" stroke-width="0.7"/>
+          <!-- Upper facets (bright faces catching light) -->
+          <polygon class="crystal-face crystal-upper" 
+                   points="15,-45 25,-25 15,-15 0,-35" 
+                   fill="url(#crystal-light)" 
+                   stroke="#D4BDFF" 
+                   stroke-width="0.4"/>
           
-          <!-- Side faces (medium-dark) -->
-          <polygon class="d12-face face-side" points="-69.1,0 -69.1,-55.5 -85.3,-18.5 -85.3,36.5 -27.1,55.5" fill="url(#face-medium)" stroke="#A69668" stroke-width="0.6"/>
-          <polygon class="d12-face face-side" points="-27.1,-55.5 0,-90 16.7,-9.5 -16.7,-9.5 -69.1,-55.5" fill="url(#face-medium)" stroke="#A69668" stroke-width="0.6"/>
+          <polygon class="crystal-face crystal-upper" 
+                   points="-15,-45 0,-35 -15,-15 -25,-25" 
+                   fill="url(#crystal-medium)" 
+                   stroke="#C4A5FF" 
+                   stroke-width="0.4"/>
           
-          <!-- Central connecting faces -->
-          <polygon class="d12-face face-center" points="16.7,-9.5 85.3,-18.5 85.3,36.5 16.7,9.5 -16.7,-9.5" fill="url(#face-light)" stroke="#B8A577" stroke-width="0.5"/>
-          <polygon class="d12-face face-center" points="16.7,9.5 -16.7,9.5 -27.1,55.5 0,90 27.1,55.5" fill="url(#face-shadow)" stroke="#8B7355" stroke-width="0.7"/>
+          <!-- Middle main faces -->
+          <polygon class="crystal-face crystal-main-left" 
+                   points="-25,-25 -30,0 -25,25 -15,-15 -15,15" 
+                   fill="url(#crystal-deep)" 
+                   stroke="#A88BFA" 
+                   stroke-width="0.5"/>
+          
+          <polygon class="crystal-face crystal-main-right" 
+                   points="25,-25 15,-15 15,15 25,25 30,0" 
+                   fill="url(#crystal-medium)" 
+                   stroke="#C4A5FF" 
+                   stroke-width="0.5"/>
+          
+          <polygon class="crystal-face crystal-main-front" 
+                   points="-15,-15 15,-15 15,15 -15,15" 
+                   fill="url(#crystal-light)" 
+                   stroke="#D4BDFF" 
+                   stroke-width="0.4"/>
+          
+          <!-- Lower facets (transitioning to shadow) -->
+          <polygon class="crystal-face crystal-lower" 
+                   points="-15,15 0,35 15,15 25,25" 
+                   fill="url(#crystal-medium)" 
+                   stroke="#C4A5FF" 
+                   stroke-width="0.4"/>
+          
+          <polygon class="crystal-face crystal-lower" 
+                   points="-25,25 -15,15 0,35 -15,45" 
+                   fill="url(#crystal-shadow)" 
+                   stroke="#9B7DF7" 
+                   stroke-width="0.5"/>
+          
+          <!-- Bottom pyramid point -->
+          <polygon class="crystal-face crystal-bottom" 
+                   points="0,75 15,45 0,35 -15,45" 
+                   fill="url(#crystal-shadow)" 
+                   stroke="#8B6CF4" 
+                   stroke-width="0.5"/>
+          
+          <!-- Additional side facets for more detail -->
+          <polygon class="crystal-face crystal-side" 
+                   points="15,15 25,25 15,45 0,35" 
+                   fill="url(#crystal-deep)" 
+                   stroke="#A88BFA" 
+                   stroke-width="0.5"/>
         </g>
       </svg>
     </div>
