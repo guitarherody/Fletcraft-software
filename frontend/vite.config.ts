@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
+import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -24,10 +25,10 @@ export default defineConfig({
     }
   },
   resolve: {
-    alias: {
-      '$lib': '/src/lib',
-      '@': '/src'
-    },
+    alias: [
+      { find: '$lib', replacement: path.resolve('./src/lib') },
+      { find: '@', replacement: path.resolve('./src') }
+    ],
     extensions: ['.ts', '.js', '.svelte', '.json'],
     mainFields: ['svelte', 'browser', 'module', 'main'],
     dedupe: ['svelte', 'chart.js', 'howler']
