@@ -92,18 +92,18 @@
   }
 </script>
 
-<section id="services" class="section relative overflow-hidden bg-background">
+<section id="services" class="section relative overflow-hidden bg-background py-16 sm:py-20 lg:py-24">
   <!-- Background Elements -->
   <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(99,102,241,0.05)_0%,transparent_100%)]"></div>
   <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(139,92,246,0.05)_0%,transparent_100%)]"></div>
   
-  <div class="container relative">
+  <div class="container relative px-4 sm:px-6 lg:px-8">
     <!-- Section Header -->
-    <div class="text-center mb-16">
-      <h2 class="text-4xl md:text-5xl font-display font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+    <div class="text-center mb-12 sm:mb-16">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4 sm:mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
         Our Services
       </h2>
-      <p class="text-text-secondary max-w-2xl mx-auto">
+      <p class="text-text-secondary max-w-2xl mx-auto text-base sm:text-lg">
         We deliver innovative solutions across a wide range of technologies, helping businesses thrive in the digital age.
       </p>
     </div>
@@ -111,43 +111,43 @@
     <!-- Services Grid -->
     {#if loading}
       <div class="flex justify-center items-center py-16">
-        <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
+        <div class="animate-spin rounded-full h-12 w-12 sm:h-16 sm:w-16 border-t-2 border-b-2 border-primary"></div>
       </div>
     {:else if error}
       <div class="flex justify-center items-center py-16">
-        <div class="text-red-500 text-center">
+        <div class="text-red-500 text-center px-4">
           <p class="text-lg font-semibold mb-2">⚠️ Error</p>
-          <p>{error}</p>
+          <p class="text-sm sm:text-base">{error}</p>
         </div>
       </div>
     {:else}
-      <div class="services-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="services-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {#each services as service}
           <div class="service-card group">
-            <div class="relative p-8 rounded-2xl bg-background border border-primary/10 hover:border-primary/20 transition-all duration-300">
+            <div class="relative p-6 sm:p-8 rounded-2xl bg-background border border-primary/10 hover:border-primary/20 transition-all duration-300">
               <!-- Card Background -->
               <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
               
               <!-- Card Content -->
               <div class="relative">
-                <div class="service-icon text-5xl mb-6 transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
+                <div class="service-icon text-4xl sm:text-5xl mb-4 sm:mb-6 transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
                   {getServiceIcon(service.icon)}
                 </div>
-                <h3 class="text-xl font-bold mb-4 text-text-primary group-hover:text-primary transition-colors duration-300">
+                <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-text-primary group-hover:text-primary transition-colors duration-300">
                   {service.title}
                 </h3>
-                <p class="text-text-secondary leading-relaxed">
+                <p class="text-text-secondary leading-relaxed text-sm sm:text-base">
                   {service.description}
                 </p>
                 
                 <!-- Animated hover elements -->
-                <div class="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-primary to-secondary rounded-full opacity-0 group-hover:opacity-100 transform scale-0 group-hover:scale-100 transition-all duration-300"></div>
-                <div class="absolute -bottom-2 -left-2 w-6 h-6 bg-gradient-to-r from-accent to-primary rounded-full opacity-0 group-hover:opacity-100 transform scale-0 group-hover:scale-100 transition-all duration-500"></div>
+                <div class="absolute -top-2 -right-2 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-primary to-secondary rounded-full opacity-0 group-hover:opacity-100 transform scale-0 group-hover:scale-100 transition-all duration-300"></div>
+                <div class="absolute -bottom-2 -left-2 w-4 h-4 sm:w-6 sm:h-6 bg-gradient-to-r from-accent to-primary rounded-full opacity-0 group-hover:opacity-100 transform scale-0 group-hover:scale-100 transition-all duration-500"></div>
                 
                 <!-- Hover Arrow -->
-                <div class="absolute bottom-4 right-4 opacity-0 transform translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300">
-                  <div class="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 opacity-0 transform translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300">
+                  <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                     </svg>
                   </div>
@@ -160,11 +160,11 @@
     {/if}
     
     <!-- Call to Action -->
-    <div class="text-center mt-16">
+    <div class="text-center mt-12 sm:mt-16">
       <a href="#contact" 
-         class="inline-flex items-center space-x-2 px-8 py-3 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors">
+         class="inline-flex items-center space-x-2 px-6 sm:px-8 py-3 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors text-sm sm:text-base">
         <span>Start Your Project</span>
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
         </svg>
       </a>

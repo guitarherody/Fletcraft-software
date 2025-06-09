@@ -72,19 +72,19 @@
   });
 </script>
 
-<section id="contact" class="section relative overflow-hidden bg-background">
+<section id="contact" class="section relative overflow-hidden bg-background py-16 sm:py-20 lg:py-24">
   <!-- Background Elements -->
   <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(99,102,241,0.05)_0%,transparent_100%)]"></div>
   <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(139,92,246,0.05)_0%,transparent_100%)]"></div>
   
-  <div class="container relative">
+  <div class="container relative px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto">
       <!-- Section Header -->
-      <div class="text-center mb-16 contact-element">
-        <h2 class="text-4xl md:text-5xl font-display font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+      <div class="text-center mb-12 sm:mb-16 contact-element">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4 sm:mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
           Get in Touch
         </h2>
-        <p class="text-text-secondary max-w-2xl mx-auto">
+        <p class="text-text-secondary max-w-2xl mx-auto text-base sm:text-lg">
           Ready to transform your ideas into reality? Let's start a conversation about your project.
         </p>
       </div>
@@ -92,18 +92,18 @@
       <!-- Contact Form -->
       <div class="relative">
         <!-- Form Container -->
-        <div class="bg-background/40 backdrop-blur-xl border border-primary/10 rounded-2xl p-8 md:p-12 contact-element">
+        <div class="bg-background/40 backdrop-blur-xl border border-primary/10 rounded-2xl p-6 sm:p-8 md:p-12 contact-element">
           <!-- Success Message -->
           {#if showSuccess}
             <div class="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
-              <p class="text-green-400 text-center">✅ Thank you! Your message has been sent successfully.</p>
+              <p class="text-green-400 text-center text-sm sm:text-base">✅ Thank you! Your message has been sent successfully.</p>
             </div>
           {/if}
           
           <!-- Error Message -->
           {#if showError}
             <div class="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
-              <p class="text-red-400 text-center">❌ {errorMessage}</p>
+              <p class="text-red-400 text-center text-sm sm:text-base">❌ {errorMessage}</p>
             </div>
           {/if}
           
@@ -118,7 +118,7 @@
                 id="name"
                 bind:value={name}
                 required
-                class="w-full px-4 py-3 bg-background/40 border border-primary/10 rounded-lg focus:outline-none focus:border-primary/30 focus:ring-2 focus:ring-primary/10 transition-all"
+                class="w-full px-4 py-3 bg-background/40 border border-primary/10 rounded-lg focus:outline-none focus:border-primary/30 focus:ring-2 focus:ring-primary/10 transition-all text-sm sm:text-base"
                 placeholder="John Doe"
               />
             </div>
@@ -133,7 +133,7 @@
                 id="email"
                 bind:value={email}
                 required
-                class="w-full px-4 py-3 bg-background/40 border border-primary/10 rounded-lg focus:outline-none focus:border-primary/30 focus:ring-2 focus:ring-primary/10 transition-all"
+                class="w-full px-4 py-3 bg-background/40 border border-primary/10 rounded-lg focus:outline-none focus:border-primary/30 focus:ring-2 focus:ring-primary/10 transition-all text-sm sm:text-base"
                 placeholder="john@example.com"
               />
             </div>
@@ -148,7 +148,7 @@
                 id="subject"
                 bind:value={subject}
                 required
-                class="w-full px-4 py-3 bg-background/40 border border-primary/10 rounded-lg focus:outline-none focus:border-primary/30 focus:ring-2 focus:ring-primary/10 transition-all"
+                class="w-full px-4 py-3 bg-background/40 border border-primary/10 rounded-lg focus:outline-none focus:border-primary/30 focus:ring-2 focus:ring-primary/10 transition-all text-sm sm:text-base"
                 placeholder="Project consultation"
               />
             </div>
@@ -163,7 +163,7 @@
                 bind:value={message}
                 required
                 rows="5"
-                class="w-full px-4 py-3 bg-background/40 border border-primary/10 rounded-lg focus:outline-none focus:border-primary/30 focus:ring-2 focus:ring-primary/10 transition-all resize-none"
+                class="w-full px-4 py-3 bg-background/40 border border-primary/10 rounded-lg focus:outline-none focus:border-primary/30 focus:ring-2 focus:ring-primary/10 transition-all resize-none text-sm sm:text-base"
                 placeholder="Tell us about your project..."
               ></textarea>
             </div>
@@ -172,11 +172,11 @@
             <button
               type="submit"
               disabled={isSubmitting}
-              class="w-full relative group overflow-hidden px-8 py-4 bg-gradient-to-r from-primary to-secondary rounded-lg text-white font-medium transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100"
+              class="w-full relative group overflow-hidden px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary to-secondary rounded-lg text-white font-medium transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100 text-sm sm:text-base"
             >
               <span class="relative z-10 flex items-center justify-center">
                 {#if isSubmitting}
-                  <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                  <svg class="animate-spin -ml-1 mr-3 h-4 w-4 sm:h-5 sm:w-5 text-white" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
@@ -189,8 +189,8 @@
         </div>
         
         <!-- Decorative Elements -->
-        <div class="absolute -z-10 top-1/2 -left-64 w-96 h-96 bg-primary/10 rounded-full filter blur-3xl"></div>
-        <div class="absolute -z-10 bottom-0 -right-64 w-96 h-96 bg-secondary/10 rounded-full filter blur-3xl"></div>
+        <div class="absolute -z-10 top-1/2 -left-32 sm:-left-64 w-48 h-48 sm:w-96 sm:h-96 bg-primary/10 rounded-full filter blur-3xl"></div>
+        <div class="absolute -z-10 bottom-0 -right-32 sm:-right-64 w-48 h-48 sm:w-96 sm:h-96 bg-secondary/10 rounded-full filter blur-3xl"></div>
       </div>
     </div>
   </div>

@@ -71,7 +71,7 @@
   });
 </script>
 
-<section bind:this={heroSection} class="relative min-h-screen flex items-center justify-center overflow-hidden bg-background text-text-primary">
+<section bind:this={heroSection} class="relative min-h-screen flex items-center justify-center overflow-hidden bg-background text-text-primary px-4 sm:px-6">
   <!-- Subtle cinematic background -->
   <div class="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background"></div>
   <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(99,102,241,0.03)_0%,transparent_70%)]"></div>
@@ -93,7 +93,7 @@
   <!-- Dodecahedron (D12 Style) - Centered Behind Hero Text -->
   <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
     <div class="dodecahedron-container">
-      <svg class="dodecahedron-svg" width="200" height="200" viewBox="-100 -100 200 200">
+      <svg class="dodecahedron-svg" width="120" height="120" viewBox="-100 -100 200 200">
         <!-- Dodecahedron faces using proper geometry -->
         <g class="dodecahedron-3d">
           <!-- Top pentagon -->
@@ -121,15 +121,15 @@
   </div>
   
   <!-- Content -->
-  <div class="container relative px-6 md:px-8 z-10">
+  <div class="container relative px-4 sm:px-6 md:px-8 z-10">
     <div class="max-w-4xl mx-auto text-center">
-      <div class="mb-8 inline-block hero-badge">
-        <span class="inline-block px-4 py-2 rounded-full text-sm font-medium bg-primary/5 text-primary border border-primary/10 backdrop-blur-sm">
+      <div class="mb-6 sm:mb-8 inline-block hero-badge">
+        <span class="inline-block px-3 py-2 sm:px-4 rounded-full text-xs sm:text-sm font-medium bg-primary/5 text-primary border border-primary/10 backdrop-blur-sm">
           Welcome to Fletcraft Software
         </span>
       </div>
       
-      <h1 class="hero-title text-5xl md:text-7xl font-display font-bold mb-8 leading-tight">
+      <h1 class="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 sm:mb-8 leading-tight">
         <span class="bg-gradient-to-r from-text-primary via-primary to-text-primary bg-clip-text text-transparent">
           Crafting Digital
         </span>
@@ -139,26 +139,26 @@
         </span>
       </h1>
       
-      <p class="hero-subtitle text-lg md:text-xl text-text-secondary mb-12 max-w-2xl mx-auto leading-relaxed opacity-90">
+      <p class="hero-subtitle text-base sm:text-lg md:text-xl text-text-secondary mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed opacity-90">
         We transform visionary ideas into powerful software solutions that drive business growth and innovation in the digital age.
       </p>
       
-      <div class="hero-buttons flex flex-wrap gap-6 justify-center">
+      <div class="hero-buttons flex flex-col sm:flex-row flex-wrap gap-4 sm:gap-6 justify-center">
         <a href="#contact" 
-          class="group relative px-8 py-4 bg-primary overflow-hidden rounded-lg transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-primary/25">
+          class="group relative px-6 sm:px-8 py-3 sm:py-4 bg-primary overflow-hidden rounded-lg transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-primary/25">
           <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          <span class="relative text-white font-medium flex items-center gap-2">
+          <span class="relative text-white font-medium flex items-center justify-center gap-2">
             Get Started
-            <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
             </svg>
           </span>
         </a>
         
         <a href="#services" 
-          class="group px-8 py-4 border border-primary/20 rounded-lg transition-all duration-500 hover:border-primary/40 hover:scale-105 backdrop-blur-sm bg-background/30">
-          <span class="text-text-primary group-hover:text-primary font-medium flex items-center gap-2 transition-colors duration-300">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          class="group px-6 sm:px-8 py-3 sm:py-4 border border-primary/20 rounded-lg transition-all duration-500 hover:border-primary/40 hover:scale-105 backdrop-blur-sm bg-background/30">
+          <span class="text-text-primary group-hover:text-primary font-medium flex items-center justify-center gap-2 transition-colors duration-300">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
             </svg>
             Our Services
@@ -169,10 +169,10 @@
   </div>
   
   <!-- Scroll Indicator -->
-  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-60">
+  <div class="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 opacity-60">
     <div class="flex flex-col items-center gap-2 text-text-secondary animate-bounce-slow">
-      <span class="text-sm font-medium">Scroll to explore</span>
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <span class="text-xs sm:text-sm font-medium">Scroll to explore</span>
+      <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
       </svg>
     </div>
@@ -182,17 +182,41 @@
 <style>
   /* D12 Dodecahedron styles - SVG based with proper geometry */
   .dodecahedron-container {
-    filter: drop-shadow(0 8px 32px rgba(99, 102, 241, 0.2));
-    opacity: 0.7; /* Subtle background presence */
+    filter: drop-shadow(0 4px 16px rgba(99, 102, 241, 0.15));
+    opacity: 0.5; /* More subtle on mobile */
   }
 
   .dodecahedron-svg {
-    width: 180px;
-    height: 180px;
+    width: 120px;
+    height: 120px;
     animation: dodecahedron-float 40s linear infinite, dodecahedron-bob 6s ease-in-out infinite;
   }
 
+  @media (min-width: 640px) {
+    .dodecahedron-container {
+      filter: drop-shadow(0 6px 24px rgba(99, 102, 241, 0.18));
+      opacity: 0.6;
+    }
+    
+    .dodecahedron-svg {
+      width: 160px;
+      height: 160px;
+    }
+  }
+
   @media (min-width: 768px) {
+    .dodecahedron-container {
+      filter: drop-shadow(0 8px 32px rgba(99, 102, 241, 0.2));
+      opacity: 0.7;
+    }
+    
+    .dodecahedron-svg {
+      width: 200px;
+      height: 200px;
+    }
+  }
+
+  @media (min-width: 1024px) {
     .dodecahedron-svg {
       width: 240px;
       height: 240px;
