@@ -53,8 +53,17 @@
   function createFireflies() {
     if (!fireflyContainer) return;
     
-    const numFireflies = 12;
-    const colors = ['#F0E6FF', '#E8D5FF', '#D4BDFF', '#C4A5FF', '#FFFF99', '#90EE90', '#FFB6C1'];
+    const numFireflies = 15;
+    // Theme-consistent colors - purple/violet palette
+    const colors = [
+      '#8B5CF6', // primary violet
+      '#A855F7', // purple
+      '#C084FC', // lighter purple  
+      '#DDD6FE', // very light purple
+      '#F3E8FF', // lavender
+      '#E879F9', // fuchsia
+      '#F0ABFC'  // light fuchsia
+    ];
 
     for (let i = 0; i < numFireflies; i++) {
       const firefly = document.createElement('div');
@@ -66,40 +75,55 @@
       firefly.style.left = startX + '%';
       firefly.style.top = startY + '%';
       
-      // Random color
+      // Random theme color
       const color = colors[Math.floor(Math.random() * colors.length)];
       firefly.style.setProperty('--firefly-color', color);
       
-      // Random animation timing
-      firefly.style.animationDelay = Math.random() * 10 + 's';
-      firefly.style.animationDuration = (20 + Math.random() * 15) + 's';
+      // Faster animation timing
+      firefly.style.animationDelay = Math.random() * 5 + 's';
+      firefly.style.animationDuration = (8 + Math.random() * 8) + 's';
       
-      // Create glowing trail
-      const trail = document.createElement('div');
-      trail.className = 'firefly-trail';
-      firefly.appendChild(trail);
+      // Create multiple trail elements for better effect
+      for (let j = 0; j < 3; j++) {
+        const trail = document.createElement('div');
+        trail.className = `firefly-trail trail-${j + 1}`;
+        trail.style.animationDelay = (j * 0.1) + 's';
+        firefly.appendChild(trail);
+      }
       
       fireflyContainer.appendChild(firefly);
 
-      // GSAP animation for organic movement
+      // Faster GSAP animation for organic movement
       gsap.to(firefly, {
-        x: `+=${(Math.random() - 0.5) * 200}`,
-        y: `+=${(Math.random() - 0.5) * 150}`,
-        duration: 8 + Math.random() * 12,
+        x: `+=${(Math.random() - 0.5) * 300}`,
+        y: `+=${(Math.random() - 0.5) * 200}`,
+        duration: 4 + Math.random() * 6,
         repeat: -1,
         yoyo: true,
-        ease: 'sine.inOut',
-        delay: Math.random() * 5
+        ease: 'power1.inOut',
+        delay: Math.random() * 2
       });
 
-      // Additional floating motion
+      // Additional faster floating motion
       gsap.to(firefly, {
-        y: `+=${(Math.random() - 0.5) * 50}`,
-        duration: 3 + Math.random() * 4,
+        x: `+=${(Math.random() - 0.5) * 80}`,
+        y: `+=${(Math.random() - 0.5) * 60}`,
+        duration: 1.5 + Math.random() * 2,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
-        delay: Math.random() * 3
+        delay: Math.random() * 1.5
+      });
+
+      // Quick micro movements for liveliness
+      gsap.to(firefly, {
+        x: `+=${(Math.random() - 0.5) * 20}`,
+        y: `+=${(Math.random() - 0.5) * 20}`,
+        duration: 0.8 + Math.random() * 0.7,
+        repeat: -1,
+        yoyo: true,
+        ease: 'power2.inOut',
+        delay: Math.random() * 1
       });
     }
   }
