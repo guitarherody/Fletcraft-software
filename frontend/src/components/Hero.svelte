@@ -92,20 +92,31 @@
   
   <!-- Dodecahedron (D12 Style) - Centered Behind Hero Text -->
   <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
-    <div class="dodecahedron relative w-48 h-48 md:w-64 md:h-64">
-      <!-- 12 pentagonal faces positioned like a real D12 -->
-      <div class="d12-face face-1"></div>
-      <div class="d12-face face-2"></div>
-      <div class="d12-face face-3"></div>
-      <div class="d12-face face-4"></div>
-      <div class="d12-face face-5"></div>
-      <div class="d12-face face-6"></div>
-      <div class="d12-face face-7"></div>
-      <div class="d12-face face-8"></div>
-      <div class="d12-face face-9"></div>
-      <div class="d12-face face-10"></div>
-      <div class="d12-face face-11"></div>
-      <div class="d12-face face-12"></div>
+    <div class="dodecahedron-container">
+      <svg class="dodecahedron-svg" width="200" height="200" viewBox="-100 -100 200 200">
+        <!-- Dodecahedron faces using proper geometry -->
+        <g class="dodecahedron-3d">
+          <!-- Top pentagon -->
+          <polygon class="d12-face face-1" points="0,-90 27.1,-55.5 16.7,-9.5 -16.7,-9.5 -27.1,-55.5"/>
+          
+          <!-- Upper ring - 5 faces -->
+          <polygon class="d12-face face-2" points="27.1,-55.5 69.1,-55.5 85.3,-18.5 16.7,-9.5 0,-90"/>
+          <polygon class="d12-face face-3" points="69.1,-55.5 69.1,0 85.3,36.5 85.3,-18.5 27.1,-55.5"/>
+          <polygon class="d12-face face-4" points="69.1,0 27.1,55.5 16.7,9.5 85.3,36.5 69.1,-55.5"/>
+          <polygon class="d12-face face-5" points="27.1,55.5 0,90 -16.7,9.5 16.7,9.5 69.1,0"/>
+          <polygon class="d12-face face-6" points="0,90 -27.1,55.5 -69.1,0 -16.7,9.5 27.1,55.5"/>
+          
+          <!-- Lower ring - 5 faces -->
+          <polygon class="d12-face face-7" points="-27.1,55.5 -69.1,0 -85.3,36.5 -85.3,-18.5 0,90"/>
+          <polygon class="d12-face face-8" points="-69.1,0 -69.1,-55.5 -85.3,-18.5 -85.3,36.5 -27.1,55.5"/>
+          <polygon class="d12-face face-9" points="-69.1,-55.5 -27.1,-55.5 -16.7,-9.5 -85.3,-18.5 -69.1,0"/>
+          <polygon class="d12-face face-10" points="-27.1,-55.5 0,-90 16.7,-9.5 -16.7,-9.5 -69.1,-55.5"/>
+          <polygon class="d12-face face-11" points="16.7,-9.5 85.3,-18.5 85.3,36.5 16.7,9.5 -16.7,-9.5"/>
+          
+          <!-- Bottom pentagon -->
+          <polygon class="d12-face face-12" points="16.7,9.5 -16.7,9.5 -27.1,55.5 0,90 27.1,55.5"/>
+        </g>
+      </svg>
     </div>
   </div>
   
@@ -169,81 +180,65 @@
 </section>
 
 <style>
-  /* D12 Dodecahedron styles */
-  .dodecahedron {
-    transform-style: preserve-3d;
-    perspective: 1200px;
+  /* D12 Dodecahedron styles - SVG based with proper geometry */
+  .dodecahedron-container {
     filter: drop-shadow(0 8px 32px rgba(99, 102, 241, 0.2));
-    opacity: 0.6; /* Subtle background presence */
+    opacity: 0.7; /* Subtle background presence */
   }
 
-  .d12-face {
-    position: absolute;
-    width: 64px;
-    height: 64px;
-    background: linear-gradient(135deg, 
-      rgba(99, 102, 241, 0.08) 0%, 
-      rgba(139, 92, 246, 0.12) 30%,
-      rgba(59, 130, 246, 0.10) 70%, 
-      rgba(99, 102, 241, 0.06) 100%);
-    border: 1px solid rgba(99, 102, 241, 0.15);
-    border-radius: 6px;
-    transform-origin: 32px 32px;
-    backface-visibility: hidden;
-    /* Perfect pentagon shape for D12 */
-    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
-    
-    /* Subtle inner glow like a real dice */
-    box-shadow: 
-      inset 0 2px 6px rgba(255, 255, 255, 0.08),
-      inset 0 -2px 4px rgba(0, 0, 0, 0.03),
-      0 4px 16px rgba(99, 102, 241, 0.08);
+  .dodecahedron-svg {
+    width: 180px;
+    height: 180px;
+    animation: dodecahedron-float 40s linear infinite, dodecahedron-bob 6s ease-in-out infinite;
   }
 
-  /* Responsive face sizing for larger dodecahedron */
   @media (min-width: 768px) {
-    .d12-face {
-      width: 80px;
-      height: 80px;
-      transform-origin: 40px 40px;
+    .dodecahedron-svg {
+      width: 240px;
+      height: 240px;
     }
   }
 
-  /* Geometrically accurate D12 face positioning - scaled up */
-  /* Top cap (1 face) */
-  .face-1 { transform: rotateX(-26.565deg) translateZ(56px); }
-  
-  /* Upper ring (5 faces) */
-  .face-2 { transform: rotateY(0deg) rotateX(26.565deg) translateZ(56px); }
-  .face-3 { transform: rotateY(72deg) rotateX(26.565deg) translateZ(56px); }
-  .face-4 { transform: rotateY(144deg) rotateX(26.565deg) translateZ(56px); }
-  .face-5 { transform: rotateY(216deg) rotateX(26.565deg) translateZ(56px); }
-  .face-6 { transform: rotateY(288deg) rotateX(26.565deg) translateZ(56px); }
-  
-  /* Lower ring (5 faces) */
-  .face-7 { transform: rotateY(36deg) rotateX(153.435deg) translateZ(56px); }
-  .face-8 { transform: rotateY(108deg) rotateX(153.435deg) translateZ(56px); }
-  .face-9 { transform: rotateY(180deg) rotateX(153.435deg) translateZ(56px); }
-  .face-10 { transform: rotateY(252deg) rotateX(153.435deg) translateZ(56px); }
-  .face-11 { transform: rotateY(324deg) rotateX(153.435deg) translateZ(56px); }
-  
-  /* Bottom cap (1 face) */
-  .face-12 { transform: rotateX(180deg) rotateY(180deg) translateZ(56px); }
+  .dodecahedron-3d {
+    transform-origin: center;
+    transform-style: preserve-3d;
+  }
 
-  /* Larger desktop version */
-  @media (min-width: 768px) {
-    .face-1 { transform: rotateX(-26.565deg) translateZ(70px); }
-    .face-2 { transform: rotateY(0deg) rotateX(26.565deg) translateZ(70px); }
-    .face-3 { transform: rotateY(72deg) rotateX(26.565deg) translateZ(70px); }
-    .face-4 { transform: rotateY(144deg) rotateX(26.565deg) translateZ(70px); }
-    .face-5 { transform: rotateY(216deg) rotateX(26.565deg) translateZ(70px); }
-    .face-6 { transform: rotateY(288deg) rotateX(26.565deg) translateZ(70px); }
-    .face-7 { transform: rotateY(36deg) rotateX(153.435deg) translateZ(70px); }
-    .face-8 { transform: rotateY(108deg) rotateX(153.435deg) translateZ(70px); }
-    .face-9 { transform: rotateY(180deg) rotateX(153.435deg) translateZ(70px); }
-    .face-10 { transform: rotateY(252deg) rotateX(153.435deg) translateZ(70px); }
-    .face-11 { transform: rotateY(324deg) rotateX(153.435deg) translateZ(70px); }
-    .face-12 { transform: rotateX(180deg) rotateY(180deg) translateZ(70px); }
+  .d12-face {
+    fill: rgba(99, 102, 241, 0.08);
+    stroke: rgba(99, 102, 241, 0.2);
+    stroke-width: 0.8;
+    transition: all 0.3s ease;
+  }
+
+  /* Face lighting effects for 3D appearance */
+  .face-1, .face-2, .face-3 { 
+    fill: rgba(99, 102, 241, 0.12); /* Top faces - brightest */
+  }
+  
+  .face-4, .face-5, .face-6, .face-11 { 
+    fill: rgba(99, 102, 241, 0.08); /* Side faces - medium */
+  }
+  
+  .face-7, .face-8, .face-9, .face-10, .face-12 { 
+    fill: rgba(99, 102, 241, 0.04); /* Bottom faces - darkest */
+  }
+
+  /* Hover effect */
+  .d12-face:hover {
+    fill: rgba(99, 102, 241, 0.15);
+    stroke: rgba(99, 102, 241, 0.4);
+  }
+
+  /* Rotation animations */
+  @keyframes dodecahedron-float {
+    0% { transform: rotateY(0deg) rotateX(15deg); }
+    100% { transform: rotateY(360deg) rotateX(15deg); }
+  }
+
+  @keyframes dodecahedron-bob {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-8px) scale(1.02); }
   }
 
   /* Sparkle animation */
