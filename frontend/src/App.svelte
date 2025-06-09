@@ -1,21 +1,23 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { isLoading, scrollProgress, currentSection, soundEnabled } from './lib/stores.ts';
+  import { isLoading, scrollProgress, currentSection, soundEnabled } from './lib/stores';
   import gsap from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
   
-  // Core Components
+  // Core Components - These should work
   import Navbar from './components/Navbar.svelte';
   import Hero from './components/Hero.svelte';
   import Services from './components/Services.svelte';
   import Team from './components/Team.svelte';
   import Contact from './components/Contact.svelte';
   
-  // Advanced Components
+  // Simple Components
   import ParticleSystem from './components/ParticleSystem.svelte';
-  import AIChat from './components/AIChat.svelte';
-  import Portfolio from './components/Portfolio.svelte';
-  import Analytics from './components/Analytics.svelte';
+  
+  // Temporarily disabled - problematic components
+  // import AIChat from './components/AIChat.svelte';
+  // import Portfolio from './components/Portfolio.svelte';
+  // import Analytics from './components/Analytics.svelte';
 
   gsap.registerPlugin(ScrollTrigger);
 
@@ -60,12 +62,10 @@
   <Hero />
   <Services />
   <Team />
-  <Portfolio />
-  <Analytics />
   <Contact />
   
   <!-- AI Chat Assistant -->
-  <AIChat />
+  <!-- <AIChat /> -->
 </main>
 
 <style>
