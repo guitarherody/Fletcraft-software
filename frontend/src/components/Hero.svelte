@@ -90,122 +90,84 @@
     <div class="sparkle absolute top-1/2 left-1/6 w-1 h-1 bg-accent rounded-full opacity-40"></div>
   </div>
   
-  <!-- Truly 3D Crystal - Centered Behind Hero Text -->
+  <!-- 3D Crystal with Light Source - Centered Behind Hero Text -->
   <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
-    <div class="crystal-3d-container">
-      <div class="crystal-3d-inner">
+    
+    <!-- Light Source -->
+    <div class="light-source">
+      <div class="light-beam"></div>
+      <div class="light-glow"></div>
+    </div>
+    
+    <!-- Crystal Container -->
+    <div class="crystal-container">
+      <div class="crystal-3d">
         
-        <!-- Inner Core Glow -->
-        <div class="crystal-core"></div>
+        <!-- Inner Core Light -->
+        <div class="crystal-core-light"></div>
         
-        <!-- Front Face -->
-        <div class="crystal-face crystal-face-front">
-          <svg width="120" height="160" viewBox="-60 -80 120 160">
-            <defs>
-              <linearGradient id="front-glass" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.9"/>
-                <stop offset="30%" style="stop-color:#E8D5FF;stop-opacity:0.7"/>
-                <stop offset="70%" style="stop-color:#D4BDFF;stop-opacity:0.5"/>
-                <stop offset="100%" style="stop-color:#C4A5FF;stop-opacity:0.3"/>
-              </linearGradient>
-              <filter id="front-glow" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                <feMerge>
-                  <feMergeNode in="coloredBlur"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-            <polygon points="0,-75 20,-50 15,-15 -15,-15 -20,-50" 
-                     fill="url(#front-glass)" stroke="#E8D5FF" stroke-width="0.5" filter="url(#front-glow)"/>
-            <polygon points="15,-15 15,15 0,75 -15,15 -15,-15" 
-                     fill="url(#front-glass)" stroke="#D4BDFF" stroke-width="0.5"/>
-          </svg>
+        <!-- Crystal Geometry -->
+        <div class="crystal-geometry">
+          
+          <!-- Top Point -->
+          <div class="crystal-face face-top-point">
+            <div class="face-surface face-surface-bright"></div>
+          </div>
+          
+          <!-- Upper Faces -->
+          <div class="crystal-face face-upper-1">
+            <div class="face-surface face-surface-lit"></div>
+          </div>
+          <div class="crystal-face face-upper-2">
+            <div class="face-surface face-surface-medium"></div>
+          </div>
+          <div class="crystal-face face-upper-3">
+            <div class="face-surface face-surface-lit"></div>
+          </div>
+          <div class="crystal-face face-upper-4">
+            <div class="face-surface face-surface-medium"></div>
+          </div>
+          
+          <!-- Middle Faces -->
+          <div class="crystal-face face-middle-1">
+            <div class="face-surface face-surface-bright"></div>
+          </div>
+          <div class="crystal-face face-middle-2">
+            <div class="face-surface face-surface-shadow"></div>
+          </div>
+          <div class="crystal-face face-middle-3">
+            <div class="face-surface face-surface-medium"></div>
+          </div>
+          <div class="crystal-face face-middle-4">
+            <div class="face-surface face-surface-shadow"></div>
+          </div>
+          
+          <!-- Lower Faces -->
+          <div class="crystal-face face-lower-1">
+            <div class="face-surface face-surface-medium"></div>
+          </div>
+          <div class="crystal-face face-lower-2">
+            <div class="face-surface face-surface-shadow"></div>
+          </div>
+          <div class="crystal-face face-lower-3">
+            <div class="face-surface face-surface-medium"></div>
+          </div>
+          <div class="crystal-face face-lower-4">
+            <div class="face-surface face-surface-shadow"></div>
+          </div>
+          
+          <!-- Bottom Point -->
+          <div class="crystal-face face-bottom-point">
+            <div class="face-surface face-surface-dark"></div>
+          </div>
+          
         </div>
         
-        <!-- Back Face -->
-        <div class="crystal-face crystal-face-back">
-          <svg width="120" height="160" viewBox="-60 -80 120 160">
-            <defs>
-              <linearGradient id="back-glass" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#8B6CF4;stop-opacity:0.4"/>
-                <stop offset="50%" style="stop-color:#7C5CE3;stop-opacity:0.3"/>
-                <stop offset="100%" style="stop-color:#6B5B95;stop-opacity:0.2"/>
-              </linearGradient>
-            </defs>
-            <polygon points="0,-75 20,-50 15,-15 -15,-15 -20,-50" 
-                     fill="url(#back-glass)" stroke="#9B7DF7" stroke-width="0.3"/>
-            <polygon points="15,-15 15,15 0,75 -15,15 -15,-15" 
-                     fill="url(#back-glass)" stroke="#8B6CF4" stroke-width="0.3"/>
-          </svg>
-        </div>
-        
-        <!-- Left Face -->
-        <div class="crystal-face crystal-face-left">
-          <svg width="120" height="160" viewBox="-60 -80 120 160">
-            <defs>
-              <linearGradient id="left-glass" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#D4BDFF;stop-opacity:0.6"/>
-                <stop offset="50%" style="stop-color:#C4A5FF;stop-opacity:0.5"/>
-                <stop offset="100%" style="stop-color:#A88BFA;stop-opacity:0.4"/>
-              </linearGradient>
-            </defs>
-            <polygon points="0,-75 -25,-45 -30,0 -25,45 0,75 -15,15 -15,-15" 
-                     fill="url(#left-glass)" stroke="#C4A5FF" stroke-width="0.4"/>
-          </svg>
-        </div>
-        
-        <!-- Right Face -->
-        <div class="crystal-face crystal-face-right">
-          <svg width="120" height="160" viewBox="-60 -80 120 160">
-            <defs>
-              <linearGradient id="right-glass" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#C4A5FF;stop-opacity:0.6"/>
-                <stop offset="50%" style="stop-color:#B794F6;stop-opacity:0.5"/>
-                <stop offset="100%" style="stop-color:#9B7DF7;stop-opacity:0.4"/>
-              </linearGradient>
-            </defs>
-            <polygon points="0,-75 25,-45 30,0 25,45 0,75 15,15 15,-15" 
-                     fill="url(#right-glass)" stroke="#B794F6" stroke-width="0.4"/>
-          </svg>
-        </div>
-        
-        <!-- Top Face -->
-        <div class="crystal-face crystal-face-top">
-          <svg width="120" height="120" viewBox="-60 -60 120 120">
-            <defs>
-              <linearGradient id="top-glass" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.8"/>
-                <stop offset="50%" style="stop-color:#F0E6FF;stop-opacity:0.6"/>
-                <stop offset="100%" style="stop-color:#E8D5FF;stop-opacity:0.4"/>
-              </linearGradient>
-              <filter id="top-shine" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="1" result="softGlow"/>
-                <feColorMatrix in="softGlow" type="matrix" values="1 1 1 0 0  1 1 1 0 0  1 1 1 0 0  0 0 0 0.8 0"/>
-                <feMerge>
-                  <feMergeNode in="softGlow"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-            <polygon points="0,-50 25,-25 20,0 -20,0 -25,-25" 
-                     fill="url(#top-glass)" stroke="#F0E6FF" stroke-width="0.3" filter="url(#top-shine)"/>
-          </svg>
-        </div>
-        
-        <!-- Bottom Face -->
-        <div class="crystal-face crystal-face-bottom">
-          <svg width="120" height="120" viewBox="-60 -60 120 120">
-            <defs>
-              <linearGradient id="bottom-glass" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#9B7DF7;stop-opacity:0.5"/>
-                <stop offset="50%" style="stop-color:#8B6CF4;stop-opacity:0.4"/>
-                <stop offset="100%" style="stop-color:#7C5CE3;stop-opacity:0.3"/>
-              </linearGradient>
-            </defs>
-            <polygon points="0,50 25,25 20,0 -20,0 -25,25" 
-                     fill="url(#bottom-glass)" stroke="#8B6CF4" stroke-width="0.4"/>
-          </svg>
+        <!-- Light Reflections -->
+        <div class="light-reflections">
+          <div class="reflection reflection-1"></div>
+          <div class="reflection reflection-2"></div>
+          <div class="reflection reflection-3"></div>
         </div>
         
       </div>
