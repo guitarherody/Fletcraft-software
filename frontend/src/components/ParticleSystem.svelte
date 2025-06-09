@@ -76,35 +76,72 @@
       gsap.set(particle, {
         x: x,
         y: y,
-        scale: Math.random() * 0.3 + 0.2, // Smaller on mobile
-        opacity: Math.random() * 0.4 + 0.1,
+        scale: Math.random() * 0.2 + 0.1, // Even smaller for dust-like effect
+        opacity: Math.random() * 0.3 + 0.05, // Very subtle opacity
       });
       
       container.appendChild(particle);
       particles.push(particle);
       
-      // Floating animation with reduced intensity for mobile
-      const duration = isMobile() ? 60 + Math.random() * 40 : 40 + Math.random() * 30;
-      const distance = isMobile() ? 15 : 25;
+      // Dust-like floating animation with gentle Brownian motion
+      const createDustMovement = (element: HTMLElement) => {
+        const duration = isMobile() ? 15 + Math.random() * 10 : 10 + Math.random() * 8;
+        const distance = isMobile() ? 8 : 12;
+        
+        // Create a gentle drift in a random direction
+        const angle = Math.random() * Math.PI * 2;
+        const driftX = Math.cos(angle) * distance;
+        const driftY = Math.sin(angle) * distance;
+        
+        gsap.to(element, {
+          x: `+=${driftX}`,
+          y: `+=${driftY}`,
+          duration: duration,
+          ease: 'none',
+          onComplete: () => {
+            // Add slight random direction change (Brownian motion)
+            const newAngle = Math.random() * Math.PI * 2;
+            const newDriftX = Math.cos(newAngle) * (distance * 0.7);
+            const newDriftY = Math.sin(newAngle) * (distance * 0.7);
+            
+            gsap.to(element, {
+              x: `+=${newDriftX}`,
+              y: `+=${newDriftY}`,
+              duration: duration * 0.8,
+              ease: 'sine.inOut',
+              onComplete: () => createDustMovement(element) // Loop the movement
+            });
+          }
+        });
+        
+        // Add gentle vertical oscillation (like dust settling)
+        gsap.to(element, {
+          y: `+=${Math.random() * 6 - 3}`,
+          duration: duration * 2,
+          ease: 'sine.inOut',
+          yoyo: true,
+          repeat: -1
+        });
+      };
       
-      gsap.to(particle, {
-        x: `+=${Math.random() * distance * 2 - distance}`,
-        y: `+=${Math.random() * distance * 2 - distance}`,
-        rotation: 360,
-        duration: duration,
-        ease: 'none',
-        repeat: -1,
-        yoyo: true
-      });
+      createDustMovement(particle);
       
-      // Individual dodecahedron rotation
+      // Very slow, subtle rotation for the mini dodecahedrons
       const dodecahedron = particle.querySelector('.mini-dodecahedron');
       if (dodecahedron) {
         gsap.to(dodecahedron, {
-          rotationX: 360,
           rotationY: 360,
-          duration: 30 + Math.random() * 20,
+          duration: 60 + Math.random() * 40, // Very slow rotation
           ease: 'none',
+          repeat: -1
+        });
+        
+        // Add very subtle scale pulsing (like dust catching light)
+        gsap.to(dodecahedron, {
+          scale: 1.1,
+          duration: 8 + Math.random() * 4,
+          ease: 'sine.inOut',
+          yoyo: true,
           repeat: -1
         });
       }

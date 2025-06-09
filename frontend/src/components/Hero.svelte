@@ -94,27 +94,55 @@
   <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
     <div class="dodecahedron-container">
       <svg class="dodecahedron-svg" width="120" height="120" viewBox="-100 -100 200 200">
-        <!-- Dodecahedron faces using proper geometry -->
-        <g class="dodecahedron-3d">
-          <!-- Top pentagon -->
-          <polygon class="d12-face face-1" points="0,-90 27.1,-55.5 16.7,-9.5 -16.7,-9.5 -27.1,-55.5"/>
+        <defs>
+          <!-- Enhanced gradients for realistic 3D lighting -->
+          <linearGradient id="face-light" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#F4E4BC;stop-opacity:0.9"/>
+            <stop offset="50%" style="stop-color:#E6D3A3;stop-opacity:0.7"/>
+            <stop offset="100%" style="stop-color:#D4C194;stop-opacity:0.5"/>
+          </linearGradient>
           
-          <!-- Upper ring - 5 faces -->
-          <polygon class="d12-face face-2" points="27.1,-55.5 69.1,-55.5 85.3,-18.5 16.7,-9.5 0,-90"/>
-          <polygon class="d12-face face-3" points="69.1,-55.5 69.1,0 85.3,36.5 85.3,-18.5 27.1,-55.5"/>
-          <polygon class="d12-face face-4" points="69.1,0 27.1,55.5 16.7,9.5 85.3,36.5 69.1,-55.5"/>
-          <polygon class="d12-face face-5" points="27.1,55.5 0,90 -16.7,9.5 16.7,9.5 69.1,0"/>
-          <polygon class="d12-face face-6" points="0,90 -27.1,55.5 -69.1,0 -16.7,9.5 27.1,55.5"/>
+          <linearGradient id="face-medium" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#E6D3A3;stop-opacity:0.8"/>
+            <stop offset="50%" style="stop-color:#D4C194;stop-opacity:0.6"/>
+            <stop offset="100%" style="stop-color:#C5B285;stop-opacity:0.4"/>
+          </linearGradient>
           
-          <!-- Lower ring - 5 faces -->
-          <polygon class="d12-face face-7" points="-27.1,55.5 -69.1,0 -85.3,36.5 -85.3,-18.5 0,90"/>
-          <polygon class="d12-face face-8" points="-69.1,0 -69.1,-55.5 -85.3,-18.5 -85.3,36.5 -27.1,55.5"/>
-          <polygon class="d12-face face-9" points="-69.1,-55.5 -27.1,-55.5 -16.7,-9.5 -85.3,-18.5 -69.1,0"/>
-          <polygon class="d12-face face-10" points="-27.1,-55.5 0,-90 16.7,-9.5 -16.7,-9.5 -69.1,-55.5"/>
-          <polygon class="d12-face face-11" points="16.7,-9.5 85.3,-18.5 85.3,36.5 16.7,9.5 -16.7,-9.5"/>
+          <linearGradient id="face-shadow" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#C5B285;stop-opacity:0.7"/>
+            <stop offset="50%" style="stop-color:#B8A577;stop-opacity:0.5"/>
+            <stop offset="100%" style="stop-color:#A69668;stop-opacity:0.3"/>
+          </linearGradient>
           
-          <!-- Bottom pentagon -->
-          <polygon class="d12-face face-12" points="16.7,9.5 -16.7,9.5 -27.1,55.5 0,90 27.1,55.5"/>
+          <!-- Subtle drop shadow filter -->
+          <filter id="dodecaShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="2" dy="4" stdDeviation="3" flood-opacity="0.2" flood-color="#8B7355"/>
+          </filter>
+        </defs>
+        
+        <!-- Dodecahedron faces with enhanced lighting -->
+        <g class="dodecahedron-3d" filter="url(#dodecaShadow)">
+          <!-- Top faces (lightest - catching most light) -->
+          <polygon class="d12-face face-top" points="0,-90 27.1,-55.5 16.7,-9.5 -16.7,-9.5 -27.1,-55.5" fill="url(#face-light)" stroke="#B8A577" stroke-width="0.5"/>
+          <polygon class="d12-face face-top" points="27.1,-55.5 69.1,-55.5 85.3,-18.5 16.7,-9.5 0,-90" fill="url(#face-light)" stroke="#B8A577" stroke-width="0.5"/>
+          
+          <!-- Upper middle faces (medium lighting) -->
+          <polygon class="d12-face face-middle" points="69.1,-55.5 69.1,0 85.3,36.5 85.3,-18.5 27.1,-55.5" fill="url(#face-medium)" stroke="#A69668" stroke-width="0.6"/>
+          <polygon class="d12-face face-middle" points="69.1,0 27.1,55.5 16.7,9.5 85.3,36.5 69.1,-55.5" fill="url(#face-medium)" stroke="#A69668" stroke-width="0.6"/>
+          <polygon class="d12-face face-middle" points="-69.1,-55.5 -27.1,-55.5 -16.7,-9.5 -85.3,-18.5 -69.1,0" fill="url(#face-medium)" stroke="#A69668" stroke-width="0.6"/>
+          
+          <!-- Lower middle faces (darker) -->
+          <polygon class="d12-face face-shadow" points="27.1,55.5 0,90 -16.7,9.5 16.7,9.5 69.1,0" fill="url(#face-shadow)" stroke="#8B7355" stroke-width="0.7"/>
+          <polygon class="d12-face face-shadow" points="0,90 -27.1,55.5 -69.1,0 -16.7,9.5 27.1,55.5" fill="url(#face-shadow)" stroke="#8B7355" stroke-width="0.7"/>
+          <polygon class="d12-face face-shadow" points="-27.1,55.5 -69.1,0 -85.3,36.5 -85.3,-18.5 0,90" fill="url(#face-shadow)" stroke="#8B7355" stroke-width="0.7"/>
+          
+          <!-- Side faces (medium-dark) -->
+          <polygon class="d12-face face-side" points="-69.1,0 -69.1,-55.5 -85.3,-18.5 -85.3,36.5 -27.1,55.5" fill="url(#face-medium)" stroke="#A69668" stroke-width="0.6"/>
+          <polygon class="d12-face face-side" points="-27.1,-55.5 0,-90 16.7,-9.5 -16.7,-9.5 -69.1,-55.5" fill="url(#face-medium)" stroke="#A69668" stroke-width="0.6"/>
+          
+          <!-- Central connecting faces -->
+          <polygon class="d12-face face-center" points="16.7,-9.5 85.3,-18.5 85.3,36.5 16.7,9.5 -16.7,-9.5" fill="url(#face-light)" stroke="#B8A577" stroke-width="0.5"/>
+          <polygon class="d12-face face-center" points="16.7,9.5 -16.7,9.5 -27.1,55.5 0,90 27.1,55.5" fill="url(#face-shadow)" stroke="#8B7355" stroke-width="0.7"/>
         </g>
       </svg>
     </div>
@@ -180,22 +208,22 @@
 </section>
 
 <style>
-  /* D12 Dodecahedron styles - SVG based with proper geometry */
+  /* D12 Dodecahedron styles - Enhanced realistic appearance */
   .dodecahedron-container {
-    filter: drop-shadow(0 4px 16px rgba(99, 102, 241, 0.15));
-    opacity: 0.5; /* More subtle on mobile */
+    filter: drop-shadow(0 6px 20px rgba(180, 165, 119, 0.3));
+    opacity: 0.7; /* More visible but still subtle */
   }
 
   .dodecahedron-svg {
     width: 120px;
     height: 120px;
-    animation: dodecahedron-float 40s linear infinite, dodecahedron-bob 6s ease-in-out infinite;
+    animation: dodecahedron-float 50s linear infinite, dodecahedron-bob 8s ease-in-out infinite;
   }
 
   @media (min-width: 640px) {
     .dodecahedron-container {
-      filter: drop-shadow(0 6px 24px rgba(99, 102, 241, 0.18));
-      opacity: 0.6;
+      filter: drop-shadow(0 8px 25px rgba(180, 165, 119, 0.35));
+      opacity: 0.75;
     }
     
     .dodecahedron-svg {
@@ -206,8 +234,8 @@
 
   @media (min-width: 768px) {
     .dodecahedron-container {
-      filter: drop-shadow(0 8px 32px rgba(99, 102, 241, 0.2));
-      opacity: 0.7;
+      filter: drop-shadow(0 10px 30px rgba(180, 165, 119, 0.4));
+      opacity: 0.8;
     }
     
     .dodecahedron-svg {
@@ -228,41 +256,45 @@
     transform-style: preserve-3d;
   }
 
+  /* Enhanced face styling for realistic 3D appearance */
   .d12-face {
-    fill: rgba(99, 102, 241, 0.08);
-    stroke: rgba(99, 102, 241, 0.2);
-    stroke-width: 0.8;
     transition: all 0.3s ease;
   }
 
-  /* Face lighting effects for 3D appearance */
-  .face-1, .face-2, .face-3 { 
-    fill: rgba(99, 102, 241, 0.12); /* Top faces - brightest */
-  }
-  
-  .face-4, .face-5, .face-6, .face-11 { 
-    fill: rgba(99, 102, 241, 0.08); /* Side faces - medium */
-  }
-  
-  .face-7, .face-8, .face-9, .face-10, .face-12 { 
-    fill: rgba(99, 102, 241, 0.04); /* Bottom faces - darkest */
+  .face-top {
+    filter: brightness(1.2);
   }
 
-  /* Hover effect */
-  .d12-face:hover {
-    fill: rgba(99, 102, 241, 0.15);
-    stroke: rgba(99, 102, 241, 0.4);
+  .face-middle {
+    filter: brightness(1.0);
   }
 
-  /* Rotation animations */
+  .face-shadow {
+    filter: brightness(0.8);
+  }
+
+  .face-side {
+    filter: brightness(0.9);
+  }
+
+  .face-center {
+    filter: brightness(1.1);
+  }
+
+  /* Subtle glow effect around the entire dodecahedron */
+  .dodecahedron-svg:hover {
+    filter: drop-shadow(0 0 15px rgba(244, 228, 188, 0.4));
+  }
+
+  /* Animation keyframes for floating and bobbing */
   @keyframes dodecahedron-float {
-    0% { transform: rotateY(0deg) rotateX(15deg); }
-    100% { transform: rotateY(360deg) rotateX(15deg); }
+    from { transform: rotateY(0deg) rotateX(5deg); }
+    to { transform: rotateY(360deg) rotateX(5deg); }
   }
 
   @keyframes dodecahedron-bob {
-    0%, 100% { transform: translateY(0px) scale(1); }
-    50% { transform: translateY(-8px) scale(1.02); }
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
   }
 
   /* Sparkle animation */
