@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { analyticsData, currentSection } from '../lib/stores.js';
+  import { analyticsData, currentSection } from '../lib';
   import { Chart, registerables } from 'chart.js';
   import gsap from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';

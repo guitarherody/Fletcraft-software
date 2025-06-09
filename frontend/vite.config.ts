@@ -7,6 +7,9 @@ export default defineConfig({
     hot: {
       preserveLocalState: true,
       noPreserveStateKey: ['@hmr:reset', '@!hmr'],
+    },
+    compilerOptions: {
+      dev: false // Force dev to false for production builds
     }
   })],
   server: {
@@ -22,7 +25,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '$lib': '/src/lib'
+      '$lib': '/src/lib',
+      '@': '/src'
     },
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.svelte']
   },
@@ -33,12 +37,21 @@ export default defineConfig({
           vendor: ['gsap'],
           svelte: ['svelte']
         }
+      },
+      external: [],
+      input: {
+        main: './index.html'
       }
     },
     sourcemap: false,
-    minify: 'esbuild'
+    minify: 'esbuild',
+    target: 'esnext',
+    assetsDir: 'assets'
   },
   optimizeDeps: {
     include: ['gsap', 'howler', 'chart.js']
+  },
+  esbuild: {
+    target: 'esnext'
   }
 })
