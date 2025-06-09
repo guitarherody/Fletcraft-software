@@ -99,69 +99,138 @@
       <div class="light-glow"></div>
     </div>
     
-    <!-- Crystal Container -->
+    <!-- Connected Crystal Container -->
     <div class="crystal-container">
       <div class="crystal-3d">
         
         <!-- Inner Core Light -->
         <div class="crystal-core-light"></div>
         
-        <!-- Crystal Geometry -->
-        <div class="crystal-geometry">
+        <!-- Crystal SVG with Connected Faces -->
+        <svg class="crystal-svg" width="120" height="160" viewBox="0 0 120 160">
+          <defs>
+            <!-- Crystal Gradients -->
+            <linearGradient id="crystal-face-bright" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.9"/>
+              <stop offset="30%" style="stop-color:#F0E6FF;stop-opacity:0.8"/>
+              <stop offset="70%" style="stop-color:#E8D5FF;stop-opacity:0.6"/>
+              <stop offset="100%" style="stop-color:#D4BDFF;stop-opacity:0.4"/>
+            </linearGradient>
+            
+            <linearGradient id="crystal-face-lit" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#E8D5FF;stop-opacity:0.8"/>
+              <stop offset="50%" style="stop-color:#D4BDFF;stop-opacity:0.7"/>
+              <stop offset="100%" style="stop-color:#C4A5FF;stop-opacity:0.5"/>
+            </linearGradient>
+            
+            <linearGradient id="crystal-face-medium" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#C4A5FF;stop-opacity:0.7"/>
+              <stop offset="50%" style="stop-color:#A88BFA;stop-opacity:0.6"/>
+              <stop offset="100%" style="stop-color:#9B7DF7;stop-opacity:0.5"/>
+            </linearGradient>
+            
+            <linearGradient id="crystal-face-shadow" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#9B7DF7;stop-opacity:0.6"/>
+              <stop offset="50%" style="stop-color:#8B6CF4;stop-opacity:0.5"/>
+              <stop offset="100%" style="stop-color:#7C5CE3;stop-opacity:0.4"/>
+            </linearGradient>
+            
+            <linearGradient id="crystal-face-dark" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#7C5CE3;stop-opacity:0.5"/>
+              <stop offset="50%" style="stop-color:#6B5B95;stop-opacity:0.4"/>
+              <stop offset="100%" style="stop-color:#4A4566;stop-opacity:0.3"/>
+            </linearGradient>
+            
+            <!-- Light reflection filters -->
+            <filter id="crystal-glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          
+          <!-- Crystal Geometry - Properly Connected Crystal -->
           
           <!-- Top Point -->
-          <div class="crystal-face face-top-point">
-            <div class="face-surface face-surface-bright"></div>
-          </div>
+          <polygon points="60,10 45,35 75,35" 
+                   fill="url(#crystal-face-bright)" 
+                   stroke="#FFFFFF" 
+                   stroke-width="0.5" 
+                   filter="url(#crystal-glow)"/>
           
-          <!-- Upper Faces -->
-          <div class="crystal-face face-upper-1">
-            <div class="face-surface face-surface-lit"></div>
-          </div>
-          <div class="crystal-face face-upper-2">
-            <div class="face-surface face-surface-medium"></div>
-          </div>
-          <div class="crystal-face face-upper-3">
-            <div class="face-surface face-surface-lit"></div>
-          </div>
-          <div class="crystal-face face-upper-4">
-            <div class="face-surface face-surface-medium"></div>
-          </div>
+          <!-- Upper Left Face -->
+          <polygon points="45,35 20,60 50,85 60,60" 
+                   fill="url(#crystal-face-lit)" 
+                   stroke="#E8D5FF" 
+                   stroke-width="0.3"/>
           
-          <!-- Middle Faces -->
-          <div class="crystal-face face-middle-1">
-            <div class="face-surface face-surface-bright"></div>
-          </div>
-          <div class="crystal-face face-middle-2">
-            <div class="face-surface face-surface-shadow"></div>
-          </div>
-          <div class="crystal-face face-middle-3">
-            <div class="face-surface face-surface-medium"></div>
-          </div>
-          <div class="crystal-face face-middle-4">
-            <div class="face-surface face-surface-shadow"></div>
-          </div>
+          <!-- Upper Right Face -->
+          <polygon points="75,35 100,60 70,85 60,60" 
+                   fill="url(#crystal-face-medium)" 
+                   stroke="#D4BDFF" 
+                   stroke-width="0.3"/>
           
-          <!-- Lower Faces -->
-          <div class="crystal-face face-lower-1">
-            <div class="face-surface face-surface-medium"></div>
-          </div>
-          <div class="crystal-face face-lower-2">
-            <div class="face-surface face-surface-shadow"></div>
-          </div>
-          <div class="crystal-face face-lower-3">
-            <div class="face-surface face-surface-medium"></div>
-          </div>
-          <div class="crystal-face face-lower-4">
-            <div class="face-surface face-surface-shadow"></div>
-          </div>
+          <!-- Center Front Face -->
+          <polygon points="45,35 75,35 70,85 50,85" 
+                   fill="url(#crystal-face-bright)" 
+                   stroke="#F0E6FF" 
+                   stroke-width="0.2" 
+                   filter="url(#crystal-glow)"/>
           
-          <!-- Bottom Point -->
-          <div class="crystal-face face-bottom-point">
-            <div class="face-surface face-surface-dark"></div>
-          </div>
+          <!-- Middle Left Face -->
+          <polygon points="20,60 10,95 40,125 50,85" 
+                   fill="url(#crystal-face-shadow)" 
+                   stroke="#C4A5FF" 
+                   stroke-width="0.3"/>
           
-        </div>
+          <!-- Middle Right Face -->
+          <polygon points="100,60 110,95 80,125 70,85" 
+                   fill="url(#crystal-face-shadow)" 
+                   stroke="#A88BFA" 
+                   stroke-width="0.3"/>
+          
+          <!-- Lower Left Face -->
+          <polygon points="40,125 10,95 35,140 60,150" 
+                   fill="url(#crystal-face-dark)" 
+                   stroke="#9B7DF7" 
+                   stroke-width="0.3"/>
+          
+          <!-- Lower Right Face -->
+          <polygon points="80,125 110,95 85,140 60,150" 
+                   fill="url(#crystal-face-dark)" 
+                   stroke="#8B6CF4" 
+                   stroke-width="0.3"/>
+          
+          <!-- Bottom Face -->
+          <polygon points="50,85 70,85 80,125 40,125" 
+                   fill="url(#crystal-face-medium)" 
+                   stroke="#C4A5FF" 
+                   stroke-width="0.2"/>
+          
+          <!-- Main Central Diamond -->
+          <polygon points="60,60 50,85 60,110 70,85" 
+                   fill="url(#crystal-face-bright)" 
+                   stroke="#FFFFFF" 
+                   stroke-width="0.4" 
+                   filter="url(#crystal-glow)"/>
+          
+          <!-- Inner Highlights -->
+          <line x1="45" y1="35" x2="75" y2="35" 
+                stroke="#FFFFFF" 
+                stroke-width="1.5" 
+                opacity="0.8"/>
+          <line x1="50" y1="85" x2="70" y2="85" 
+                stroke="#FFFFFF" 
+                stroke-width="1.2" 
+                opacity="0.6"/>
+          <line x1="60" y1="10" x2="60" y2="150" 
+                stroke="#F0E6FF" 
+                stroke-width="0.8" 
+                opacity="0.4"/>
+          
+        </svg>
         
         <!-- Light Reflections -->
         <div class="light-reflections">

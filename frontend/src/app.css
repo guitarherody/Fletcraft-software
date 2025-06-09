@@ -446,7 +446,7 @@ html {
   color: white;
 }
 
-/* Light Source and 3D Crystal with Realistic Lighting */
+/* Light Source and Connected 3D Crystal */
 .light-source {
   position: absolute;
   top: -100px;
@@ -521,185 +521,18 @@ html {
   z-index: 0;
 }
 
-.crystal-geometry {
+.crystal-svg {
   position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
+  width: 120px;
+  height: 160px;
+  z-index: 1;
+  filter: drop-shadow(0 0 10px rgba(139, 108, 244, 0.3));
+  animation: crystal-spin 25s linear infinite;
 }
 
-.crystal-face {
-  position: absolute;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-}
-
-.face-surface {
-  width: 100%;
-  height: 100%;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Crystal Face Positioning in 3D Space */
-.face-top-point {
-  width: 40px;
-  height: 40px;
-  top: -10px;
-  left: 40px;
-  transform: rotateX(75deg) translateZ(40px);
-}
-
-.face-upper-1 {
-  width: 50px;
-  height: 60px;
-  top: 15px;
-  left: 10px;
-  transform: rotateY(-45deg) rotateX(30deg) translateZ(25px);
-}
-
-.face-upper-2 {
-  width: 50px;
-  height: 60px;
-  top: 15px;
-  right: 10px;
-  transform: rotateY(45deg) rotateX(30deg) translateZ(25px);
-}
-
-.face-upper-3 {
-  width: 40px;
-  height: 60px;
-  top: 20px;
-  left: 30px;
-  transform: rotateY(-15deg) rotateX(20deg) translateZ(35px);
-}
-
-.face-upper-4 {
-  width: 40px;
-  height: 60px;
-  top: 20px;
-  right: 30px;
-  transform: rotateY(15deg) rotateX(20deg) translateZ(35px);
-}
-
-.face-middle-1 {
-  width: 60px;
-  height: 80px;
-  top: 40px;
-  left: 0px;
-  transform: rotateY(-60deg) translateZ(30px);
-}
-
-.face-middle-2 {
-  width: 60px;
-  height: 80px;
-  top: 40px;
-  right: 0px;
-  transform: rotateY(60deg) translateZ(30px);
-}
-
-.face-middle-3 {
-  width: 50px;
-  height: 80px;
-  top: 45px;
-  left: 20px;
-  transform: rotateY(-20deg) translateZ(40px);
-}
-
-.face-middle-4 {
-  width: 50px;
-  height: 80px;
-  top: 45px;
-  right: 20px;
-  transform: rotateY(20deg) translateZ(40px);
-}
-
-.face-lower-1 {
-  width: 50px;
-  height: 60px;
-  bottom: 15px;
-  left: 10px;
-  transform: rotateY(-45deg) rotateX(-30deg) translateZ(25px);
-}
-
-.face-lower-2 {
-  width: 50px;
-  height: 60px;
-  bottom: 15px;
-  right: 10px;
-  transform: rotateY(45deg) rotateX(-30deg) translateZ(25px);
-}
-
-.face-lower-3 {
-  width: 40px;
-  height: 60px;
-  bottom: 20px;
-  left: 30px;
-  transform: rotateY(-15deg) rotateX(-20deg) translateZ(35px);
-}
-
-.face-lower-4 {
-  width: 40px;
-  height: 60px;
-  bottom: 20px;
-  right: 30px;
-  transform: rotateY(15deg) rotateX(-20deg) translateZ(35px);
-}
-
-.face-bottom-point {
-  width: 40px;
-  height: 40px;
-  bottom: -10px;
-  left: 40px;
-  transform: rotateX(-75deg) translateZ(40px);
-}
-
-/* Light-based Surface Materials */
-.face-surface-bright {
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(240, 230, 255, 0.8) 30%,
-    rgba(232, 213, 255, 0.6) 100%);
-  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5),
-              0 0 15px rgba(232, 213, 255, 0.4);
-}
-
-.face-surface-lit {
-  background: linear-gradient(135deg, 
-    rgba(232, 213, 255, 0.8) 0%,
-    rgba(212, 189, 255, 0.7) 50%,
-    rgba(196, 165, 255, 0.6) 100%);
-  box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.3),
-              0 0 10px rgba(196, 165, 255, 0.3);
-}
-
-.face-surface-medium {
-  background: linear-gradient(135deg, 
-    rgba(196, 165, 255, 0.7) 0%,
-    rgba(168, 139, 250, 0.6) 50%,
-    rgba(139, 108, 244, 0.5) 100%);
-  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.2),
-              0 0 8px rgba(139, 108, 244, 0.3);
-}
-
-.face-surface-shadow {
-  background: linear-gradient(135deg, 
-    rgba(139, 108, 244, 0.6) 0%,
-    rgba(124, 92, 227, 0.5) 50%,
-    rgba(107, 91, 149, 0.4) 100%);
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2),
-              0 0 5px rgba(107, 91, 149, 0.2);
-}
-
-.face-surface-dark {
-  background: linear-gradient(135deg, 
-    rgba(107, 91, 149, 0.5) 0%,
-    rgba(75, 65, 105, 0.4) 50%,
-    rgba(45, 40, 70, 0.3) 100%);
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3),
-              0 0 3px rgba(75, 65, 105, 0.2);
+@keyframes crystal-spin {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
 }
 
 /* Light Reflections */
@@ -757,9 +590,8 @@ html {
   animation-duration: 20s, 6s;
 }
 
-.crystal-container:hover .face-surface-bright {
-  box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.7),
-              0 0 25px rgba(232, 213, 255, 0.6);
+.crystal-container:hover .crystal-svg {
+  filter: drop-shadow(0 0 20px rgba(139, 108, 244, 0.5));
 }
 
 .crystal-container:hover .crystal-core-light {
