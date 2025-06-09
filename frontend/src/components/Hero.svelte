@@ -90,22 +90,22 @@
     <div class="sparkle absolute top-1/2 left-1/6 w-1 h-1 bg-accent rounded-full opacity-40"></div>
   </div>
   
-  <!-- Dodecahedron -->
+  <!-- Dodecahedron (D12 Style) -->
   <div class="absolute top-1/2 right-20 transform -translate-y-1/2 pointer-events-none hidden md:block">
-    <div class="dodecahedron relative w-32 h-32">
-      <!-- 12 pentagonal faces of dodecahedron -->
-      <div class="face face-1"></div>
-      <div class="face face-2"></div>
-      <div class="face face-3"></div>
-      <div class="face face-4"></div>
-      <div class="face face-5"></div>
-      <div class="face face-6"></div>
-      <div class="face face-7"></div>
-      <div class="face face-8"></div>
-      <div class="face face-9"></div>
-      <div class="face face-10"></div>
-      <div class="face face-11"></div>
-      <div class="face face-12"></div>
+    <div class="dodecahedron relative w-24 h-24">
+      <!-- 12 pentagonal faces positioned like a real D12 -->
+      <div class="d12-face face-1"></div>
+      <div class="d12-face face-2"></div>
+      <div class="d12-face face-3"></div>
+      <div class="d12-face face-4"></div>
+      <div class="d12-face face-5"></div>
+      <div class="d12-face face-6"></div>
+      <div class="d12-face face-7"></div>
+      <div class="d12-face face-8"></div>
+      <div class="d12-face face-9"></div>
+      <div class="d12-face face-10"></div>
+      <div class="d12-face face-11"></div>
+      <div class="d12-face face-12"></div>
     </div>
   </div>
   
@@ -169,39 +169,56 @@
 </section>
 
 <style>
-  /* Dodecahedron styles */
+  /* D12 Dodecahedron styles */
   .dodecahedron {
     transform-style: preserve-3d;
-    perspective: 1000px;
+    perspective: 800px;
+    filter: drop-shadow(0 4px 12px rgba(99, 102, 241, 0.15));
   }
 
-  .face {
+  .d12-face {
     position: absolute;
-    width: 60px;
-    height: 60px;
+    width: 32px;
+    height: 32px;
     background: linear-gradient(135deg, 
-      rgba(99, 102, 241, 0.08) 0%, 
-      rgba(139, 92, 246, 0.12) 50%, 
-      rgba(99, 102, 241, 0.06) 100%);
-    border: 1px solid rgba(99, 102, 241, 0.15);
-    border-radius: 8px;
-    transform-origin: center;
-    clip-path: polygon(30% 0%, 70% 0%, 100% 35%, 82% 100%, 18% 100%, 0% 35%);
+      rgba(99, 102, 241, 0.12) 0%, 
+      rgba(139, 92, 246, 0.18) 30%,
+      rgba(59, 130, 246, 0.15) 70%, 
+      rgba(99, 102, 241, 0.08) 100%);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    border-radius: 3px;
+    transform-origin: 16px 16px;
+    backface-visibility: hidden;
+    /* Perfect pentagon shape for D12 */
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+    
+    /* Subtle inner glow like a real dice */
+    box-shadow: 
+      inset 0 1px 3px rgba(255, 255, 255, 0.1),
+      inset 0 -1px 2px rgba(0, 0, 0, 0.05),
+      0 2px 8px rgba(99, 102, 241, 0.1);
   }
 
-  /* Dodecahedron face positioning (simplified 12-face approximation) */
-  .face-1 { transform: translateZ(40px) rotateY(0deg); }
-  .face-2 { transform: translateZ(40px) rotateY(72deg); }
-  .face-3 { transform: translateZ(40px) rotateY(144deg); }
-  .face-4 { transform: translateZ(40px) rotateY(216deg); }
-  .face-5 { transform: translateZ(40px) rotateY(288deg); }
-  .face-6 { transform: translateZ(-40px) rotateY(36deg); }
-  .face-7 { transform: translateZ(-40px) rotateY(108deg); }
-  .face-8 { transform: translateZ(-40px) rotateY(180deg); }
-  .face-9 { transform: translateZ(-40px) rotateY(252deg); }
-  .face-10 { transform: translateZ(-40px) rotateY(324deg); }
-  .face-11 { transform: rotateX(90deg) translateZ(40px); }
-  .face-12 { transform: rotateX(-90deg) translateZ(40px); }
+  /* Geometrically accurate D12 face positioning */
+  /* Top cap (1 face) */
+  .face-1 { transform: rotateX(-26.565deg) translateZ(28px); }
+  
+  /* Upper ring (5 faces) */
+  .face-2 { transform: rotateY(0deg) rotateX(26.565deg) translateZ(28px); }
+  .face-3 { transform: rotateY(72deg) rotateX(26.565deg) translateZ(28px); }
+  .face-4 { transform: rotateY(144deg) rotateX(26.565deg) translateZ(28px); }
+  .face-5 { transform: rotateY(216deg) rotateX(26.565deg) translateZ(28px); }
+  .face-6 { transform: rotateY(288deg) rotateX(26.565deg) translateZ(28px); }
+  
+  /* Lower ring (5 faces) */
+  .face-7 { transform: rotateY(36deg) rotateX(153.435deg) translateZ(28px); }
+  .face-8 { transform: rotateY(108deg) rotateX(153.435deg) translateZ(28px); }
+  .face-9 { transform: rotateY(180deg) rotateX(153.435deg) translateZ(28px); }
+  .face-10 { transform: rotateY(252deg) rotateX(153.435deg) translateZ(28px); }
+  .face-11 { transform: rotateY(324deg) rotateX(153.435deg) translateZ(28px); }
+  
+  /* Bottom cap (1 face) */
+  .face-12 { transform: rotateX(180deg) rotateY(180deg) translateZ(28px); }
 
   /* Sparkle animation */
   .sparkle {
