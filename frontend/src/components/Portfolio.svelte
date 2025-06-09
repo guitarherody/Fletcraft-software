@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { currentSection } from '../lib/stores';
+  import { currentSection } from '../lib/stores.js';
   import { fetchProjects, type Project } from '../lib/api';
   import gsap from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
