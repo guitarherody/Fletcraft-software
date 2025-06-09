@@ -3,6 +3,7 @@
   import gsap from 'gsap';
 
   let heroSection: HTMLElement;
+  let fireflyContainer: HTMLElement;
 
   onMount(() => {
     // Subtle entrance animations
@@ -31,31 +32,7 @@
           y: 20,
           opacity: 0,
           ease: 'power2.out'
-        }, '-=0.8')
-        .from('.dodecahedron', {
-          duration: 2,
-          scale: 0.7,
-          opacity: 0,
-          rotationY: 45,
-          ease: 'power2.out'
-        }, '-=1.5');
-
-      // Continuous dodecahedron rotation
-      gsap.to('.dodecahedron', {
-        rotationY: 360,
-        duration: 40,
-        ease: 'none',
-        repeat: -1
-      });
-
-      // Subtle floating animation for dodecahedron
-      gsap.to('.dodecahedron', {
-        y: '+=15',
-        duration: 4,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1
-      });
+        }, '-=0.8');
 
       // Sparkle animation
       gsap.to('.sparkle', {
@@ -68,7 +45,64 @@
         stagger: 0.3
       });
     }
+
+    // Create firefly particles
+    createFireflies();
   });
+
+  function createFireflies() {
+    if (!fireflyContainer) return;
+    
+    const numFireflies = 12;
+    const colors = ['#F0E6FF', '#E8D5FF', '#D4BDFF', '#C4A5FF', '#FFFF99', '#90EE90', '#FFB6C1'];
+
+    for (let i = 0; i < numFireflies; i++) {
+      const firefly = document.createElement('div');
+      firefly.className = 'firefly';
+      
+      // Random starting position
+      const startX = Math.random() * 100;
+      const startY = Math.random() * 100;
+      firefly.style.left = startX + '%';
+      firefly.style.top = startY + '%';
+      
+      // Random color
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      firefly.style.setProperty('--firefly-color', color);
+      
+      // Random animation timing
+      firefly.style.animationDelay = Math.random() * 10 + 's';
+      firefly.style.animationDuration = (20 + Math.random() * 15) + 's';
+      
+      // Create glowing trail
+      const trail = document.createElement('div');
+      trail.className = 'firefly-trail';
+      firefly.appendChild(trail);
+      
+      fireflyContainer.appendChild(firefly);
+
+      // GSAP animation for organic movement
+      gsap.to(firefly, {
+        x: `+=${(Math.random() - 0.5) * 200}`,
+        y: `+=${(Math.random() - 0.5) * 150}`,
+        duration: 8 + Math.random() * 12,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        delay: Math.random() * 5
+      });
+
+      // Additional floating motion
+      gsap.to(firefly, {
+        y: `+=${(Math.random() - 0.5) * 50}`,
+        duration: 3 + Math.random() * 4,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        delay: Math.random() * 3
+      });
+    }
+  }
 </script>
 
 <section bind:this={heroSection} class="relative min-h-screen flex items-center justify-center overflow-hidden bg-background text-text-primary px-4 sm:px-6">
@@ -90,157 +124,9 @@
     <div class="sparkle absolute top-1/2 left-1/6 w-1 h-1 bg-accent rounded-full opacity-40"></div>
   </div>
   
-  <!-- 3D Crystal with Light Source - Centered Behind Hero Text -->
-  <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
-    
-    <!-- Light Source -->
-    <div class="light-source">
-      <div class="light-beam"></div>
-      <div class="light-glow"></div>
-    </div>
-    
-    <!-- Connected Crystal Container -->
-    <div class="crystal-container">
-      <div class="crystal-3d">
-        
-        <!-- Inner Core Light -->
-        <div class="crystal-core-light"></div>
-        
-        <!-- Crystal SVG with Connected Faces -->
-        <svg class="crystal-svg" width="120" height="160" viewBox="0 0 120 160">
-          <defs>
-            <!-- Crystal Gradients -->
-            <linearGradient id="crystal-face-bright" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.9"/>
-              <stop offset="30%" style="stop-color:#F0E6FF;stop-opacity:0.8"/>
-              <stop offset="70%" style="stop-color:#E8D5FF;stop-opacity:0.6"/>
-              <stop offset="100%" style="stop-color:#D4BDFF;stop-opacity:0.4"/>
-            </linearGradient>
-            
-            <linearGradient id="crystal-face-lit" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#E8D5FF;stop-opacity:0.8"/>
-              <stop offset="50%" style="stop-color:#D4BDFF;stop-opacity:0.7"/>
-              <stop offset="100%" style="stop-color:#C4A5FF;stop-opacity:0.5"/>
-            </linearGradient>
-            
-            <linearGradient id="crystal-face-medium" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#C4A5FF;stop-opacity:0.7"/>
-              <stop offset="50%" style="stop-color:#A88BFA;stop-opacity:0.6"/>
-              <stop offset="100%" style="stop-color:#9B7DF7;stop-opacity:0.5"/>
-            </linearGradient>
-            
-            <linearGradient id="crystal-face-shadow" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#9B7DF7;stop-opacity:0.6"/>
-              <stop offset="50%" style="stop-color:#8B6CF4;stop-opacity:0.5"/>
-              <stop offset="100%" style="stop-color:#7C5CE3;stop-opacity:0.4"/>
-            </linearGradient>
-            
-            <linearGradient id="crystal-face-dark" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#7C5CE3;stop-opacity:0.5"/>
-              <stop offset="50%" style="stop-color:#6B5B95;stop-opacity:0.4"/>
-              <stop offset="100%" style="stop-color:#4A4566;stop-opacity:0.3"/>
-            </linearGradient>
-            
-            <!-- Light reflection filters -->
-            <filter id="crystal-glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-          </defs>
-          
-          <!-- Crystal Geometry - Properly Connected Crystal -->
-          
-          <!-- Top Point -->
-          <polygon points="60,10 45,35 75,35" 
-                   fill="url(#crystal-face-bright)" 
-                   stroke="#FFFFFF" 
-                   stroke-width="0.5" 
-                   filter="url(#crystal-glow)"/>
-          
-          <!-- Upper Left Face -->
-          <polygon points="45,35 20,60 50,85 60,60" 
-                   fill="url(#crystal-face-lit)" 
-                   stroke="#E8D5FF" 
-                   stroke-width="0.3"/>
-          
-          <!-- Upper Right Face -->
-          <polygon points="75,35 100,60 70,85 60,60" 
-                   fill="url(#crystal-face-medium)" 
-                   stroke="#D4BDFF" 
-                   stroke-width="0.3"/>
-          
-          <!-- Center Front Face -->
-          <polygon points="45,35 75,35 70,85 50,85" 
-                   fill="url(#crystal-face-bright)" 
-                   stroke="#F0E6FF" 
-                   stroke-width="0.2" 
-                   filter="url(#crystal-glow)"/>
-          
-          <!-- Middle Left Face -->
-          <polygon points="20,60 10,95 40,125 50,85" 
-                   fill="url(#crystal-face-shadow)" 
-                   stroke="#C4A5FF" 
-                   stroke-width="0.3"/>
-          
-          <!-- Middle Right Face -->
-          <polygon points="100,60 110,95 80,125 70,85" 
-                   fill="url(#crystal-face-shadow)" 
-                   stroke="#A88BFA" 
-                   stroke-width="0.3"/>
-          
-          <!-- Lower Left Face -->
-          <polygon points="40,125 10,95 35,140 60,150" 
-                   fill="url(#crystal-face-dark)" 
-                   stroke="#9B7DF7" 
-                   stroke-width="0.3"/>
-          
-          <!-- Lower Right Face -->
-          <polygon points="80,125 110,95 85,140 60,150" 
-                   fill="url(#crystal-face-dark)" 
-                   stroke="#8B6CF4" 
-                   stroke-width="0.3"/>
-          
-          <!-- Bottom Face -->
-          <polygon points="50,85 70,85 80,125 40,125" 
-                   fill="url(#crystal-face-medium)" 
-                   stroke="#C4A5FF" 
-                   stroke-width="0.2"/>
-          
-          <!-- Main Central Diamond -->
-          <polygon points="60,60 50,85 60,110 70,85" 
-                   fill="url(#crystal-face-bright)" 
-                   stroke="#FFFFFF" 
-                   stroke-width="0.4" 
-                   filter="url(#crystal-glow)"/>
-          
-          <!-- Inner Highlights -->
-          <line x1="45" y1="35" x2="75" y2="35" 
-                stroke="#FFFFFF" 
-                stroke-width="1.5" 
-                opacity="0.8"/>
-          <line x1="50" y1="85" x2="70" y2="85" 
-                stroke="#FFFFFF" 
-                stroke-width="1.2" 
-                opacity="0.6"/>
-          <line x1="60" y1="10" x2="60" y2="150" 
-                stroke="#F0E6FF" 
-                stroke-width="0.8" 
-                opacity="0.4"/>
-          
-        </svg>
-        
-        <!-- Light Reflections -->
-        <div class="light-reflections">
-          <div class="reflection reflection-1"></div>
-          <div class="reflection reflection-2"></div>
-          <div class="reflection reflection-3"></div>
-        </div>
-        
-      </div>
-    </div>
+  <!-- Firefly Particles -->
+  <div bind:this={fireflyContainer} class="firefly-container pointer-events-none z-0">
+    <!-- Firefly particles will be generated here -->
   </div>
   
   <!-- Content -->
