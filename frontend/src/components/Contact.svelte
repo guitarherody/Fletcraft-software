@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import gsap from 'gsap';
-  import { submitContactForm } from '../lib/api';
+  import { submitContact } from '../lib/api';
   
   let name = '';
   let email = '';
@@ -18,7 +18,7 @@
     showSuccess = false;
     
     try {
-      const success = await submitContactForm({
+      const success = await submitContact({
         name,
         email,
         subject,
