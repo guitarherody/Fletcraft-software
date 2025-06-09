@@ -90,9 +90,9 @@
     <div class="sparkle absolute top-1/2 left-1/6 w-1 h-1 bg-accent rounded-full opacity-40"></div>
   </div>
   
-  <!-- Dodecahedron (D12 Style) -->
-  <div class="absolute top-1/2 right-20 transform -translate-y-1/2 pointer-events-none hidden md:block">
-    <div class="dodecahedron relative w-24 h-24">
+  <!-- Dodecahedron (D12 Style) - Centered Behind Hero Text -->
+  <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
+    <div class="dodecahedron relative w-48 h-48 md:w-64 md:h-64">
       <!-- 12 pentagonal faces positioned like a real D12 -->
       <div class="d12-face face-1"></div>
       <div class="d12-face face-2"></div>
@@ -172,53 +172,79 @@
   /* D12 Dodecahedron styles */
   .dodecahedron {
     transform-style: preserve-3d;
-    perspective: 800px;
-    filter: drop-shadow(0 4px 12px rgba(99, 102, 241, 0.15));
+    perspective: 1200px;
+    filter: drop-shadow(0 8px 32px rgba(99, 102, 241, 0.2));
+    opacity: 0.6; /* Subtle background presence */
   }
 
   .d12-face {
     position: absolute;
-    width: 32px;
-    height: 32px;
+    width: 64px;
+    height: 64px;
     background: linear-gradient(135deg, 
-      rgba(99, 102, 241, 0.12) 0%, 
-      rgba(139, 92, 246, 0.18) 30%,
-      rgba(59, 130, 246, 0.15) 70%, 
-      rgba(99, 102, 241, 0.08) 100%);
-    border: 1px solid rgba(99, 102, 241, 0.25);
-    border-radius: 3px;
-    transform-origin: 16px 16px;
+      rgba(99, 102, 241, 0.08) 0%, 
+      rgba(139, 92, 246, 0.12) 30%,
+      rgba(59, 130, 246, 0.10) 70%, 
+      rgba(99, 102, 241, 0.06) 100%);
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    border-radius: 6px;
+    transform-origin: 32px 32px;
     backface-visibility: hidden;
     /* Perfect pentagon shape for D12 */
     clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
     
     /* Subtle inner glow like a real dice */
     box-shadow: 
-      inset 0 1px 3px rgba(255, 255, 255, 0.1),
-      inset 0 -1px 2px rgba(0, 0, 0, 0.05),
-      0 2px 8px rgba(99, 102, 241, 0.1);
+      inset 0 2px 6px rgba(255, 255, 255, 0.08),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.03),
+      0 4px 16px rgba(99, 102, 241, 0.08);
   }
 
-  /* Geometrically accurate D12 face positioning */
+  /* Responsive face sizing for larger dodecahedron */
+  @media (min-width: 768px) {
+    .d12-face {
+      width: 80px;
+      height: 80px;
+      transform-origin: 40px 40px;
+    }
+  }
+
+  /* Geometrically accurate D12 face positioning - scaled up */
   /* Top cap (1 face) */
-  .face-1 { transform: rotateX(-26.565deg) translateZ(28px); }
+  .face-1 { transform: rotateX(-26.565deg) translateZ(56px); }
   
   /* Upper ring (5 faces) */
-  .face-2 { transform: rotateY(0deg) rotateX(26.565deg) translateZ(28px); }
-  .face-3 { transform: rotateY(72deg) rotateX(26.565deg) translateZ(28px); }
-  .face-4 { transform: rotateY(144deg) rotateX(26.565deg) translateZ(28px); }
-  .face-5 { transform: rotateY(216deg) rotateX(26.565deg) translateZ(28px); }
-  .face-6 { transform: rotateY(288deg) rotateX(26.565deg) translateZ(28px); }
+  .face-2 { transform: rotateY(0deg) rotateX(26.565deg) translateZ(56px); }
+  .face-3 { transform: rotateY(72deg) rotateX(26.565deg) translateZ(56px); }
+  .face-4 { transform: rotateY(144deg) rotateX(26.565deg) translateZ(56px); }
+  .face-5 { transform: rotateY(216deg) rotateX(26.565deg) translateZ(56px); }
+  .face-6 { transform: rotateY(288deg) rotateX(26.565deg) translateZ(56px); }
   
   /* Lower ring (5 faces) */
-  .face-7 { transform: rotateY(36deg) rotateX(153.435deg) translateZ(28px); }
-  .face-8 { transform: rotateY(108deg) rotateX(153.435deg) translateZ(28px); }
-  .face-9 { transform: rotateY(180deg) rotateX(153.435deg) translateZ(28px); }
-  .face-10 { transform: rotateY(252deg) rotateX(153.435deg) translateZ(28px); }
-  .face-11 { transform: rotateY(324deg) rotateX(153.435deg) translateZ(28px); }
+  .face-7 { transform: rotateY(36deg) rotateX(153.435deg) translateZ(56px); }
+  .face-8 { transform: rotateY(108deg) rotateX(153.435deg) translateZ(56px); }
+  .face-9 { transform: rotateY(180deg) rotateX(153.435deg) translateZ(56px); }
+  .face-10 { transform: rotateY(252deg) rotateX(153.435deg) translateZ(56px); }
+  .face-11 { transform: rotateY(324deg) rotateX(153.435deg) translateZ(56px); }
   
   /* Bottom cap (1 face) */
-  .face-12 { transform: rotateX(180deg) rotateY(180deg) translateZ(28px); }
+  .face-12 { transform: rotateX(180deg) rotateY(180deg) translateZ(56px); }
+
+  /* Larger desktop version */
+  @media (min-width: 768px) {
+    .face-1 { transform: rotateX(-26.565deg) translateZ(70px); }
+    .face-2 { transform: rotateY(0deg) rotateX(26.565deg) translateZ(70px); }
+    .face-3 { transform: rotateY(72deg) rotateX(26.565deg) translateZ(70px); }
+    .face-4 { transform: rotateY(144deg) rotateX(26.565deg) translateZ(70px); }
+    .face-5 { transform: rotateY(216deg) rotateX(26.565deg) translateZ(70px); }
+    .face-6 { transform: rotateY(288deg) rotateX(26.565deg) translateZ(70px); }
+    .face-7 { transform: rotateY(36deg) rotateX(153.435deg) translateZ(70px); }
+    .face-8 { transform: rotateY(108deg) rotateX(153.435deg) translateZ(70px); }
+    .face-9 { transform: rotateY(180deg) rotateX(153.435deg) translateZ(70px); }
+    .face-10 { transform: rotateY(252deg) rotateX(153.435deg) translateZ(70px); }
+    .face-11 { transform: rotateY(324deg) rotateX(153.435deg) translateZ(70px); }
+    .face-12 { transform: rotateX(180deg) rotateY(180deg) translateZ(70px); }
+  }
 
   /* Sparkle animation */
   .sparkle {
