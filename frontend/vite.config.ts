@@ -28,7 +28,8 @@ export default defineConfig({
       '$lib': '/src/lib',
       '@': '/src'
     },
-    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.svelte']
+    extensions: ['.ts', '.js', '.svelte', '.json'],
+    mainFields: ['svelte', 'browser', 'module', 'main']
   },
   build: {
     rollupOptions: {
