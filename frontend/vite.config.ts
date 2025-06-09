@@ -29,30 +29,26 @@ export default defineConfig({
       '@': '/src'
     },
     extensions: ['.ts', '.js', '.svelte', '.json'],
-    mainFields: ['svelte', 'browser', 'module', 'main']
+    mainFields: ['svelte', 'browser', 'module', 'main'],
+    dedupe: ['svelte', 'chart.js', 'howler']
   },
   build: {
+    target: 'esnext',
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false,
+    minify: 'esbuild',
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['gsap'],
+          vendor: ['gsap', 'chart.js', 'howler'],
           svelte: ['svelte']
         }
-      },
-      external: [],
-      input: {
-        main: './index.html'
       }
-    },
-    sourcemap: false,
-    minify: 'esbuild',
-    target: 'esnext',
-    assetsDir: 'assets'
+    }
   },
   optimizeDeps: {
-    include: ['gsap', 'howler', 'chart.js']
-  },
-  esbuild: {
-    target: 'esnext'
+    include: ['gsap', 'howler', 'chart.js'],
+    exclude: []
   }
 })
