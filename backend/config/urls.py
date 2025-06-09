@@ -15,8 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+
+def health_check(request):
+    """Simple health check endpoint for deployment services"""
+    return HttpResponse("FLETCRAFT SOFTWARE INC. Backend API is running! ✅", content_type="text/plain")
 
 urlpatterns = [
+    path('', health_check, name='health_check'),
     path('admin/', admin.site.urls),
     path('api/', include('core.urls')),
 ]
