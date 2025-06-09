@@ -4,20 +4,20 @@
 
   let container: HTMLDivElement;
   let particles: HTMLElement[] = [];
-  let particleCount = 8; // Reduced for mobile performance
+  let particleCount = 25; // More particles for space tunnel effect
 
   // Detect if user is on mobile
   const isMobile = () => window.innerWidth < 768;
   
   onMount(() => {
     // Adjust particle count based on screen size
-    particleCount = isMobile() ? 6 : 12;
+    particleCount = isMobile() ? 15 : 25;
     
     createParticles();
     
     // Handle resize
     const handleResize = () => {
-      const newParticleCount = isMobile() ? 6 : 12;
+      const newParticleCount = isMobile() ? 15 : 25;
       if (newParticleCount !== particleCount) {
         particleCount = newParticleCount;
         clearParticles();
@@ -42,24 +42,21 @@
     particles = [];
   }
 
-  function createDodecahedronParticle() {
-    // Create main container
+  function createSpaceParticle() {
     const particle = document.createElement('div');
-    particle.className = 'particle dodecahedron-particle';
+    particle.className = 'space-particle';
     
-    // Create dodecahedron structure
-    const dodecahedron = document.createElement('div');
-    dodecahedron.className = 'mini-dodecahedron';
+    // Create glowing core
+    const core = document.createElement('div');
+    core.className = 'particle-core';
     
-    // Create 12 faces - simplified for mobile performance
-    const faceCount = isMobile() ? 6 : 12; // Reduce faces on mobile
-    for (let i = 1; i <= faceCount; i++) {
-      const face = document.createElement('div');
-      face.className = `mini-face mini-face-${i}`;
-      dodecahedron.appendChild(face);
-    }
+    // Create trailing streaks
+    const trail = document.createElement('div');
+    trail.className = 'particle-trail';
     
-    particle.appendChild(dodecahedron);
+    particle.appendChild(core);
+    particle.appendChild(trail);
+    
     return particle;
   }
 
@@ -67,156 +64,179 @@
     if (!container) return;
     
     for (let i = 0; i < particleCount; i++) {
-      const particle = createDodecahedronParticle();
+      const particle = createSpaceParticle();
       
-      // Random starting position
-      const x = Math.random() * window.innerWidth;
-      const y = Math.random() * window.innerHeight;
+      // Start particles at random positions around the screen edges (simulating distance)
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      
+      // Create a circular starting area around the center (simulating far distance)
+      const angle = Math.random() * Math.PI * 2;
+      const radius = Math.random() * 100 + 50; // Small radius for "far away" effect
+      const startX = centerX + Math.cos(angle) * radius;
+      const startY = centerY + Math.sin(angle) * radius;
+      
+      // Calculate end position (much further out, past screen edges)
+      const endRadius = Math.max(window.innerWidth, window.innerHeight) * 1.5;
+      const endX = centerX + Math.cos(angle) * endRadius;
+      const endY = centerY + Math.sin(angle) * endRadius;
       
       gsap.set(particle, {
-        x: x,
-        y: y,
-        scale: Math.random() * 0.2 + 0.1, // Even smaller for dust-like effect
-        opacity: Math.random() * 0.3 + 0.05, // Very subtle opacity
+        x: startX,
+        y: startY,
+        scale: 0.1, // Start very small (far away)
+        opacity: 0.3,
       });
       
       container.appendChild(particle);
       particles.push(particle);
       
-      // Dust-like floating animation with gentle Brownian motion
-      const createDustMovement = (element: HTMLElement) => {
-        const duration = isMobile() ? 15 + Math.random() * 10 : 10 + Math.random() * 8;
-        const distance = isMobile() ? 8 : 12;
+      // Create the space movement animation
+      const createSpaceMovement = (element: HTMLElement, delay: number = 0) => {
+        const duration = isMobile() ? 2.5 + Math.random() * 1.5 : 1.5 + Math.random() * 1; // Fast movement
         
-        // Create a gentle drift in a random direction
-        const angle = Math.random() * Math.PI * 2;
-        const driftX = Math.cos(angle) * distance;
-        const driftY = Math.sin(angle) * distance;
+        // Reset to starting position
+        gsap.set(element, {
+          x: startX,
+          y: startY,
+          scale: 0.1,
+          opacity: 0.3,
+        });
         
+        // Animate toward viewer and through screen
         gsap.to(element, {
-          x: `+=${driftX}`,
-          y: `+=${driftY}`,
+          x: endX,
+          y: endY,
+          scale: 3 + Math.random() * 2, // Get much larger as it approaches
+          opacity: 1,
           duration: duration,
-          ease: 'none',
+          ease: 'power2.in', // Accelerate as it approaches
+          delay: delay,
+          onUpdate: function() {
+            // Add classes based on scale for trail effects
+            const currentScale = gsap.getProperty(element, 'scale') as number;
+            element.classList.remove('medium', 'large');
+            if (currentScale > 2.5) {
+              element.classList.add('large');
+            } else if (currentScale > 1.5) {
+              element.classList.add('medium');
+            }
+          },
           onComplete: () => {
-            // Add slight random direction change (Brownian motion)
-            const newAngle = Math.random() * Math.PI * 2;
-            const newDriftX = Math.cos(newAngle) * (distance * 0.7);
-            const newDriftY = Math.sin(newAngle) * (distance * 0.7);
-            
-            gsap.to(element, {
-              x: `+=${newDriftX}`,
-              y: `+=${newDriftY}`,
-              duration: duration * 0.8,
-              ease: 'sine.inOut',
-              onComplete: () => createDustMovement(element) // Loop the movement
-            });
+            // Loop the animation with random delay
+            const newDelay = Math.random() * 3;
+            createSpaceMovement(element, newDelay);
           }
         });
         
-        // Add gentle vertical oscillation (like dust settling)
+        // Fade out near the end (as it passes through viewer)
         gsap.to(element, {
-          y: `+=${Math.random() * 6 - 3}`,
-          duration: duration * 2,
-          ease: 'sine.inOut',
-          yoyo: true,
-          repeat: -1
+          opacity: 0,
+          duration: duration * 0.3,
+          delay: delay + duration * 0.7,
+          ease: 'power2.out'
         });
       };
       
-      createDustMovement(particle);
+      // Start each particle with a random delay for staggered effect
+      const initialDelay = Math.random() * 4;
+      createSpaceMovement(particle, initialDelay);
       
-      // Very slow, subtle rotation for the mini dodecahedrons
-      const dodecahedron = particle.querySelector('.mini-dodecahedron');
-      if (dodecahedron) {
-        gsap.to(dodecahedron, {
-          rotationY: 360,
-          duration: 60 + Math.random() * 40, // Very slow rotation
-          ease: 'none',
-          repeat: -1
-        });
-        
-        // Add very subtle scale pulsing (like dust catching light)
-        gsap.to(dodecahedron, {
-          scale: 1.1,
-          duration: 8 + Math.random() * 4,
-          ease: 'sine.inOut',
-          yoyo: true,
-          repeat: -1
-        });
-      }
+      // Add subtle rotation for more dynamic effect
+      gsap.to(particle, {
+        rotation: 360,
+        duration: 8 + Math.random() * 4,
+        ease: 'none',
+        repeat: -1
+      });
     }
   }
 </script>
 
-<div bind:this={container} class="fixed inset-0 pointer-events-none z-0" style="perspective: 1000px;">
+<div bind:this={container} class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
   <!-- Particles will be added here dynamically -->
 </div>
 
 <style>
-  :global(.particle) {
+  :global(.space-particle) {
     position: absolute;
-    animation: subtle-float linear infinite;
     pointer-events: none;
-    transform: scale(var(--particle-scale, 0.5));
+    filter: blur(0px);
+    transition: filter 0.3s ease;
   }
 
-  :global(.dodecahedron-particle) {
-    width: 16px;
-    height: 16px;
-    opacity: 0.4;
-  }
-
-  :global(.mini-dodecahedron) {
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    perspective: 200px;
+  :global(.particle-core) {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: radial-gradient(circle, 
+      #E879F9 0%,
+      #C084FC 30%,
+      #A855F7 60%,
+      #8B5CF6 100%
+    );
+    box-shadow: 
+      0 0 6px #E879F9,
+      0 0 12px #C084FC,
+      0 0 18px #A855F7,
+      0 0 24px rgba(139, 92, 246, 0.3);
     position: relative;
+    z-index: 2;
   }
 
-  :global(.mini-face) {
+  :global(.particle-trail) {
     position: absolute;
-    width: 8px;
-    height: 8px;
-    background: linear-gradient(135deg, 
-      hsla(var(--particle-hue, 240), 60%, 70%, 0.1) 0%, 
-      hsla(var(--particle-hue, 240), 40%, 60%, 0.15) 50%, 
-      hsla(var(--particle-hue, 240), 60%, 70%, 0.08) 100%);
-    border: 0.5px solid hsla(var(--particle-hue, 240), 60%, 70%, 0.2);
-    border-radius: 2px;
-    transform-origin: center;
-    clip-path: polygon(30% 0%, 70% 0%, 100% 35%, 82% 100%, 18% 100%, 0% 35%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+    height: 20px;
+    background: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(232, 121, 249, 0.8) 20%,
+      rgba(192, 132, 252, 0.6) 50%,
+      rgba(168, 85, 247, 0.4) 80%,
+      transparent 100%
+    );
+    border-radius: 1px;
+    z-index: 1;
+    opacity: 0.7;
   }
 
-  /* Mini dodecahedron face positioning */
-  :global(.mini-face-1) { transform: translateZ(6px) rotateY(0deg); }
-  :global(.mini-face-2) { transform: translateZ(6px) rotateY(72deg); }
-  :global(.mini-face-3) { transform: translateZ(6px) rotateY(144deg); }
-  :global(.mini-face-4) { transform: translateZ(6px) rotateY(216deg); }
-  :global(.mini-face-5) { transform: translateZ(6px) rotateY(288deg); }
-  :global(.mini-face-6) { transform: translateZ(-6px) rotateY(36deg); }
-  :global(.mini-face-7) { transform: translateZ(-6px) rotateY(108deg); }
-  :global(.mini-face-8) { transform: translateZ(-6px) rotateY(180deg); }
-  :global(.mini-face-9) { transform: translateZ(-6px) rotateY(252deg); }
-  :global(.mini-face-10) { transform: translateZ(-6px) rotateY(324deg); }
-  :global(.mini-face-11) { transform: rotateX(90deg) translateZ(6px); }
-  :global(.mini-face-12) { transform: rotateX(-90deg) translateZ(6px); }
+  /* Enhanced glow effect that increases with scale */
+  :global(.space-particle:hover) {
+    filter: blur(1px);
+  }
 
-  @keyframes subtle-float {
-    0% {
-      transform: translateY(100vh) scale(var(--particle-scale, 0.5)) rotate(0deg);
-      opacity: 0;
+  :global(.space-particle.large) {
+    filter: blur(1px);
+  }
+
+  /* Create streak effect as particles move fast */
+  :global(.space-particle.medium .particle-trail) {
+    height: 40px;
+    opacity: 0.9;
+  }
+
+  :global(.space-particle.large .particle-trail) {
+    height: 60px;
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(232, 121, 249, 0.5);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    :global(.particle-core) {
+      width: 3px;
+      height: 3px;
+      box-shadow: 
+        0 0 4px #E879F9,
+        0 0 8px #C084FC,
+        0 0 12px #A855F7;
     }
-    10% {
-      opacity: 0.4;
-    }
-    90% {
-      opacity: 0.4;
-    }
-    100% {
-      transform: translateY(-10vh) scale(calc(var(--particle-scale, 0.5) * 1.2)) rotate(180deg);
-      opacity: 0;
+    
+    :global(.particle-trail) {
+      height: 15px;
     }
   }
 </style>
