@@ -8,29 +8,71 @@
 
   let services: Service[] = [];
   let loading = true;
+  let error = '';
 
   onMount(async () => {
-    // Fetch services from API
-    services = await fetchServices();
-    loading = false;
+    try {
+      // Fetch services from API
+      services = await fetchServices();
+      loading = false;
+    } catch (err) {
+      console.error('Failed to load services:', err);
+      error = 'Failed to load services. Please try again later.';
+      loading = false;
+    }
 
-    // Animate service cards only after they're rendered
+    // Enhanced animate service cards only after they're rendered
     setTimeout(() => {
       const serviceCards = document.querySelectorAll('.service-card');
       const servicesGrid = document.querySelector('.services-grid');
       
       if (serviceCards.length > 0 && servicesGrid) {
-        gsap.from(serviceCards, {
+        // Staggered entrance animation
+        gsap.fromTo(serviceCards, 
+          {
+            y: 60,
+            opacity: 0,
+            scale: 0.8,
+            rotationY: 45
+          },
+          {
+            scrollTrigger: {
+              trigger: servicesGrid,
+              start: 'top center+=100',
+              toggleActions: 'play none none reverse'
+            },
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            rotationY: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: 'back.out(1.7)'
+          }
+        );
+
+        // Add continuous floating animation
+        gsap.to(serviceCards, {
+          y: '+=10',
+          duration: 3,
+          ease: 'sine.inOut',
+          yoyo: true,
+          repeat: -1,
+          stagger: 0.2
+        });
+
+        // Icon animation on scroll
+        gsap.from('.service-icon', {
           scrollTrigger: {
             trigger: servicesGrid,
-            start: 'top center+=100',
+            start: 'top center+=150',
             toggleActions: 'play none none reverse'
           },
-          y: 30,
-          opacity: 0,
+          scale: 0,
+          rotation: 180,
           duration: 0.6,
           stagger: 0.1,
-          ease: 'power2.out'
+          ease: 'elastic.out(1, 0.5)'
         });
       }
     }, 100);
@@ -71,6 +113,13 @@
       <div class="flex justify-center items-center py-16">
         <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
       </div>
+    {:else if error}
+      <div class="flex justify-center items-center py-16">
+        <div class="text-red-500 text-center">
+          <p class="text-lg font-semibold mb-2">⚠️ Error</p>
+          <p>{error}</p>
+        </div>
+      </div>
     {:else}
       <div class="services-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {#each services as service}
@@ -81,19 +130,27 @@
               
               <!-- Card Content -->
               <div class="relative">
-                <div class="text-4xl mb-4">{getServiceIcon(service.icon)}</div>
-                <h3 class="text-xl font-bold mb-3 text-text-primary group-hover:text-primary transition-colors">
+                <div class="service-icon text-5xl mb-6 transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
+                  {getServiceIcon(service.icon)}
+                </div>
+                <h3 class="text-xl font-bold mb-4 text-text-primary group-hover:text-primary transition-colors duration-300">
                   {service.title}
                 </h3>
-                <p class="text-text-secondary">
+                <p class="text-text-secondary leading-relaxed">
                   {service.description}
                 </p>
                 
+                <!-- Animated hover elements -->
+                <div class="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-primary to-secondary rounded-full opacity-0 group-hover:opacity-100 transform scale-0 group-hover:scale-100 transition-all duration-300"></div>
+                <div class="absolute -bottom-2 -left-2 w-6 h-6 bg-gradient-to-r from-accent to-primary rounded-full opacity-0 group-hover:opacity-100 transform scale-0 group-hover:scale-100 transition-all duration-500"></div>
+                
                 <!-- Hover Arrow -->
-                <div class="absolute bottom-0 right-0 p-4 opacity-0 transform translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-                  <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                  </svg>
+                <div class="absolute bottom-4 right-4 opacity-0 transform translate-x-4 translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300">
+                  <div class="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                  </div>
                 </div>
               </div>
             </div>
@@ -117,6 +174,59 @@
 
 <style>
   .service-card {
-    @apply transform transition-transform duration-300 hover:-translate-y-2;
+    @apply transform transition-all duration-500 hover:-translate-y-4;
+    perspective: 1000px;
+  }
+
+  .service-card:hover {
+    transform: translateY(-16px) rotateX(5deg) rotateY(5deg);
+    box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.25);
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.1));
+    border-radius: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .service-card:hover::before {
+    opacity: 1;
+  }
+
+  .service-icon {
+    filter: drop-shadow(0 4px 8px rgba(99,102,241,0.3));
+  }
+
+  /* Animated background patterns */
+  .service-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, rgba(99,102,241,0.1), transparent);
+    animation: rotate-bg 20s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    border-radius: 50%;
+  }
+
+  .service-card:hover::after {
+    opacity: 1;
+  }
+
+  @keyframes rotate-bg {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 </style> 

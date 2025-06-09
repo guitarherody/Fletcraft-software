@@ -3,10 +3,12 @@ const API_BASE_URL = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/api`
   : 'https://fletcraft-software.onrender.com/api'; // Always use production API for now
 
+console.log('API_BASE_URL:', API_BASE_URL);
+
 // TypeScript interfaces
 export interface Service {
   id: number;
-  name: string;
+  title: string;
   description: string;
   icon: string;
   created_at: string;
@@ -47,11 +49,13 @@ export interface Contact {
 // API functions
 export async function fetchServices(): Promise<Service[]> {
   try {
+    console.log('Fetching services from:', `${API_BASE_URL}/services/`);
     const response = await fetch(`${API_BASE_URL}/services/`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
+    console.log('Services data:', data);
     return data.results || data;
   } catch (error) {
     console.error('Error fetching services:', error);
@@ -61,11 +65,13 @@ export async function fetchServices(): Promise<Service[]> {
 
 export async function fetchTeamMembers(): Promise<TeamMember[]> {
   try {
+    console.log('Fetching team members from:', `${API_BASE_URL}/team/`);
     const response = await fetch(`${API_BASE_URL}/team/`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
+    console.log('Team data:', data);
     return data.results || data;
   } catch (error) {
     console.error('Error fetching team members:', error);
@@ -75,11 +81,13 @@ export async function fetchTeamMembers(): Promise<TeamMember[]> {
 
 export async function fetchProjects(): Promise<Project[]> {
   try {
+    console.log('Fetching projects from:', `${API_BASE_URL}/projects/`);
     const response = await fetch(`${API_BASE_URL}/projects/`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
+    console.log('Projects data:', data);
     return data.results || data;
   } catch (error) {
     console.error('Error fetching projects:', error);

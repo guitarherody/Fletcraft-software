@@ -8,10 +8,17 @@
 
   let teamMembers: TeamMember[] = [];
   let loading = true;
+  let error = '';
 
   onMount(async () => {
-    teamMembers = await fetchTeamMembers();
-    loading = false;
+    try {
+      teamMembers = await fetchTeamMembers();
+      loading = false;
+    } catch (err) {
+      console.error('Failed to load team members:', err);
+      error = 'Failed to load team members. Please try again later.';
+      loading = false;
+    }
 
     // Animate team cards only after they're rendered
     setTimeout(() => {
@@ -52,6 +59,13 @@
     {#if loading}
       <div class="flex justify-center items-center py-16">
         <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    {:else if error}
+      <div class="flex justify-center items-center py-16">
+        <div class="text-red-500 text-center">
+          <p class="text-lg font-semibold mb-2">⚠️ Error</p>
+          <p>{error}</p>
+        </div>
       </div>
     {:else}
       <div class="team-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -3,30 +3,34 @@
 
   let container: HTMLDivElement;
   let particles: HTMLElement[] = [];
-  const particleCount = 50; // Much smaller count for better performance
+  const particleCount = 25; // Reduced for subtlety
 
   function createParticle() {
     const particle = document.createElement('div');
-    particle.className = 'particle';
+    particle.className = 'particle subtle-particle';
     
     // Random position
     particle.style.left = Math.random() * 100 + '%';
     particle.style.top = Math.random() * 100 + '%';
     
-    // Random animation duration
-    particle.style.animationDuration = (Math.random() * 20 + 10) + 's';
-    particle.style.animationDelay = Math.random() * 20 + 's';
+    // Random animation duration and delay
+    particle.style.animationDuration = (Math.random() * 20 + 30) + 's'; // Much slower
+    particle.style.animationDelay = Math.random() * 30 + 's';
     
-    // Random size
-    const size = Math.random() * 4 + 2;
+    // Subtle size
+    const size = Math.random() * 2 + 1;
     particle.style.width = size + 'px';
     particle.style.height = size + 'px';
+    
+    // Subtle color variations (cooler tones)
+    const hue = Math.random() * 40 + 220; // Blue range only
+    particle.style.setProperty('--particle-hue', hue.toString());
     
     return particle;
   }
 
   onMount(() => {
-    // Create lightweight CSS particles
+    // Create subtle particles
     for (let i = 0; i < particleCount; i++) {
       const particle = createParticle();
       container.appendChild(particle);
@@ -34,10 +38,10 @@
     }
 
     return () => {
-      // Cleanup particles
-      particles.forEach(particle => {
-        if (particle.parentNode) {
-          particle.parentNode.removeChild(particle);
+      // Cleanup
+      particles.forEach(element => {
+        if (element.parentNode) {
+          element.parentNode.removeChild(element);
         }
       });
     };
@@ -49,25 +53,33 @@
 <style>
   :global(.particle) {
     position: absolute;
-    background: radial-gradient(circle, rgba(99,102,241,0.4) 0%, transparent 70%);
     border-radius: 50%;
-    animation: float linear infinite;
+    animation: subtle-float linear infinite;
     pointer-events: none;
   }
 
-  @keyframes float {
+  :global(.subtle-particle) {
+    background: radial-gradient(circle, 
+      hsl(var(--particle-hue, 240), 60%, 70%) 0%, 
+      hsl(var(--particle-hue, 240), 40%, 60%) 40%, 
+      transparent 70%);
+    box-shadow: 0 0 4px hsl(var(--particle-hue, 240), 60%, 70%);
+    opacity: 0.3;
+  }
+
+  @keyframes subtle-float {
     0% {
-      transform: translateY(100vh) rotate(0deg);
+      transform: translateY(100vh) scale(0.8);
       opacity: 0;
     }
     10% {
-      opacity: 0.6;
+      opacity: 0.3;
     }
     90% {
-      opacity: 0.6;
+      opacity: 0.3;
     }
     100% {
-      transform: translateY(-100px) rotate(360deg);
+      transform: translateY(-10vh) scale(1.1);
       opacity: 0;
     }
   }
