@@ -20,15 +20,23 @@ export default defineConfig({
       overlay: false // Reduce overlay refreshes
     }
   },
+  resolve: {
+    alias: {
+      '$lib': '/src/lib'
+    },
+    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.svelte']
+  },
   build: {
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['gsap', 'three'],
+          vendor: ['gsap'],
           svelte: ['svelte']
         }
       }
-    }
+    },
+    sourcemap: false,
+    minify: 'esbuild'
   },
   optimizeDeps: {
     include: ['gsap', 'howler', 'chart.js']

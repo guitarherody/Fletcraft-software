@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { chatMessages, isChatOpen, isTyping, soundEnabled } from '../lib/stores';
+  import { chatMessages, isChatOpen, isTyping, soundEnabled } from '../lib/stores.js';
   import { get } from 'svelte/store';
   import { Howl } from 'howler';
 

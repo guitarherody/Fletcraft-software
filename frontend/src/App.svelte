@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { isLoading, scrollProgress, currentSection, soundEnabled } from './lib/stores';
+  import { isLoading, scrollProgress, currentSection, soundEnabled } from './lib/stores.js';
   import gsap from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
   

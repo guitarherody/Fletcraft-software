@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { currentSection } from '../lib/stores';
+  import { currentSection } from '../lib/stores.js';
   import { fetchProjects, type Project } from '../lib/api';
   import gsap from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -174,7 +174,11 @@
     <!-- Projects Grid -->
     <div class="projects-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {#each filteredProjects as project}
-        <div class="project-card group cursor-pointer" on:click={() => openProjectModal(project)}>
+        <div class="project-card group cursor-pointer" 
+             role="button" 
+             tabindex="0"
+             on:click={() => openProjectModal(project)}
+             on:keydown={(e) => e.key === 'Enter' || e.key === ' ' ? openProjectModal(project) : null}>
           <div class="relative bg-background/40 backdrop-blur-xl border border-primary/10 rounded-2xl overflow-hidden hover:border-primary/20 transition-all duration-300 hover:-translate-y-2">
             <!-- Project Image -->
             <div class="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 relative overflow-hidden">
@@ -263,8 +267,15 @@
 
 <!-- Project Modal -->
 {#if selectedProject}
-  <div class="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4" on:click={closeProjectModal}>
-    <div class="modal-content bg-background border border-primary/20 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto" on:click|stopPropagation>
+  <div class="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4" 
+       role="dialog" 
+       aria-modal="true"
+       tabindex="-1"
+       on:click={closeProjectModal}
+       on:keydown={(e) => e.key === 'Escape' ? closeProjectModal() : null}>
+    <div class="modal-content bg-background border border-primary/20 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto" 
+         on:click|stopPropagation
+         role="document">
       <!-- Modal Header -->
       <div class="p-6 border-b border-primary/10">
         <div class="flex justify-between items-start">
