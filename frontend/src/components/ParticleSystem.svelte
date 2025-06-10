@@ -4,26 +4,26 @@
 
   let container: HTMLDivElement;
   let particles: HTMLElement[] = [];
-  let particleCount = 30; // More particles for dense warp effect
+  let particleCount = 20; // Reduced particles for better performance
 
   // Detect if user is on mobile
   const isMobile = () => window.innerWidth < 768;
   
   onMount(() => {
     // Adjust particle count based on screen size
-    particleCount = isMobile() ? 20 : 30;
+    particleCount = isMobile() ? 12 : 20;
     
     createParticles();
     
     // Handle resize
-    const handleResize = () => {
-      const newParticleCount = isMobile() ? 20 : 30;
-      if (newParticleCount !== particleCount) {
-        particleCount = newParticleCount;
-        clearParticles();
-        createParticles();
-      }
-    };
+          const handleResize = () => {
+        const newParticleCount = isMobile() ? 12 : 20;
+        if (newParticleCount !== particleCount) {
+          particleCount = newParticleCount;
+          clearParticles();
+          createParticles();
+        }
+      };
     
     window.addEventListener('resize', handleResize);
     

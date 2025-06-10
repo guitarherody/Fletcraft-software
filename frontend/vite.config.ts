@@ -15,6 +15,24 @@ export default defineConfig({
     target: 'esnext',
     outDir: 'dist',
     sourcemap: false,
-    minify: 'esbuild'
+    minify: 'esbuild',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['gsap'],
+          charts: ['chart.js'],
+          audio: ['howler']
+        }
+      }
+    }
+  },
+  optimizeDeps: {
+    include: ['gsap', 'chart.js', 'howler'],
+    force: true
+  },
+  server: {
+    hmr: {
+      overlay: false
+    }
   }
 })
