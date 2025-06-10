@@ -6,7 +6,7 @@
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
   
   // Core Components - These should work
-  import Navbar from './components/Navbar.svelte';
+  import Navigation from './components/Navigation.svelte';
   import Hero from './components/Hero.svelte';
   import Services from './components/Services.svelte';
   import Team from './components/Team.svelte';
@@ -61,7 +61,7 @@
   <ParticleSystem />
   
   <!-- Navigation -->
-  <Navbar />
+  <Navigation />
   
   <!-- Main Sections -->
   <Hero />

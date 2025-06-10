@@ -124,7 +124,7 @@
       <div class="services-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {#each services as service}
           <div class="service-card group">
-            <div class="relative p-6 sm:p-8 rounded-2xl bg-background border border-primary/10 hover:border-primary/20 transition-all duration-300">
+            <div class="liquid-glass-service-card relative p-6 sm:p-8 rounded-2xl transition-all duration-300">
               <!-- Card Background -->
               <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
               
@@ -173,6 +173,25 @@
 </section>
 
 <style>
+  .liquid-glass-service-card {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(139, 92, 246, 0.15);
+    box-shadow: 
+      0 8px 32px rgba(139, 92, 246, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: all 0.4s ease;
+  }
+
+  .service-card:hover .liquid-glass-service-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(139, 92, 246, 0.25);
+    box-shadow: 
+      0 20px 60px rgba(139, 92, 246, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
   .service-card {
     @apply transform transition-all duration-500 hover:-translate-y-4;
     perspective: 1000px;
