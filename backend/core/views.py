@@ -63,7 +63,7 @@ class OrderViewSet(viewsets.ModelViewSet):
             # Prepare payment data
             payment_data = {
                 'merchant_id': MERCHANT_ID,
-                'merchant_key': MERCHANT_KEY,  # Include merchant_key as required
+                'merchant_key': MERCHANT_KEY,  # Include merchant_key in form data
                 'return_url': f'{request.build_absolute_uri("/")}payment/success/',
                 'cancel_url': f'{request.build_absolute_uri("/")}payment/cancel/',
                 'notify_url': f'{request.build_absolute_uri("/")}api/payment/notify/',
@@ -81,8 +81,10 @@ class OrderViewSet(viewsets.ModelViewSet):
             # Remove empty values to avoid issues
             payment_data = {k: v for k, v in payment_data.items() if v}
             
-            # Generate signature (include ALL fields including merchant_key)
-            signature_string = '&'.join([f'{key}={value}' for key, value in sorted(payment_data.items())])
+            # Generate signature (EXCLUDE merchant_key from signature calculation)
+            # Create a copy without merchant_key for signature
+            signature_data = {k: v for k, v in payment_data.items() if k != 'merchant_key'}
+            signature_string = '&'.join([f'{key}={value}' for key, value in sorted(signature_data.items())])
             signature = hashlib.md5(signature_string.encode()).hexdigest()
             payment_data['signature'] = signature
             
@@ -119,8 +121,8 @@ class PaymentTransactionViewSet(viewsets.ModelViewSet):
             MERCHANT_KEY = 'kzyobsh5zlvrw'  # Your merchant key
             signature = payment_data.get('signature', '')
             
-            # Remove signature from data for verification
-            data_for_signature = {k: v for k, v in payment_data.items() if k != 'signature'}
+            # Remove signature from data for verification (and merchant_key if present)
+            data_for_signature = {k: v for k, v in payment_data.items() if k not in ['signature', 'merchant_key']}
             signature_string = '&'.join([f'{key}={value}' for key, value in sorted(data_for_signature.items())])
             calculated_signature = hashlib.md5(signature_string.encode()).hexdigest()
             
