@@ -151,3 +151,6 @@ CORS_ALLOWED_ORIGINS = [
 # Allow all origins in production (you can restrict this later)
 if not DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

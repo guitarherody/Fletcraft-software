@@ -3,12 +3,15 @@
   import gsap from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
   import { fetchServices, type Service } from '../lib/api';
+  import Checkout from './Checkout.svelte';
 
   gsap.registerPlugin(ScrollTrigger);
 
   let services: Service[] = [];
   let loading = true;
   let error = '';
+  let showCheckout = false;
+  let selectedService: Service | null = null;
 
   onMount(async () => {
     try {
@@ -90,6 +93,16 @@
     };
     return iconMap[iconClass] || '⚡';
   }
+
+  function openCheckout(service: Service) {
+    selectedService = service;
+    showCheckout = true;
+  }
+
+  function closeCheckout() {
+    showCheckout = false;
+    selectedService = null;
+  }
 </script>
 
 <section id="services" class="section relative overflow-hidden bg-background py-16 sm:py-20 lg:py-24">
@@ -136,9 +149,28 @@
                 <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-text-primary group-hover:text-primary transition-colors duration-300">
                   {service.title}
                 </h3>
-                <p class="text-text-secondary leading-relaxed text-sm sm:text-base">
+                <p class="text-text-secondary leading-relaxed text-sm sm:text-base mb-4">
                   {service.description}
                 </p>
+                
+                <!-- Price Display -->
+                {#if service.price && service.price > 0}
+                  <div class="mb-4">
+                    <div class="text-2xl font-bold text-green-600">
+                      R {service.price}
+                    </div>
+                    <div class="text-xs text-text-secondary">One-time payment</div>
+                  </div>
+                {/if}
+                
+                <!-- Purchase Button -->
+                {#if service.price && service.price > 0}
+                  <button
+                    on:click={() => openCheckout(service)}
+                    class="w-full mt-4 px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 transform hover:scale-105 font-semibold">
+                    Purchase Now
+                  </button>
+                {/if}
                 
                 <!-- Animated hover elements -->
                 <div class="absolute -top-2 -right-2 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-primary to-secondary rounded-full opacity-0 group-hover:opacity-100 transform scale-0 group-hover:scale-100 transition-all duration-300"></div>
@@ -172,6 +204,10 @@
   </div>
 </section>
 
+{#if showCheckout && selectedService}
+  <Checkout service={selectedService} onClose={closeCheckout} />
+{/if}
+
 <style>
   .liquid-glass-service-card {
     background: rgba(255, 255, 255, 0.02);
@@ -198,8 +234,7 @@
   }
 
   .service-card:hover {
-    transform: translateY(-16px) rotateX(5deg) rotateY(5deg);
-    box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.25);
+    transform: translateY(-1rem) rotateX(5deg);
   }
 
   .service-card::before {
