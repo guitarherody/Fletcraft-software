@@ -55,15 +55,15 @@ class OrderViewSet(viewsets.ModelViewSet):
             order_id = request.data.get('order_id')
             order = Order.objects.get(order_id=order_id)
             
-            # PayFast configuration - USE SANDBOX FOR TESTING
-            MERCHANT_ID = '10000100'  # PayFast sandbox merchant ID
-            MERCHANT_KEY = '46f0cd694581a'  # PayFast sandbox merchant key
-            PAYFAST_URL = 'https://sandbox.payfast.co.za/eng/process'  # Sandbox URL
+            # PayFast configuration - USE PRODUCTION CREDENTIALS
+            MERCHANT_ID = '13245841'  # Your merchant ID
+            MERCHANT_KEY = 'kzyobsh5zlvrw'  # Your merchant key
+            PAYFAST_URL = 'https://www.payfast.co.za/eng/process'  # Production URL
             
             # Prepare payment data
             payment_data = {
                 'merchant_id': MERCHANT_ID,
-                'merchant_key': MERCHANT_KEY,
+                'merchant_key': MERCHANT_KEY,  # Include merchant_key as required
                 'return_url': f'{request.build_absolute_uri("/")}payment/success/',
                 'cancel_url': f'{request.build_absolute_uri("/")}payment/cancel/',
                 'notify_url': f'{request.build_absolute_uri("/")}api/payment/notify/',
@@ -78,21 +78,17 @@ class OrderViewSet(viewsets.ModelViewSet):
                 'custom_str1': str(order.id),
             }
             
-            # Remove empty values to avoid signature issues
+            # Remove empty values to avoid issues
             payment_data = {k: v for k, v in payment_data.items() if v}
             
-            # Generate signature (exclude merchant_key from signature data)
-            signature_data = {k: v for k, v in payment_data.items() if k != 'merchant_key'}
-            signature_string = '&'.join([f'{key}={value}' for key, value in sorted(signature_data.items())])
+            # Generate signature (include ALL fields including merchant_key)
+            signature_string = '&'.join([f'{key}={value}' for key, value in sorted(payment_data.items())])
             signature = hashlib.md5(signature_string.encode()).hexdigest()
             payment_data['signature'] = signature
             
-            # Remove merchant_key from final payment data (it shouldn't be in the form)
-            final_payment_data = {k: v for k, v in payment_data.items() if k != 'merchant_key'}
-            
             return Response({
                 'payment_url': PAYFAST_URL,
-                'payment_data': final_payment_data,
+                'payment_data': payment_data,
                 'order_id': order.order_id,
                 'debug_info': {
                     'merchant_id': MERCHANT_ID,
@@ -119,8 +115,8 @@ class PaymentTransactionViewSet(viewsets.ModelViewSet):
             # Get payment data from PayFast
             payment_data = request.POST.dict()
             
-            # Verify signature - USE SANDBOX MERCHANT KEY
-            MERCHANT_KEY = '46f0cd694581a'  # PayFast sandbox merchant key
+            # Verify signature - USE PRODUCTION MERCHANT KEY
+            MERCHANT_KEY = 'kzyobsh5zlvrw'  # Your merchant key
             signature = payment_data.get('signature', '')
             
             # Remove signature from data for verification
