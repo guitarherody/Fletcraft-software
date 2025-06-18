@@ -55,10 +55,10 @@ class OrderViewSet(viewsets.ModelViewSet):
             order_id = request.data.get('order_id')
             order = Order.objects.get(order_id=order_id)
             
-            # PayFast configuration
-            MERCHANT_ID = '13245841'
-            MERCHANT_KEY = 'kzyobsh5zlvrw'
-            PAYFAST_URL = 'https://www.payfast.co.za/eng/process'  # Use sandbox URL for testing
+            # PayFast configuration - USE SANDBOX FOR TESTING
+            MERCHANT_ID = '10000100'  # PayFast sandbox merchant ID
+            MERCHANT_KEY = '46f0cd694581a'  # PayFast sandbox merchant key
+            PAYFAST_URL = 'https://sandbox.payfast.co.za/eng/process'  # Sandbox URL
             
             # Prepare payment data
             payment_data = {
@@ -67,26 +67,39 @@ class OrderViewSet(viewsets.ModelViewSet):
                 'return_url': f'{request.build_absolute_uri("/")}payment/success/',
                 'cancel_url': f'{request.build_absolute_uri("/")}payment/cancel/',
                 'notify_url': f'{request.build_absolute_uri("/")}api/payment/notify/',
-                'name_first': order.customer_name.split()[0] if order.customer_name else '',
-                'name_last': ' '.join(order.customer_name.split()[1:]) if len(order.customer_name.split()) > 1 else '',
+                'name_first': order.customer_name.split()[0] if order.customer_name else 'Test',
+                'name_last': ' '.join(order.customer_name.split()[1:]) if len(order.customer_name.split()) > 1 else 'User',
                 'email_address': order.customer_email,
-                'cell_number': order.customer_phone,
+                'cell_number': order.customer_phone or '',
                 'm_payment_id': order.order_id,
-                'amount': str(order.amount),
+                'amount': f'{order.amount:.2f}',
                 'item_name': order.service.title,
-                'item_description': order.service.description[:255],
+                'item_description': order.service.description[:255] if order.service.description else order.service.title,
                 'custom_str1': str(order.id),
             }
             
-            # Generate signature
-            signature_string = '&'.join([f'{key}={value}' for key, value in sorted(payment_data.items())])
+            # Remove empty values to avoid signature issues
+            payment_data = {k: v for k, v in payment_data.items() if v}
+            
+            # Generate signature (exclude merchant_key from signature data)
+            signature_data = {k: v for k, v in payment_data.items() if k != 'merchant_key'}
+            signature_string = '&'.join([f'{key}={value}' for key, value in sorted(signature_data.items())])
             signature = hashlib.md5(signature_string.encode()).hexdigest()
             payment_data['signature'] = signature
             
+            # Remove merchant_key from final payment data (it shouldn't be in the form)
+            final_payment_data = {k: v for k, v in payment_data.items() if k != 'merchant_key'}
+            
             return Response({
                 'payment_url': PAYFAST_URL,
-                'payment_data': payment_data,
-                'order_id': order.order_id
+                'payment_data': final_payment_data,
+                'order_id': order.order_id,
+                'debug_info': {
+                    'merchant_id': MERCHANT_ID,
+                    'amount': str(order.amount),
+                    'signature_string': signature_string,
+                    'signature': signature
+                }
             })
             
         except Order.DoesNotExist:
@@ -106,8 +119,8 @@ class PaymentTransactionViewSet(viewsets.ModelViewSet):
             # Get payment data from PayFast
             payment_data = request.POST.dict()
             
-            # Verify signature
-            MERCHANT_KEY = 'kzyobsh5zlvrw'
+            # Verify signature - USE SANDBOX MERCHANT KEY
+            MERCHANT_KEY = '46f0cd694581a'  # PayFast sandbox merchant key
             signature = payment_data.get('signature', '')
             
             # Remove signature from data for verification
