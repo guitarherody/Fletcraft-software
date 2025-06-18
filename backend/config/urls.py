@@ -15,18 +15,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import redirect
 
 def health_check(request):
-    """Simple health check endpoint for deployment services"""
-    return HttpResponse("FLETCRAFT SOFTWARE INC. Backend API is running! ✅", content_type="text/plain")
+    return JsonResponse({'status': 'healthy', 'message': 'FLETCRAFT SOFTWARE API is running'})
+
+@csrf_exempt
+def admin_redirect(request):
+    """Simple redirect to admin with CSRF exemption"""
+    return redirect('/admin/')
 
 urlpatterns = [
     path('', health_check, name='health_check'),
     path('admin/', admin.site.urls),
+    path('admin-login/', admin_redirect, name='admin_redirect'),
     path('api/', include('core.urls')),
 ]
 

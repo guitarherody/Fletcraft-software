@@ -179,5 +179,22 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
+# CSRF settings for Django admin
+CSRF_TRUSTED_ORIGINS = [
+    "https://fletcraft.co.za",
+    "https://www.fletcraft.co.za", 
+    "https://fletcraft-software.onrender.com",
+]
+
+# Temporarily disable CSRF for easier admin access
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_HTTPONLY = False
+CSRF_USE_SESSIONS = False
+CSRF_COOKIE_SAMESITE = 'Lax'
+
+# Allow admin access from any origin temporarily
+CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
