@@ -27,7 +27,14 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-+0k*&_&$!3%t#i%j8a&=-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'fletcraft.co.za',
+    'www.fletcraft.co.za', 
+    'fletcraft-software.onrender.com',
+    'localhost',
+    '127.0.0.1',
+    '*'  # Allow all hosts for now, can restrict later
+]
 
 
 # Application definition
@@ -144,13 +151,33 @@ REST_FRAMEWORK = {
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
+    "https://fletcraft.co.za",
+    "https://www.fletcraft.co.za",
+    "https://fletcraft-software.onrender.com",
     "http://localhost:3000",
+    "http://localhost:5173",
     "http://127.0.0.1:3000",
+    "http://127.0.0.1:5173",
 ]
 
-# Allow all origins in production (you can restrict this later)
-if not DEBUG:
-    CORS_ALLOW_ALL_ORIGINS = True
+# Allow all origins in development and production for now
+CORS_ALLOW_ALL_ORIGINS = True
+
+# Allow credentials for CORS
+CORS_ALLOW_CREDENTIALS = True
+
+# Additional CORS headers
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'

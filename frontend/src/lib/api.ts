@@ -1,7 +1,7 @@
 // API configuration
 const API_BASE_URL = import.meta.env.VITE_API_URL 
   ? `${import.meta.env.VITE_API_URL}/api`
-  : 'https://fletcraft-software.onrender.com/api'; // Always use production API for now
+  : 'https://fletcraft-software.onrender.com/api';
 
 console.log('API_BASE_URL:', API_BASE_URL);
 
@@ -51,10 +51,20 @@ export interface Contact {
 export async function fetchServices(): Promise<Service[]> {
   try {
     console.log('Fetching services from:', `${API_BASE_URL}/services/`);
-    const response = await fetch(`${API_BASE_URL}/services/`);
+    const response = await fetch(`${API_BASE_URL}/services/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      mode: 'cors',
+    });
+    
     if (!response.ok) {
+      console.error('Response not OK:', response.status, response.statusText);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+    
     const data = await response.json();
     console.log('Services data:', data);
     return data.results || data;
