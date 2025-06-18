@@ -55,36 +55,62 @@ class OrderViewSet(viewsets.ModelViewSet):
             order_id = request.data.get('order_id')
             order = Order.objects.get(order_id=order_id)
             
-            # PayFast configuration - USE PRODUCTION CREDENTIALS
-            MERCHANT_ID = '13245841'  # Your merchant ID
-            MERCHANT_KEY = 'kzyobsh5zlvrw'  # Your merchant key
-            PAYFAST_URL = 'https://www.payfast.co.za/eng/process'  # Production URL
+            # PayFast configuration - TEMPORARILY USE SANDBOX FOR TESTING
+            MERCHANT_ID = '10000100'  # PayFast test merchant ID
+            MERCHANT_KEY = '46f0cd694581a'  # PayFast test merchant key
+            PAYFAST_URL = 'https://sandbox.payfast.co.za/eng/process'  # Sandbox URL
+            PASSPHRASE = 'jt7NOE43FZPn'  # PayFast test passphrase
             
-            # Prepare payment data
+            # Build proper URLs for PayFast
+            base_url = 'https://fletcraft.co.za'  # Use your actual domain
+            return_url = f'{base_url}/payment/success'
+            cancel_url = f'{base_url}/payment/cancel'
+            notify_url = 'https://fletcraft-software.onrender.com/api/payment/notify/'
+            
+            # Split customer name properly
+            name_parts = order.customer_name.strip().split(' ') if order.customer_name else ['Customer']
+            first_name = name_parts[0]
+            last_name = ' '.join(name_parts[1:]) if len(name_parts) > 1 else ''
+            
+            # Prepare payment data with all required fields
             payment_data = {
                 'merchant_id': MERCHANT_ID,
-                'merchant_key': MERCHANT_KEY,  # Include merchant_key in form data
-                'return_url': f'{request.build_absolute_uri("/")}payment/success/',
-                'cancel_url': f'{request.build_absolute_uri("/")}payment/cancel/',
-                'notify_url': f'{request.build_absolute_uri("/")}api/payment/notify/',
-                'name_first': order.customer_name.split()[0] if order.customer_name else 'Test',
-                'name_last': ' '.join(order.customer_name.split()[1:]) if len(order.customer_name.split()) > 1 else 'User',
+                'merchant_key': MERCHANT_KEY,
+                'return_url': return_url,
+                'cancel_url': cancel_url,
+                'notify_url': notify_url,
+                'name_first': first_name[:50],  # Limit to 50 chars
+                'name_last': last_name[:50] if last_name else 'Customer',  # Ensure last name exists
                 'email_address': order.customer_email,
-                'cell_number': order.customer_phone or '',
-                'm_payment_id': order.order_id,
-                'amount': f'{order.amount:.2f}',
-                'item_name': order.service.title,
-                'item_description': order.service.description[:255] if order.service.description else order.service.title,
+                'm_payment_id': str(order.order_id),
+                'amount': f'{float(order.amount):.2f}',
+                'item_name': order.service.title[:100],  # Limit to 100 chars
+                'item_description': (order.service.description[:200] if order.service.description else order.service.title)[:200],
                 'custom_str1': str(order.id),
+                'custom_str2': order.service.title[:255],
+                'custom_str3': 'Fletcraft Software',
+                'custom_str4': '',
+                'custom_str5': '',
             }
             
-            # Remove empty values to avoid issues
+            # Add optional fields if available
+            if order.customer_phone:
+                # Clean phone number (remove spaces, dashes, etc.)
+                clean_phone = ''.join(filter(str.isdigit, order.customer_phone))
+                if len(clean_phone) >= 10:
+                    payment_data['cell_number'] = clean_phone[-10:]  # Last 10 digits
+            
+            # Remove empty values
             payment_data = {k: v for k, v in payment_data.items() if v}
             
             # Generate signature (EXCLUDE merchant_key from signature calculation)
-            # Create a copy without merchant_key for signature
             signature_data = {k: v for k, v in payment_data.items() if k != 'merchant_key'}
             signature_string = '&'.join([f'{key}={value}' for key, value in sorted(signature_data.items())])
+            
+            # Add passphrase to signature string if provided
+            if PASSPHRASE:
+                signature_string += f'&passphrase={PASSPHRASE}'
+            
             signature = hashlib.md5(signature_string.encode()).hexdigest()
             payment_data['signature'] = signature
             
@@ -96,7 +122,11 @@ class OrderViewSet(viewsets.ModelViewSet):
                     'merchant_id': MERCHANT_ID,
                     'amount': str(order.amount),
                     'signature_string': signature_string,
-                    'signature': signature
+                    'signature': signature,
+                    'first_name': first_name,
+                    'last_name': last_name,
+                    'return_url': return_url,
+                    'notify_url': notify_url
                 }
             })
             
@@ -117,13 +147,19 @@ class PaymentTransactionViewSet(viewsets.ModelViewSet):
             # Get payment data from PayFast
             payment_data = request.POST.dict()
             
-            # Verify signature - USE PRODUCTION MERCHANT KEY
-            MERCHANT_KEY = 'kzyobsh5zlvrw'  # Your merchant key
+            # Verify signature - USE SANDBOX CREDENTIALS FOR TESTING
+            MERCHANT_KEY = '46f0cd694581a'  # PayFast test merchant key
+            PASSPHRASE = 'jt7NOE43FZPn'  # PayFast test passphrase
             signature = payment_data.get('signature', '')
             
             # Remove signature from data for verification (and merchant_key if present)
             data_for_signature = {k: v for k, v in payment_data.items() if k not in ['signature', 'merchant_key']}
             signature_string = '&'.join([f'{key}={value}' for key, value in sorted(data_for_signature.items())])
+            
+            # Add passphrase to signature string if provided
+            if PASSPHRASE:
+                signature_string += f'&passphrase={PASSPHRASE}'
+            
             calculated_signature = hashlib.md5(signature_string.encode()).hexdigest()
             
             if signature != calculated_signature:
