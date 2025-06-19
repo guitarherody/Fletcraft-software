@@ -198,3 +198,15 @@ CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# PayFast Configuration
+# Use environment variables for production security
+PAYFAST_MERCHANT_ID = os.environ.get('PAYFAST_MERCHANT_ID', '13245841')  # Live merchant ID
+PAYFAST_MERCHANT_KEY = os.environ.get('PAYFAST_MERCHANT_KEY', 'kzyobsh5zlvrw')  # Live merchant key
+PAYFAST_PASSPHRASE = os.environ.get('PAYFAST_PASSPHRASE', 'Redeclip5e-8298')  # Live passphrase
+PAYFAST_URL = os.environ.get('PAYFAST_URL', 'https://www.payfast.co.za/eng/process')  # Live PayFast URL
+FRONTEND_URL = os.environ.get('FRONTEND_URL', 'https://fletcraft.co.za')  # Frontend URL for redirects
+
+# PayFast ITN (Instant Transaction Notification) settings
+PAYFAST_ITN_HOST_CHECK = os.environ.get('PAYFAST_ITN_HOST_CHECK', 'True').lower() == 'true'  # Verify ITN comes from PayFast
+PAYFAST_ITN_VERIFY_SSL = os.environ.get('PAYFAST_ITN_VERIFY_SSL', 'True').lower() == 'true'  # Verify SSL certificates

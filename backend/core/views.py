@@ -9,6 +9,7 @@ from django.conf import settings
 import hashlib
 import requests
 import json
+import urllib.parse
 from .models import Service, TeamMember, Project, Contact, VoiceWork, Order, PaymentTransaction
 from .serializers import ServiceSerializer, TeamMemberSerializer, ProjectSerializer, ContactSerializer, VoiceWorkSerializer, OrderSerializer, PaymentTransactionSerializer
 
@@ -55,40 +56,40 @@ class OrderViewSet(viewsets.ModelViewSet):
             order_id = request.data.get('order_id')
             order = Order.objects.get(order_id=order_id)
             
-            # PayFast configuration - TEMPORARILY USE SANDBOX FOR TESTING
-            MERCHANT_ID = '10000100'  # PayFast test merchant ID
-            MERCHANT_KEY = '46f0cd694581a'  # PayFast test merchant key
-            PAYFAST_URL = 'https://sandbox.payfast.co.za/eng/process'  # Sandbox URL
-            PASSPHRASE = 'jt7NOE43FZPn'  # PayFast test passphrase
+            # PayFast configuration - Use environment variables for security
+            MERCHANT_ID = getattr(settings, 'PAYFAST_MERCHANT_ID', '10000100')  # Fallback to test ID
+            MERCHANT_KEY = getattr(settings, 'PAYFAST_MERCHANT_KEY', '46f0cd694581a')  # Fallback to test key
+            PAYFAST_URL = getattr(settings, 'PAYFAST_URL', 'https://sandbox.payfast.co.za/eng/process')
+            PASSPHRASE = getattr(settings, 'PAYFAST_PASSPHRASE', 'jt7NOE43FZPn')  # Fallback to test passphrase
             
             # Build proper URLs for PayFast
-            base_url = 'https://fletcraft.co.za'  # Use your actual domain
+            base_url = getattr(settings, 'FRONTEND_URL', 'https://fletcraft.co.za')
             return_url = f'{base_url}/payment/success'
             cancel_url = f'{base_url}/payment/cancel'
-            notify_url = 'https://fletcraft-software.onrender.com/api/payment/notify/'
+            notify_url = f'{request.build_absolute_uri("/").rstrip("/")}/api/payment/notify/'
             
-            # Split customer name properly
+            # Split customer name properly with validation
             name_parts = order.customer_name.strip().split(' ') if order.customer_name else ['Customer']
-            first_name = name_parts[0]
-            last_name = ' '.join(name_parts[1:]) if len(name_parts) > 1 else ''
+            first_name = name_parts[0][:50]  # PayFast limit: 50 chars
+            last_name = (' '.join(name_parts[1:]) if len(name_parts) > 1 else 'Customer')[:50]  # PayFast limit: 50 chars
             
-            # Prepare payment data with all required fields
+            # Prepare payment data with proper field length validation
             payment_data = {
                 'merchant_id': MERCHANT_ID,
                 'merchant_key': MERCHANT_KEY,
                 'return_url': return_url,
                 'cancel_url': cancel_url,
                 'notify_url': notify_url,
-                'name_first': first_name[:50],  # Limit to 50 chars
-                'name_last': last_name[:50] if last_name else 'Customer',  # Ensure last name exists
-                'email_address': order.customer_email,
-                'm_payment_id': str(order.order_id),
+                'name_first': first_name,
+                'name_last': last_name,
+                'email_address': order.customer_email[:100],  # PayFast limit: 100 chars
+                'm_payment_id': str(order.order_id)[:100],  # PayFast limit: 100 chars
                 'amount': f'{float(order.amount):.2f}',
-                'item_name': order.service.title[:100],  # Limit to 100 chars
-                'item_description': (order.service.description[:200] if order.service.description else order.service.title)[:200],
-                'custom_str1': str(order.id),
-                'custom_str2': order.service.title[:255],
-                'custom_str3': 'Fletcraft Software',
+                'item_name': order.service.title[:100],  # PayFast limit: 100 chars
+                'item_description': (order.service.description[:200] if order.service.description else order.service.title[:200]),  # PayFast limit: 200 chars
+                'custom_str1': str(order.id)[:255],  # PayFast limit: 255 chars
+                'custom_str2': order.service.title[:255],  # PayFast limit: 255 chars
+                'custom_str3': 'Fletcraft Software'[:255],  # PayFast limit: 255 chars
                 'custom_str4': '',
                 'custom_str5': '',
             }
@@ -105,11 +106,17 @@ class OrderViewSet(viewsets.ModelViewSet):
             
             # Generate signature (EXCLUDE merchant_key from signature calculation)
             signature_data = {k: v for k, v in payment_data.items() if k != 'merchant_key'}
-            signature_string = '&'.join([f'{key}={value}' for key, value in sorted(signature_data.items())])
+            
+            # URL encode the values properly
+            encoded_params = []
+            for key, value in sorted(signature_data.items()):
+                encoded_params.append(f'{key}={urllib.parse.quote_plus(str(value))}')
+            
+            signature_string = '&'.join(encoded_params)
             
             # Add passphrase to signature string if provided
             if PASSPHRASE:
-                signature_string += f'&passphrase={PASSPHRASE}'
+                signature_string += f'&passphrase={urllib.parse.quote_plus(PASSPHRASE)}'
             
             signature = hashlib.md5(signature_string.encode()).hexdigest()
             payment_data['signature'] = signature
@@ -142,28 +149,41 @@ class PaymentTransactionViewSet(viewsets.ModelViewSet):
     @method_decorator(csrf_exempt)
     @action(detail=False, methods=['post'])
     def notify(self, request):
-        """Handle PayFast payment notifications"""
+        """Handle PayFast payment notifications (ITN)"""
         try:
             # Get payment data from PayFast
             payment_data = request.POST.dict()
             
-            # Verify signature - USE SANDBOX CREDENTIALS FOR TESTING
-            MERCHANT_KEY = '46f0cd694581a'  # PayFast test merchant key
-            PASSPHRASE = 'jt7NOE43FZPn'  # PayFast test passphrase
+            # PayFast configuration - Use environment variables for security
+            MERCHANT_KEY = getattr(settings, 'PAYFAST_MERCHANT_KEY', '46f0cd694581a')
+            PASSPHRASE = getattr(settings, 'PAYFAST_PASSPHRASE', 'jt7NOE43FZPn')
+            
             signature = payment_data.get('signature', '')
+            
+            # Validate required fields
+            required_fields = ['m_payment_id', 'payment_status', 'amount_gross']
+            missing_fields = [field for field in required_fields if field not in payment_data]
+            if missing_fields:
+                return HttpResponse(f'MISSING_FIELDS: {", ".join(missing_fields)}', status=400)
             
             # Remove signature from data for verification (and merchant_key if present)
             data_for_signature = {k: v for k, v in payment_data.items() if k not in ['signature', 'merchant_key']}
-            signature_string = '&'.join([f'{key}={value}' for key, value in sorted(data_for_signature.items())])
+            
+            # URL encode the values properly for signature verification
+            encoded_params = []
+            for key, value in sorted(data_for_signature.items()):
+                encoded_params.append(f'{key}={urllib.parse.quote_plus(str(value))}')
+            
+            signature_string = '&'.join(encoded_params)
             
             # Add passphrase to signature string if provided
             if PASSPHRASE:
-                signature_string += f'&passphrase={PASSPHRASE}'
+                signature_string += f'&passphrase={urllib.parse.quote_plus(PASSPHRASE)}'
             
             calculated_signature = hashlib.md5(signature_string.encode()).hexdigest()
             
             if signature != calculated_signature:
-                return HttpResponse('INVALID', status=400)
+                return HttpResponse('INVALID_SIGNATURE', status=400)
             
             # Process payment
             order_id = payment_data.get('m_payment_id')
@@ -174,30 +194,42 @@ class PaymentTransactionViewSet(viewsets.ModelViewSet):
             try:
                 order = Order.objects.get(order_id=order_id)
                 
-                # Update order status
-                if payment_status == 'COMPLETE':
-                    order.payment_status = 'paid'
-                elif payment_status == 'FAILED':
-                    order.payment_status = 'failed'
-                elif payment_status == 'CANCELLED':
-                    order.payment_status = 'cancelled'
+                # Validate amount matches order amount
+                if abs(float(order.amount) - amount_paid) > 0.01:  # Allow for small floating point differences
+                    return HttpResponse('AMOUNT_MISMATCH', status=400)
                 
-                order.payfast_payment_id = payfast_payment_id
-                order.save()
+                # Update order status based on PayFast payment status
+                status_mapping = {
+                    'COMPLETE': 'paid',
+                    'FAILED': 'failed',
+                    'CANCELLED': 'cancelled',
+                    'PENDING': 'pending'
+                }
                 
-                # Create payment transaction record
-                PaymentTransaction.objects.create(
-                    order=order,
-                    payfast_payment_id=payfast_payment_id,
-                    transaction_status=payment_status,
-                    amount_paid=amount_paid,
-                    payfast_data=payment_data
-                )
-                
-                return HttpResponse('OK', status=200)
+                if payment_status in status_mapping:
+                    order.payment_status = status_mapping[payment_status]
+                    order.payfast_payment_id = payfast_payment_id
+                    order.save()
+                    
+                    # Create payment transaction record
+                    PaymentTransaction.objects.create(
+                        order=order,
+                        payfast_payment_id=payfast_payment_id,
+                        transaction_status=payment_status,
+                        amount_paid=amount_paid,
+                        payfast_data=payment_data
+                    )
+                    
+                    return HttpResponse('OK', status=200)
+                else:
+                    return HttpResponse(f'UNKNOWN_STATUS: {payment_status}', status=400)
                 
             except Order.DoesNotExist:
                 return HttpResponse('ORDER_NOT_FOUND', status=404)
                 
         except Exception as e:
+            # Log the error for debugging
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f'PayFast ITN Error: {str(e)}', exc_info=True)
             return HttpResponse('ERROR', status=500)
