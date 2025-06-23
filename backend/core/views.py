@@ -89,32 +89,34 @@ class OrderViewSet(viewsets.ModelViewSet):
                 ('amount', f'{float(order.amount):.2f}'),
                 ('item_name', order.service.title[:100]),
                 ('item_description', (order.service.description[:200] if order.service.description else order.service.title[:200])),
-                ('custom_str1', str(order.id)[:255]),
-                ('custom_str2', order.service.title[:255]),
-                ('custom_str3', 'Fletcraft Software'[:255]),
             ])
             
-            # Add optional fields in proper order
+            # Add optional fields only if they exist
             if order.customer_phone:
                 clean_phone = ''.join(filter(str.isdigit, order.customer_phone))
                 if len(clean_phone) >= 10:
                     payment_data['cell_number'] = clean_phone[-10:]
             
+            # Add custom fields for tracking
+            payment_data['custom_str1'] = str(order.id)[:255]
+            payment_data['custom_str2'] = order.service.title[:255]
+            payment_data['custom_str3'] = 'Fletcraft Software'[:255]
+            
             # Remove empty values while preserving order
             payment_data = OrderedDict([(k, v) for k, v in payment_data.items() if v])
             
-            # Generate signature using FORM FIELD ORDER (Byron Adams confirmed method)
-            # Exclude merchant_key from signature but include passphrase at end
-            encoded_params = []
+            # Generate signature using SIMPLE method (no complex URL encoding)
+            # This is the most reliable method for PayFast form integration
+            signature_params = []
             for key, value in payment_data.items():
-                if key != 'merchant_key':  # Exclude merchant_key from signature
-                    encoded_params.append(f'{key}={urllib.parse.quote_plus(str(value))}')
-            
-            signature_string = '&'.join(encoded_params)
+                if key != 'merchant_key' and key != 'signature':  # Exclude merchant_key and signature from signature
+                    # Use simple string conversion, no URL encoding for signature
+                    signature_params.append(f'{key}={str(value)}')
             
             # Add passphrase to signature string if provided
+            signature_string = '&'.join(signature_params)
             if PASSPHRASE:
-                signature_string += f'&passphrase={urllib.parse.quote_plus(PASSPHRASE)}'
+                signature_string += f'&passphrase={PASSPHRASE}'
             
             signature = hashlib.md5(signature_string.encode()).hexdigest()
             payment_data['signature'] = signature
@@ -167,17 +169,16 @@ class PaymentTransactionViewSet(viewsets.ModelViewSet):
             # Remove signature from data for verification (and merchant_key if present)
             data_for_signature = {k: v for k, v in payment_data.items() if k not in ['signature', 'merchant_key']}
             
-            # Use FORM FIELD ORDER for ITN signature verification (Byron Adams method)
-            # PayFast ITN sends data in same order as original form
-            encoded_params = []
+            # Use SIMPLE signature verification (same as form generation)
+            signature_params = []
             for key, value in data_for_signature.items():  # Preserve original order
-                encoded_params.append(f'{key}={urllib.parse.quote_plus(str(value))}')
+                signature_params.append(f'{key}={str(value)}')
             
-            signature_string = '&'.join(encoded_params)
+            signature_string = '&'.join(signature_params)
             
             # Add passphrase to signature string if provided
             if PASSPHRASE:
-                signature_string += f'&passphrase={urllib.parse.quote_plus(PASSPHRASE)}'
+                signature_string += f'&passphrase={PASSPHRASE}'
             
             calculated_signature = hashlib.md5(signature_string.encode()).hexdigest()
             
