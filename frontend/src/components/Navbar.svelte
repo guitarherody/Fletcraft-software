@@ -46,6 +46,7 @@
       <!-- Desktop Menu -->
       <div class="hidden md:flex items-center space-x-8">
         <a href="#services" class="nav-link">Services</a>
+        <a href="/pricing" class="nav-link">Pricing</a>
         <a href="#about" class="nav-link">About</a>
         <a href="#work" class="nav-link">Work</a>
         <a href="#contact" 
@@ -71,6 +72,7 @@
       <div class="md:hidden">
         <div class="py-4 space-y-4">
           <a href="#services" class="mobile-menu-item block px-4 py-2 hover:bg-primary/5 rounded-lg">Services</a>
+          <a href="/pricing" class="mobile-menu-item block px-4 py-2 hover:bg-primary/5 rounded-lg">Pricing</a>
           <a href="#about" class="mobile-menu-item block px-4 py-2 hover:bg-primary/5 rounded-lg">About</a>
           <a href="#work" class="mobile-menu-item block px-4 py-2 hover:bg-primary/5 rounded-lg">Work</a>
           <a href="#contact" class="mobile-menu-item block px-4 py-2 bg-primary/10 text-primary hover:bg-primary/20 rounded-lg">

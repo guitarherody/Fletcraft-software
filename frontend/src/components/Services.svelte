@@ -200,14 +200,26 @@
     {/if}
     
     <!-- Call to Action -->
-    <div class="text-center mt-12 sm:mt-16">
-      <a href="#contact" 
-         class="inline-flex items-center space-x-2 px-6 sm:px-8 py-3 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors text-sm sm:text-base">
-        <span>Start Your Project</span>
-        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-        </svg>
-      </a>
+    <div class="text-center mt-12 sm:mt-16 space-y-4">
+      <LiquidGlass variant="button" intensity="strong" shimmer={true} className="inline-block">
+        <a href="/pricing" 
+           class="inline-flex items-center space-x-3 px-8 py-4 text-white font-bold text-lg transition-colors">
+          <span>View All Pricing & Purchase</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      </LiquidGlass>
+      
+      <div class="mt-4">
+        <a href="#contact" 
+           class="inline-flex items-center space-x-2 px-6 sm:px-8 py-3 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors text-sm sm:text-base">
+          <span>Or Start Custom Project</span>
+          <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      </div>
     </div>
   </div>
 </section>

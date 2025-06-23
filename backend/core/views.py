@@ -104,13 +104,24 @@ class OrderViewSet(viewsets.ModelViewSet):
             # Remove empty values
             payment_data = {k: v for k, v in payment_data.items() if v}
             
-            # Generate signature (EXCLUDE merchant_key from signature calculation)
+            # Generate signature using FORM field order (NOT alphabetical as per Byron Adams)
+            # Order must match the PayFast form documentation exactly
             signature_data = {k: v for k, v in payment_data.items() if k != 'merchant_key'}
             
-            # URL encode the values properly
+            # Use the exact field order from PayFast form documentation
+            field_order = [
+                'merchant_id', 'merchant_key', 'return_url', 'cancel_url', 'notify_url',
+                'name_first', 'name_last', 'email_address', 'm_payment_id', 'amount',
+                'item_name', 'item_description', 'custom_str1', 'custom_str2', 'custom_str3',
+                'custom_str4', 'custom_str5', 'custom_int1', 'custom_int2', 'custom_int3',
+                'custom_int4', 'custom_int5', 'cell_number'
+            ]
+            
+            # Build signature string in proper field order (not alphabetical)
             encoded_params = []
-            for key, value in sorted(signature_data.items()):
-                encoded_params.append(f'{key}={urllib.parse.quote_plus(str(value))}')
+            for field in field_order:
+                if field in signature_data and signature_data[field]:
+                    encoded_params.append(f'{field}={urllib.parse.quote_plus(str(signature_data[field]))}')
             
             signature_string = '&'.join(encoded_params)
             
