@@ -80,16 +80,153 @@
   function createLiquidGlass() {
     if (!liquidGlassContainer) return;
     
-    // Remove all morphing blobs for cleaner look
-    // Focus only on warp speed particles
+    // Add beautiful floating swirling orbs back!
+    for (let i = 0; i < 6; i++) {
+      const orb = document.createElement('div');
+      orb.className = 'floating-swirl-orb';
+      
+      // Strategic positioning across the screen
+      const x = 15 + Math.random() * 70;
+      const y = 20 + Math.random() * 60;
+      orb.style.left = x + '%';
+      orb.style.top = y + '%';
+      
+      // Bright, vibrant orb styling
+      const size = 40 + Math.random() * 60;
+      orb.style.width = size + 'px';
+      orb.style.height = size + 'px';
+      orb.style.borderRadius = '50%';
+      orb.style.position = 'absolute';
+      
+      // Much brighter glass styling
+      orb.style.background = `
+        radial-gradient(circle at 30% 30%, 
+          rgba(255, 255, 255, 0.3) 0%,
+          rgba(139, 92, 246, 0.2) 40%,
+          rgba(168, 85, 247, 0.1) 100%
+        )
+      `;
+      orb.style.backdropFilter = 'blur(15px) saturate(200%)';
+      orb.style.border = '1px solid rgba(255, 255, 255, 0.4)';
+      orb.style.boxShadow = `
+        0 0 30px rgba(139, 92, 246, 0.4),
+        0 0 60px rgba(168, 85, 247, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3)
+      `;
+      
+      liquidGlassContainer.appendChild(orb);
+
+      // Beautiful swirling motion
+      gsap.to(orb, {
+        x: `+=${(Math.random() - 0.5) * 200}`,
+        y: `+=${(Math.random() - 0.5) * 100}`,
+        duration: 8 + Math.random() * 12,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        delay: Math.random() * 4
+      });
+
+      // Swirling rotation
+      gsap.to(orb, {
+        rotation: 360,
+        duration: 15 + Math.random() * 20,
+        repeat: -1,
+        ease: 'none'
+      });
+
+      // Pulsing glow effect
+      gsap.to(orb, {
+        scale: 0.8 + Math.random() * 0.6,
+        duration: 4 + Math.random() * 6,
+        repeat: -1,
+        yoyo: true,
+        ease: 'power1.inOut',
+        delay: Math.random() * 2
+      });
+
+      // Brightness pulsing
+      gsap.to(orb, {
+        opacity: 0.6 + Math.random() * 0.4,
+        duration: 3 + Math.random() * 4,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
+    }
+
+    // Add some morphing background blobs
+    for (let i = 0; i < 3; i++) {
+      const blob = document.createElement('div');
+      blob.className = 'floating-morph-blob';
+      
+      const x = 20 + (i * 30);
+      const y = 30 + Math.random() * 40;
+      blob.style.left = x + '%';
+      blob.style.top = y + '%';
+      
+      const size = 100 + Math.random() * 80;
+      blob.style.width = size + 'px';
+      blob.style.height = size + 'px';
+      blob.style.position = 'absolute';
+      blob.style.borderRadius = '60% 40% 30% 70%';
+      
+      // Bright morphing blob styling
+      blob.style.background = `
+        linear-gradient(135deg, 
+          rgba(139, 92, 246, 0.15) 0%,
+          rgba(168, 85, 247, 0.1) 50%,
+          rgba(236, 72, 153, 0.08) 100%
+        )
+      `;
+      blob.style.backdropFilter = 'blur(20px) saturate(180%)';
+      blob.style.border = '1px solid rgba(255, 255, 255, 0.2)';
+      blob.style.boxShadow = `
+        0 0 40px rgba(139, 92, 246, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2)
+      `;
+      blob.style.filter = 'blur(1px)';
+      
+      liquidGlassContainer.appendChild(blob);
+
+      // Morphing animation
+      gsap.to(blob, {
+        borderRadius: '30% 70% 60% 40%',
+        duration: 6 + Math.random() * 6,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
+
+      // Floating movement
+      gsap.to(blob, {
+        x: `+=${(Math.random() - 0.5) * 120}`,
+        y: `+=${(Math.random() - 0.5) * 80}`,
+        duration: 12 + Math.random() * 8,
+        repeat: -1,
+        yoyo: true,
+        ease: 'power1.inOut',
+        delay: Math.random() * 4
+      });
+
+      // Scale pulsing
+      gsap.to(blob, {
+        scale: 0.8 + Math.random() * 0.4,
+        duration: 8 + Math.random() * 4,
+        repeat: -1,
+        yoyo: true,
+        ease: 'power1.inOut',
+        delay: Math.random() * 3
+      });
+    }
   }
 
   function createFireflies() {
     if (!fireflyContainer) return;
     
-    // Create BLAZING WARP SPEED particle system - cinematic effect
-    const numParticles = 40;
-    const colors = ['#FFFFFF', '#C084FC', '#8B5CF6', '#A855F7'];
+    // Create BLAZING WARP SPEED particle system - ultra bright cinematic effect
+    const numParticles = 50;
+    const colors = ['#FFFFFF', '#F0F9FF', '#E0E7FF', '#C084FC', '#8B5CF6', '#A855F7', '#EC4899'];
 
     for (let i = 0; i < numParticles; i++) {
       const particle = document.createElement('div');
@@ -101,32 +238,33 @@
       particle.style.left = startX + '%';
       particle.style.top = startY + '%';
       
-      // Enhanced warp speed trail effect
+            // Enhanced warp speed trail effect - ULTRA BRIGHT
       const color = colors[Math.floor(Math.random() * colors.length)];
-      const brightness = Math.random() * 0.5 + 0.5; // 0.5 to 1.0
+      const brightness = Math.random() * 0.3 + 0.7; // 0.7 to 1.0 - much brighter!
       
-      // Core particle - more intense
-      particle.style.width = '4px';
-      particle.style.height = '1px';
+      // Core particle - super intense and bright
+      particle.style.width = '5px';
+      particle.style.height = '2px';
       particle.style.background = color;
       particle.style.position = 'absolute';
-      particle.style.filter = 'blur(0.3px)';
-      particle.style.boxShadow = `0 0 12px ${color}, 0 0 24px ${color}80`;
-             particle.style.opacity = brightness.toString();
+      particle.style.filter = 'blur(0.2px)';
+      particle.style.boxShadow = `0 0 20px ${color}, 0 0 40px ${color}80, 0 0 60px ${color}40`;
+      particle.style.opacity = brightness.toString();
       
-      // Create longer trailing streaks for intense warp effect
-      for (let j = 0; j < 5; j++) {
+      // Create longer trailing streaks for intense warp effect - SUPER BRIGHT
+      for (let j = 0; j < 6; j++) {
         const trail = document.createElement('div');
         trail.className = `warp-trail trail-${j + 1}`;
         trail.style.position = 'absolute';
-        trail.style.width = `${20 + j * 12}px`;
-        trail.style.height = '1px';
-        trail.style.background = `linear-gradient(90deg, ${color}${90 - j * 15}, transparent)`;
-        trail.style.left = `-${20 + j * 12}px`;
+        trail.style.width = `${25 + j * 15}px`;
+        trail.style.height = '2px';
+        trail.style.background = `linear-gradient(90deg, ${color}${95 - j * 12}, ${color}${40 - j * 6}, transparent)`;
+        trail.style.left = `-${25 + j * 15}px`;
         trail.style.top = '0';
         trail.style.transformOrigin = 'left center';
-        trail.style.opacity = `${0.9 - j * 0.15}`;
-        trail.style.filter = 'blur(0.2px)';
+        trail.style.opacity = `${1.0 - j * 0.12}`;
+        trail.style.filter = 'blur(0.1px)';
+        trail.style.boxShadow = `0 0 6px ${color}60`;
         particle.appendChild(trail);
       }
       
