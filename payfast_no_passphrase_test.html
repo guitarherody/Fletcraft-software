@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PayFast NO PASSPHRASE Test</title>
+</head>
+<body>
+    <h1>PayFast NO PASSPHRASE Test</h1>
+    
+    <h3>Debug Information:</h3>
+    <p><strong>Merchant ID:</strong> 13245841</p>
+    <p><strong>Amount:</strong> R100.00</p>
+    <p><strong>Signature:</strong> 7f224cf934c021792d1dea4a41990e4c</p>
+    <p><strong>Method:</strong> NO PASSPHRASE in signature</p>
+    
+    <h3>Test Form:</h3>
+    <form action="https://www.payfast.co.za/eng/process" method="post" id="payfast_form">
+        <input type="hidden" name="merchant_id" value="13245841">
+        <input type="hidden" name="merchant_key" value="kzyobsh5zlvrw">
+        <input type="hidden" name="return_url" value="https://fletcraft.co.za/payment/success">
+        <input type="hidden" name="cancel_url" value="https://fletcraft.co.za/payment/cancel">
+        <input type="hidden" name="notify_url" value="https://fletcraft.co.za/api/payment/notify/">
+        <input type="hidden" name="name_first" value="Test">
+        <input type="hidden" name="name_last" value="Customer">
+        <input type="hidden" name="email_address" value="test@fletcraft.co.za">
+        <input type="hidden" name="m_payment_id" value="TEST123456">
+        <input type="hidden" name="amount" value="100.00">
+        <input type="hidden" name="item_name" value="Web Applications">
+        <input type="hidden" name="item_description" value="Professional web application development services">
+        <input type="hidden" name="custom_str1" value="1">
+        <input type="hidden" name="custom_str2" value="Web Applications">
+        <input type="hidden" name="custom_str3" value="Fletcraft Software">
+        <input type="hidden" name="signature" value="7f224cf934c021792d1dea4a41990e4c">
+    </form>
+    
+    <button onclick="document.getElementById('payfast_form').submit();">
+        Submit NO PASSPHRASE Test to PayFast
+    </button>
+</body>
+</html>

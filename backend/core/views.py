@@ -73,41 +73,42 @@ class OrderViewSet(viewsets.ModelViewSet):
             first_name = name_parts[0][:50]  # PayFast limit: 50 chars
             last_name = (' '.join(name_parts[1:]) if len(name_parts) > 1 else 'Customer')[:50]  # PayFast limit: 50 chars
             
-            # Build payment data in the EXACT order PayFast form expects
-            # This order is critical for signature generation as per Byron Adams
-            from collections import OrderedDict
-            payment_data = OrderedDict([
-                ('merchant_id', MERCHANT_ID),
-                ('merchant_key', MERCHANT_KEY),
-                ('return_url', return_url),
-                ('cancel_url', cancel_url),
-                ('notify_url', notify_url),
-                ('name_first', first_name),
-                ('name_last', last_name),
-                ('email_address', order.customer_email[:100]),
-                ('m_payment_id', str(order.order_id)[:100]),
-                ('amount', f'{float(order.amount):.2f}'),
-                ('item_name', order.service.title[:100]),
-                ('item_description', (order.service.description[:200] if order.service.description else order.service.title[:200])),
-                ('custom_str1', str(order.id)[:255]),
-                ('custom_str2', order.service.title[:255]),
-                ('custom_str3', 'Fletcraft Software'[:255]),
-            ])
+            # Build payment data
+            payment_data = {
+                'merchant_id': MERCHANT_ID,
+                'merchant_key': MERCHANT_KEY,
+                'return_url': return_url,
+                'cancel_url': cancel_url,
+                'notify_url': notify_url,
+                'name_first': first_name,
+                'name_last': last_name,
+                'email_address': order.customer_email[:100],
+                'm_payment_id': str(order.order_id)[:100],
+                'amount': f'{float(order.amount):.2f}',
+                'item_name': order.service.title[:100],
+                'item_description': (order.service.description[:200] if order.service.description else order.service.title[:200]),
+                'custom_str1': str(order.id)[:255],
+                'custom_str2': order.service.title[:255],
+                'custom_str3': 'Fletcraft Software'[:255],
+            }
             
-            # Add optional fields in proper order
+            # Add optional fields
             if order.customer_phone:
                 clean_phone = ''.join(filter(str.isdigit, order.customer_phone))
                 if len(clean_phone) >= 10:
                     payment_data['cell_number'] = clean_phone[-10:]
             
-            # Remove empty values while preserving order
-            payment_data = OrderedDict([(k, v) for k, v in payment_data.items() if v])
+            # Remove empty values
+            payment_data = {k: v for k, v in payment_data.items() if v}
             
-            # Generate signature using exact field order (Byron Adams fix)
+            # Generate signature using ALPHABETICAL ORDER (standard for most payment gateways)
+            signature_data = {k: v for k, v in payment_data.items() if k != 'merchant_key'}
+            
+            # Sort keys alphabetically and build signature string
             encoded_params = []
-            for key, value in payment_data.items():
-                if key != 'merchant_key':  # Exclude merchant_key from signature
-                    encoded_params.append(f'{key}={urllib.parse.quote_plus(str(value))}')
+            for key in sorted(signature_data.keys()):
+                value = signature_data[key]
+                encoded_params.append(f'{key}={urllib.parse.quote_plus(str(value))}')
             
             signature_string = '&'.join(encoded_params)
             
@@ -166,10 +167,10 @@ class PaymentTransactionViewSet(viewsets.ModelViewSet):
             # Remove signature from data for verification (and merchant_key if present)
             data_for_signature = {k: v for k, v in payment_data.items() if k not in ['signature', 'merchant_key']}
             
-            # CRITICAL: Use FORM field order for ITN signature verification (NOT alphabetical)
-            # This must match the exact order used when creating the payment
+            # Use ALPHABETICAL ORDER for ITN signature verification (same as payment creation)
             encoded_params = []
-            for key, value in data_for_signature.items():  # Use original order, NOT sorted()
+            for key in sorted(data_for_signature.keys()):
+                value = data_for_signature[key]
                 encoded_params.append(f'{key}={urllib.parse.quote_plus(str(value))}')
             
             signature_string = '&'.join(encoded_params)
