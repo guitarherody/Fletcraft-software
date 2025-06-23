@@ -74,11 +74,10 @@
   function createFloatingGlassCards() {
     if (!glassCardContainer) return;
     
+    // Reduced to just 2 key feature cards for cleaner look
     const cards = [
-      { icon: '⚡', text: 'Lightning Fast', x: 15, y: 20 },
-      { icon: '🎨', text: 'Beautiful Design', x: 75, y: 15 },
-      { icon: '🚀', text: 'Modern Tech', x: 20, y: 70 },
-      { icon: '💎', text: 'Premium Quality', x: 80, y: 75 }
+      { icon: '⚡', text: 'Lightning Fast', x: 20, y: 25 },
+      { icon: '💎', text: 'Premium Quality', x: 75, y: 70 }
     ];
 
     cards.forEach((card, i) => {
@@ -96,10 +95,10 @@
       
       glassCardContainer.appendChild(cardEl);
 
-      // Floating animation with Apple-style easing
+      // Gentle floating animation
       gsap.to(cardEl, {
-        y: `+=${(Math.random() - 0.5) * 40}`,
-        x: `+=${(Math.random() - 0.5) * 30}`,
+        y: `+=${(Math.random() - 0.5) * 20}`,
+        x: `+=${(Math.random() - 0.5) * 15}`,
         duration: 8 + Math.random() * 4,
         repeat: -1,
         yoyo: true,
@@ -109,7 +108,7 @@
 
       // Subtle rotation
       gsap.to(cardEl, {
-        rotation: `+=${(Math.random() - 0.5) * 10}`,
+        rotation: `+=${(Math.random() - 0.5) * 5}`,
         duration: 12 + Math.random() * 6,
         repeat: -1,
         yoyo: true,
@@ -122,56 +121,56 @@
   function createLiquidGlass() {
     if (!liquidGlassContainer) return;
     
-    // Create morphing glass blobs with Apple-inspired shapes
-    for (let i = 0; i < 4; i++) {
+    // Reduced to 2 subtle morphing blobs for cleaner background
+    for (let i = 0; i < 2; i++) {
       const blob = document.createElement('div');
-      blob.className = `liquid-glass-blob morph-${(i % 3) + 1}`;
+      blob.className = `liquid-glass-blob morph-${(i % 2) + 1}`;
       
-      // Positioning with better distribution
-      const x = 10 + (i * 20) + Math.random() * 15;
-      const y = 15 + Math.random() * 70;
+      // Better positioning - more spaced out
+      const x = 25 + (i * 50);
+      const y = 30 + Math.random() * 40;
       blob.style.left = x + '%';
       blob.style.top = y + '%';
       
-      // Size variation
-      const size = 120 + Math.random() * 100;
+      // Consistent sizing
+      const size = 150;
       blob.style.width = size + 'px';
       blob.style.height = size + 'px';
       
-      // Apple Liquid Glass styling
+      // Cleaner glass styling - more subtle
       blob.style.background = `
         linear-gradient(135deg, 
-          rgba(99, 102, 241, 0.1) 0%,
-          rgba(139, 92, 246, 0.08) 50%,
-          rgba(168, 85, 247, 0.06) 100%
+          rgba(99, 102, 241, 0.06) 0%,
+          rgba(139, 92, 246, 0.04) 50%,
+          rgba(168, 85, 247, 0.03) 100%
         )
       `;
-      blob.style.backdropFilter = 'blur(30px) saturate(150%)';
-      blob.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+      blob.style.backdropFilter = 'blur(25px) saturate(120%)';
+      blob.style.border = '1px solid rgba(255, 255, 255, 0.08)';
       blob.style.boxShadow = `
-        0 8px 32px rgba(139, 92, 246, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1)
+        0 8px 32px rgba(139, 92, 246, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06)
       `;
       blob.style.position = 'absolute';
       blob.style.filter = 'blur(0.5px)';
       
       liquidGlassContainer.appendChild(blob);
 
-      // Floating animation with Apple-style physics
+      // Gentle floating animation
       gsap.to(blob, {
-        x: `+=${(Math.random() - 0.5) * 150}`,
-        y: `+=${(Math.random() - 0.5) * 80}`,
-        duration: 15 + Math.random() * 10,
+        x: `+=${(Math.random() - 0.5) * 80}`,
+        y: `+=${(Math.random() - 0.5) * 40}`,
+        duration: 20 + Math.random() * 10,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
         delay: Math.random() * 5
       });
 
-      // Scale pulsing
+      // Subtle scale pulsing
       gsap.to(blob, {
-        scale: 0.8 + Math.random() * 0.4,
-        duration: 8 + Math.random() * 4,
+        scale: 0.9 + Math.random() * 0.2,
+        duration: 12 + Math.random() * 4,
         repeat: -1,
         yoyo: true,
         ease: 'power1.inOut',
@@ -179,65 +178,71 @@
       });
     }
 
-    // Create floating glass orbs
-    for (let i = 0; i < 8; i++) {
+    // Reduced to 4 floating glass orbs - cleaner distribution
+    for (let i = 0; i < 4; i++) {
       const orb = document.createElement('div');
       orb.className = 'liquid-glass-orb';
       
-      // Better distribution across the hero area
-      const x = 5 + Math.random() * 90;
-      const y = 10 + Math.random() * 80;
-      orb.style.left = x + '%';
-      orb.style.top = y + '%';
+      // Strategic positioning in corners
+      const positions = [
+        { x: 15, y: 15 },  // Top left
+        { x: 85, y: 20 },  // Top right  
+        { x: 10, y: 85 },  // Bottom left
+        { x: 80, y: 80 }   // Bottom right
+      ];
       
-      // Size variation
-      const size = 60 + Math.random() * 80;
+      const pos = positions[i];
+      orb.style.left = pos.x + '%';
+      orb.style.top = pos.y + '%';
+      
+      // Consistent size for cleaner look
+      const size = 60;
       orb.style.width = size + 'px';
       orb.style.height = size + 'px';
       orb.style.borderRadius = '50%';
       orb.style.position = 'absolute';
       
-      // Apple glass styling with enhanced effects
+      // Refined glass styling - more subtle
       orb.style.background = `
         radial-gradient(circle at 30% 30%, 
-          rgba(255, 255, 255, 0.15) 0%,
-          rgba(99, 102, 241, 0.1) 40%,
-          rgba(139, 92, 246, 0.05) 100%
+          rgba(255, 255, 255, 0.08) 0%,
+          rgba(99, 102, 241, 0.06) 40%,
+          rgba(139, 92, 246, 0.03) 100%
         )
       `;
-      orb.style.backdropFilter = 'blur(25px) saturate(180%)';
-      orb.style.border = '1px solid rgba(255, 255, 255, 0.15)';
+      orb.style.backdropFilter = 'blur(20px) saturate(150%)';
+      orb.style.border = '1px solid rgba(255, 255, 255, 0.1)';
       orb.style.boxShadow = `
-        0 8px 32px rgba(139, 92, 246, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2),
-        inset 0 -1px 0 rgba(99, 102, 241, 0.1)
+        0 8px 32px rgba(139, 92, 246, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        inset 0 -1px 0 rgba(99, 102, 241, 0.06)
       `;
       
       liquidGlassContainer.appendChild(orb);
 
-      // Complex floating motion
+      // Gentle floating motion
       gsap.to(orb, {
-        x: `+=${(Math.random() - 0.5) * 200}`,
-        y: `+=${(Math.random() - 0.5) * 100}`,
-        duration: 12 + Math.random() * 8,
+        x: `+=${(Math.random() - 0.5) * 60}`,
+        y: `+=${(Math.random() - 0.5) * 40}`,
+        duration: 15 + Math.random() * 8,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
         delay: Math.random() * 4
       });
 
-      // Rotation animation
+      // Slow rotation animation
       gsap.to(orb, {
         rotation: 360,
-        duration: 20 + Math.random() * 15,
+        duration: 30 + Math.random() * 15,
         repeat: -1,
         ease: 'none'
       });
 
-      // Scale animation
+      // Subtle scale animation
       gsap.to(orb, {
-        scale: 0.7 + Math.random() * 0.6,
-        duration: 6 + Math.random() * 4,
+        scale: 0.8 + Math.random() * 0.4,
+        duration: 10 + Math.random() * 4,
         repeat: -1,
         yoyo: true,
         ease: 'power1.inOut',
@@ -249,11 +254,11 @@
   function createFireflies() {
     if (!fireflyContainer) return;
     
-    const numFireflies = 20;
-    // Enhanced color palette with Apple-inspired gradients
+    // Reduced fireflies count for cleaner look
+    const numFireflies = 12;
+    // Refined color palette - more subtle
     const colors = [
-      '#8B5CF6', '#A855F7', '#C084FC', '#DDD6FE', 
-      '#F3E8FF', '#E879F9', '#F0ABFC', '#FBBF24'
+      '#8B5CF6', '#A855F7', '#C084FC', '#DDD6FE'
     ];
 
     for (let i = 0; i < numFireflies; i++) {
@@ -266,43 +271,43 @@
       firefly.style.left = startX + '%';
       firefly.style.top = startY + '%';
       
-      // Enhanced styling with glass effect
+      // Subtle styling
       const color = colors[Math.floor(Math.random() * colors.length)];
       firefly.style.setProperty('--firefly-color', color);
-      firefly.style.backdropFilter = 'blur(2px)';
+      firefly.style.backdropFilter = 'blur(1px)';
       firefly.style.borderRadius = '50%';
-      firefly.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}40`;
+      firefly.style.boxShadow = `0 0 8px ${color}60, 0 0 16px ${color}30`;
       
       // Timing variations
       firefly.style.animationDelay = Math.random() * 5 + 's';
-      firefly.style.animationDuration = (6 + Math.random() * 6) + 's';
+      firefly.style.animationDuration = (8 + Math.random() * 6) + 's';
       
-      // Enhanced trail effect
-      for (let j = 0; j < 4; j++) {
+      // Reduced trail effect
+      for (let j = 0; j < 2; j++) {
         const trail = document.createElement('div');
         trail.className = `firefly-trail trail-${j + 1}`;
-        trail.style.animationDelay = (j * 0.08) + 's';
+        trail.style.animationDelay = (j * 0.1) + 's';
         firefly.appendChild(trail);
       }
       
       fireflyContainer.appendChild(firefly);
 
-      // Enhanced organic movement with Apple-style easing
+      // Gentle organic movement
       gsap.to(firefly, {
-        x: `+=${(Math.random() - 0.5) * 400}`,
-        y: `+=${(Math.random() - 0.5) * 200}`,
-        duration: 8 + Math.random() * 8,
+        x: `+=${(Math.random() - 0.5) * 200}`,
+        y: `+=${(Math.random() - 0.5) * 120}`,
+        duration: 12 + Math.random() * 8,
         repeat: -1,
         yoyo: true,
         ease: 'power1.inOut',
         delay: Math.random() * 3
       });
 
-      // Micro-movements for realism
+      // Subtle micro-movements
       gsap.to(firefly, {
-        x: `+=${(Math.random() - 0.5) * 60}`,
-        y: `+=${(Math.random() - 0.5) * 40}`,
-        duration: 2 + Math.random() * 2,
+        x: `+=${(Math.random() - 0.5) * 40}`,
+        y: `+=${(Math.random() - 0.5) * 30}`,
+        duration: 3 + Math.random() * 2,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',

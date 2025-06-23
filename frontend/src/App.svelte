@@ -53,19 +53,12 @@
 
 <!-- Enhanced Scroll Progress Indicator with Liquid Glass -->
 <div class="fixed top-0 left-0 w-full h-1 z-40">
-  <LiquidGlass variant="panel" intensity="light" className="w-full h-full">
-    <div class="relative w-full h-full bg-glass-primary-10 backdrop-blur-lg">
-      <div 
-        class="h-full bg-gradient-to-r from-primary via-secondary to-accent transition-all duration-75 shadow-liquid"
-        style="width: {scrollProgress}%"
-      ></div>
-      <!-- Shimmer effect that follows progress -->
-      <div 
-        class="absolute top-0 h-full w-8 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-glass-shimmer"
-        style="left: {Math.max(0, scrollProgress - 5)}%"
-      ></div>
-    </div>
-  </LiquidGlass>
+  <div class="relative w-full h-full bg-glass-primary-5 backdrop-blur-lg border-b border-glass-primary-10">
+    <div 
+      class="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-150 shadow-sm"
+      style="width: {scrollProgress}%"
+    ></div>
+  </div>
 </div>
 
 <main class="relative">

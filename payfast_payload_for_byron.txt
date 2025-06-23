@@ -1,0 +1,64 @@
+PayFast Integration Payload - Text Format
+==========================================
+
+merchant_id=13245841
+merchant_key=kzyobsh5zlvrw
+return_url=https://fletcraft.co.za/payment/success
+cancel_url=https://fletcraft.co.za/payment/cancel
+notify_url=https://fletcraft-backend.onrender.com/api/payfast/itn/
+name_first=John
+name_last=Doe
+email_address=test@fletcraft.co.za
+m_payment_id=TEST_ORDER_123456
+amount=100.00
+item_name=Web Development Service
+item_description=Custom website development and design
+custom_int1=1
+custom_str1=order_reference_123
+custom_str2=fletcraft_service
+custom_str3=web_development
+signature=af56c3af5b370b758404085b7e0ca363
+
+PAYLOAD EXPLANATION:
+===================
+
+Required Fields:
+- merchant_id: Your PayFast merchant ID (13245841)
+- merchant_key: Your PayFast merchant key (kzyobsh5zlvrw)
+- return_url: Where customers go after successful payment
+- cancel_url: Where customers go if they cancel payment
+- notify_url: Your ITN (Instant Transaction Notification) endpoint
+- amount: Payment amount in ZAR (format: 100.00)
+- item_name: Short description of service/product
+
+Customer Information:
+- name_first: Customer's first name
+- name_last: Customer's last name  
+- email_address: Customer's email for receipts
+
+Order Tracking:
+- m_payment_id: Your unique order/payment reference
+- custom_int1: Custom integer field for internal tracking
+- custom_str1-3: Custom string fields for additional data
+
+Security:
+- signature: MD5 hash of all parameters + passphrase for verification
+
+SIGNATURE GENERATION:
+====================
+Parameters are sorted alphabetically, concatenated with '&', 
+passphrase appended, then MD5 hashed:
+
+amount=100.00&cancel_url=https://fletcraft.co.za/payment/cancel&custom_int1=1&custom_str1=order_reference_123&custom_str2=fletcraft_service&custom_str3=web_development&email_address=test@fletcraft.co.za&item_description=Custom website development and design&item_name=Web Development Service&m_payment_id=TEST_ORDER_123456&merchant_id=13245841&merchant_key=kzyobsh5zlvrw&name_first=John&name_last=Doe&notify_url=https://fletcraft-backend.onrender.com/api/payfast/itn/&return_url=https://fletcraft.co.za/payment/success&Redeclip5e-8298
+
+MD5 Hash Result: af56c3af5b370b758404085b7e0ca363
+
+INTEGRATION NOTES:
+=================
+1. All URLs use HTTPS for security
+2. Amount format is always decimal with 2 places (100.00)
+3. ITN endpoint is properly configured for payment verification
+4. Signature includes your passphrase: Redeclip5e-8298
+5. Custom fields allow order tracking and analytics
+
+This payload represents a test transaction for R100.00 web development service. 

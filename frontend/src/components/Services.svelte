@@ -188,11 +188,7 @@
                 </div>
 
                 <!-- Floating Glass Particles -->
-                <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <LiquidGlass variant="orb" size="sm" intensity="light" className="w-3 h-3">
-                  </LiquidGlass>
-                </div>
-                <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-60 transition-opacity duration-300">
                   <LiquidGlass variant="orb" size="sm" intensity="light" className="w-2 h-2">
                   </LiquidGlass>
                 </div>
