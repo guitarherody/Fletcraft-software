@@ -18,6 +18,11 @@
     try {
       // Fetch services from API
       services = await fetchServices();
+      console.log('SERVICES LOADED:', services);
+      console.log('TOTAL SERVICES:', services.length);
+      services.forEach((service, index) => {
+        console.log(`Service ${index}:`, service.title, 'Price:', service.price);
+      });
       loading = false;
     } catch (err) {
       console.error('Failed to load services:', err);
@@ -137,55 +142,40 @@
     {:else}
       <div class="services-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {#each services as service}
-          <div class="service-card group">
-            <LiquidGlass variant="card" intensity="medium" animated={true} shimmer={true} className="h-full group-hover:scale-105 transition-transform duration-500">
-              <div class="relative p-6 sm:p-8 h-full flex flex-col">
-                <!-- Floating Icon with Glass Effect -->
-                <div class="service-icon relative mb-4 sm:mb-6">
-                  <LiquidGlass variant="orb" size="sm" intensity="light" animated={true} className="w-16 h-16 mx-auto">
-                    <div class="text-2xl transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
-                      {getServiceIcon(service.icon)}
-                    </div>
-                  </LiquidGlass>
-                </div>
+          <div class="service-card group bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6 hover:scale-105 transition-transform duration-500">
+            <!-- Icon -->
+            <div class="service-icon relative mb-6 text-center">
+              <div class="w-16 h-16 mx-auto bg-primary/20 rounded-full flex items-center justify-center text-3xl">
+                {getServiceIcon(service.icon)}
+              </div>
+            </div>
 
-                <!-- Service Content -->
-                <div class="flex-1 flex flex-col">
-                  <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-white group-hover:text-primary transition-colors duration-300">
-                    {service.title}
-                  </h3>
-                  <p class="text-gray-300 leading-relaxed text-sm sm:text-base mb-4 flex-1">
-                    {service.description}
-                  </p>
-                  
-                  <!-- Price Display - Always show with debug -->
-                  <div class="mb-4">
-                    <div class="bg-green-500/20 border border-green-400/30 rounded-lg px-4 py-2 text-center backdrop-blur-sm">
-                      <div class="text-2xl font-bold text-green-400">
-                        R {service.price || 'N/A'}
-                      </div>
-                      <div class="text-xs text-gray-300">One-time payment</div>
-                    </div>
+            <!-- Service Content -->
+            <div class="flex-1 flex flex-col">
+              <h3 class="text-xl font-bold mb-3 text-white text-center">
+                {service.title}
+              </h3>
+              <p class="text-gray-300 leading-relaxed text-sm mb-4 flex-1 text-center">
+                {service.description}
+              </p>
+              
+              <!-- Price Display -->
+              <div class="mb-4">
+                <div class="bg-green-500/20 border border-green-400/30 rounded-lg px-4 py-3 text-center">
+                  <div class="text-2xl font-bold text-green-400">
+                    R {service.price || '0.00'}
                   </div>
-                  
-                  <!-- Purchase Button - Always show -->
-                  <button
-                    on:click={() => openCheckout(service)}
-                    class="w-full px-4 py-3 bg-primary hover:bg-primary/80 text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center space-x-2">
-                    <span>Purchase Now</span>
-                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
-                  </button>
-                </div>
-
-                <!-- Floating Glass Particles -->
-                <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-60 transition-opacity duration-300">
-                  <LiquidGlass variant="orb" size="sm" intensity="light" className="w-2 h-2">
-                  </LiquidGlass>
+                  <div class="text-xs text-gray-300">One-time payment</div>
                 </div>
               </div>
-            </LiquidGlass>
+              
+              <!-- Purchase Button -->
+              <button
+                on:click={() => openCheckout(service)}
+                class="w-full px-4 py-3 bg-primary hover:bg-primary/80 text-white font-semibold rounded-lg transition-all duration-300">
+                Purchase Now
+              </button>
+            </div>
           </div>
         {/each}
       </div>
