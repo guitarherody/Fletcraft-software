@@ -151,40 +151,32 @@
 
                 <!-- Service Content -->
                 <div class="flex-1 flex flex-col">
-                  <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-text-primary group-hover:text-primary transition-colors duration-300">
+                  <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-white group-hover:text-primary transition-colors duration-300">
                     {service.title}
                   </h3>
-                  <p class="text-text-secondary leading-relaxed text-sm sm:text-base mb-4 flex-1">
+                  <p class="text-gray-300 leading-relaxed text-sm sm:text-base mb-4 flex-1">
                     {service.description}
                   </p>
                   
-                  <!-- Price Display with Glass Effect -->
-                  {#if service.price && parseFloat(String(service.price)) > 0}
-                    <div class="mb-4">
-                      <LiquidGlass variant="button" intensity="light" className="inline-block">
-                        <div class="px-4 py-2 text-center">
-                          <div class="text-2xl font-bold text-green-400">
-                            R {service.price}
-                          </div>
-                          <div class="text-xs text-text-secondary">One-time payment</div>
-                        </div>
-                      </LiquidGlass>
+                  <!-- Price Display - Always show with debug -->
+                  <div class="mb-4">
+                    <div class="bg-green-500/20 border border-green-400/30 rounded-lg px-4 py-2 text-center backdrop-blur-sm">
+                      <div class="text-2xl font-bold text-green-400">
+                        R {service.price || 'N/A'}
+                      </div>
+                      <div class="text-xs text-gray-300">One-time payment</div>
                     </div>
-                  {/if}
+                  </div>
                   
-                  <!-- Enhanced Purchase Button -->
-                  {#if service.price && parseFloat(String(service.price)) > 0}
-                    <LiquidGlass variant="button" intensity="strong" shimmer={true} className="w-full mt-auto">
-                      <button
-                        on:click={() => openCheckout(service)}
-                        class="w-full px-4 py-3 text-white font-semibold text-center transition-all duration-300 flex items-center justify-center space-x-2">
-                        <span>Purchase Now</span>
-                        <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg>
-                      </button>
-                    </LiquidGlass>
-                  {/if}
+                  <!-- Purchase Button - Always show -->
+                  <button
+                    on:click={() => openCheckout(service)}
+                    class="w-full px-4 py-3 bg-primary hover:bg-primary/80 text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center space-x-2">
+                    <span>Purchase Now</span>
+                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                  </button>
                 </div>
 
                 <!-- Floating Glass Particles -->
