@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayFast - ALL Signature Methods</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1200px; margin: 20px auto; padding: 20px; }
+        .method { background: #f8f9fa; padding: 20px; margin: 15px 0; border-radius: 8px; border: 1px solid #ddd; }
+        .btn { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        .btn:hover { background: #0056b3; }
+        h1 { text-align: center; color: #333; }
+        .signature { font-family: monospace; background: #e9ecef; padding: 5px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>🧪 PayFast Signature Testing - ALL METHODS</h1>
+    <p><strong>Instructions:</strong> Try each method until one works!</p>
+
+    <div class="method">
+        <h3>Method 1: Method 1 (URL encoded)</h3>
+        <p>Signature: <span class="signature">af56c3af5b370b758404085b7e0ca363</span></p>
+        
+        <form action="https://www.payfast.co.za/eng/process" method="post" style="display: inline;">
+            <input type="hidden" name="merchant_id" value="13245841">
+            <input type="hidden" name="merchant_key" value="kzyobsh5zlvrw">
+            <input type="hidden" name="return_url" value="https://fletcraft.co.za/payment/success">
+            <input type="hidden" name="cancel_url" value="https://fletcraft.co.za/payment/cancel">
+            <input type="hidden" name="notify_url" value="https://fletcraft-software.onrender.com/api/payment/notify/">
+            <input type="hidden" name="name_first" value="Test">
+            <input type="hidden" name="name_last" value="Customer">
+            <input type="hidden" name="email_address" value="test@fletcraft.co.za">
+            <input type="hidden" name="m_payment_id" value="TEST-1">
+            <input type="hidden" name="amount" value="5.00">
+            <input type="hidden" name="item_name" value="Test Service">
+            <input type="hidden" name="item_description" value="Test payment for debugging">
+            <input type="hidden" name="custom_str1" value="test">
+            <input type="hidden" name="custom_str2" value="debug">
+            <input type="hidden" name="custom_str3" value="Fletcraft">
+            <input type="hidden" name="signature" value="af56c3af5b370b758404085b7e0ca363">
+            <button type="submit" class="btn">🚀 Test Method 1</button>
+        </form>
+    </div>
+    <div class="method">
+        <h3>Method 2: Method 2 (No encoding)</h3>
+        <p>Signature: <span class="signature">92cbf96887596785d6d0c22827ec16cd</span></p>
+        
+        <form action="https://www.payfast.co.za/eng/process" method="post" style="display: inline;">
+            <input type="hidden" name="merchant_id" value="13245841">
+            <input type="hidden" name="merchant_key" value="kzyobsh5zlvrw">
+            <input type="hidden" name="return_url" value="https://fletcraft.co.za/payment/success">
+            <input type="hidden" name="cancel_url" value="https://fletcraft.co.za/payment/cancel">
+            <input type="hidden" name="notify_url" value="https://fletcraft-software.onrender.com/api/payment/notify/">
+            <input type="hidden" name="name_first" value="Test">
+            <input type="hidden" name="name_last" value="Customer">
+            <input type="hidden" name="email_address" value="test@fletcraft.co.za">
+            <input type="hidden" name="m_payment_id" value="TEST-2">
+            <input type="hidden" name="amount" value="5.00">
+            <input type="hidden" name="item_name" value="Test Service">
+            <input type="hidden" name="item_description" value="Test payment for debugging">
+            <input type="hidden" name="custom_str1" value="test">
+            <input type="hidden" name="custom_str2" value="debug">
+            <input type="hidden" name="custom_str3" value="Fletcraft">
+            <input type="hidden" name="signature" value="92cbf96887596785d6d0c22827ec16cd">
+            <button type="submit" class="btn">🚀 Test Method 2</button>
+        </form>
+    </div>
+    <div class="method">
+        <h3>Method 3: Method 3 (With merchant_key)</h3>
+        <p>Signature: <span class="signature">92cbf96887596785d6d0c22827ec16cd</span></p>
+        
+        <form action="https://www.payfast.co.za/eng/process" method="post" style="display: inline;">
+            <input type="hidden" name="merchant_id" value="13245841">
+            <input type="hidden" name="merchant_key" value="kzyobsh5zlvrw">
+            <input type="hidden" name="return_url" value="https://fletcraft.co.za/payment/success">
+            <input type="hidden" name="cancel_url" value="https://fletcraft.co.za/payment/cancel">
+            <input type="hidden" name="notify_url" value="https://fletcraft-software.onrender.com/api/payment/notify/">
+            <input type="hidden" name="name_first" value="Test">
+            <input type="hidden" name="name_last" value="Customer">
+            <input type="hidden" name="email_address" value="test@fletcraft.co.za">
+            <input type="hidden" name="m_payment_id" value="TEST-3">
+            <input type="hidden" name="amount" value="5.00">
+            <input type="hidden" name="item_name" value="Test Service">
+            <input type="hidden" name="item_description" value="Test payment for debugging">
+            <input type="hidden" name="custom_str1" value="test">
+            <input type="hidden" name="custom_str2" value="debug">
+            <input type="hidden" name="custom_str3" value="Fletcraft">
+            <input type="hidden" name="signature" value="92cbf96887596785d6d0c22827ec16cd">
+            <button type="submit" class="btn">🚀 Test Method 3</button>
+        </form>
+    </div>
+    <div class="method">
+        <h3>Method 4: Method 4 (No custom fields)</h3>
+        <p>Signature: <span class="signature">8d8b1c2cecfcd469ecb29bff7d1b0d78</span></p>
+        
+        <form action="https://www.payfast.co.za/eng/process" method="post" style="display: inline;">
+            <input type="hidden" name="merchant_id" value="13245841">
+            <input type="hidden" name="merchant_key" value="kzyobsh5zlvrw">
+            <input type="hidden" name="return_url" value="https://fletcraft.co.za/payment/success">
+            <input type="hidden" name="cancel_url" value="https://fletcraft.co.za/payment/cancel">
+            <input type="hidden" name="notify_url" value="https://fletcraft-software.onrender.com/api/payment/notify/">
+            <input type="hidden" name="name_first" value="Test">
+            <input type="hidden" name="name_last" value="Customer">
+            <input type="hidden" name="email_address" value="test@fletcraft.co.za">
+            <input type="hidden" name="m_payment_id" value="TEST-4">
+            <input type="hidden" name="amount" value="5.00">
+            <input type="hidden" name="item_name" value="Test Service">
+            <input type="hidden" name="item_description" value="Test payment for debugging">
+            <input type="hidden" name="custom_str1" value="test">
+            <input type="hidden" name="custom_str2" value="debug">
+            <input type="hidden" name="custom_str3" value="Fletcraft">
+            <input type="hidden" name="signature" value="8d8b1c2cecfcd469ecb29bff7d1b0d78">
+            <button type="submit" class="btn">🚀 Test Method 4</button>
+        </form>
+    </div>
+    <div class="method">
+        <h3>Method 5: Method 5 (Required only)</h3>
+        <p>Signature: <span class="signature">9538dabe2621ce1dde120cc24cd6606c</span></p>
+        
+        <form action="https://www.payfast.co.za/eng/process" method="post" style="display: inline;">
+            <input type="hidden" name="merchant_id" value="13245841">
+            <input type="hidden" name="merchant_key" value="kzyobsh5zlvrw">
+            <input type="hidden" name="return_url" value="https://fletcraft.co.za/payment/success">
+            <input type="hidden" name="cancel_url" value="https://fletcraft.co.za/payment/cancel">
+            <input type="hidden" name="notify_url" value="https://fletcraft-software.onrender.com/api/payment/notify/">
+            <input type="hidden" name="name_first" value="Test">
+            <input type="hidden" name="name_last" value="Customer">
+            <input type="hidden" name="email_address" value="test@fletcraft.co.za">
+            <input type="hidden" name="m_payment_id" value="TEST-5">
+            <input type="hidden" name="amount" value="5.00">
+            <input type="hidden" name="item_name" value="Test Service">
+            <input type="hidden" name="item_description" value="Test payment for debugging">
+            <input type="hidden" name="custom_str1" value="test">
+            <input type="hidden" name="custom_str2" value="debug">
+            <input type="hidden" name="custom_str3" value="Fletcraft">
+            <input type="hidden" name="signature" value="9538dabe2621ce1dde120cc24cd6606c">
+            <button type="submit" class="btn">🚀 Test Method 5</button>
+        </form>
+    </div>
+    <div class="method">
+        <h3>Method 6: Method 6 (No passphrase)</h3>
+        <p>Signature: <span class="signature">152a73ae0beffc93826f45a4aa77b239</span></p>
+        
+        <form action="https://www.payfast.co.za/eng/process" method="post" style="display: inline;">
+            <input type="hidden" name="merchant_id" value="13245841">
+            <input type="hidden" name="merchant_key" value="kzyobsh5zlvrw">
+            <input type="hidden" name="return_url" value="https://fletcraft.co.za/payment/success">
+            <input type="hidden" name="cancel_url" value="https://fletcraft.co.za/payment/cancel">
+            <input type="hidden" name="notify_url" value="https://fletcraft-software.onrender.com/api/payment/notify/">
+            <input type="hidden" name="name_first" value="Test">
+            <input type="hidden" name="name_last" value="Customer">
+            <input type="hidden" name="email_address" value="test@fletcraft.co.za">
+            <input type="hidden" name="m_payment_id" value="TEST-6">
+            <input type="hidden" name="amount" value="5.00">
+            <input type="hidden" name="item_name" value="Test Service">
+            <input type="hidden" name="item_description" value="Test payment for debugging">
+            <input type="hidden" name="custom_str1" value="test">
+            <input type="hidden" name="custom_str2" value="debug">
+            <input type="hidden" name="custom_str3" value="Fletcraft">
+            <input type="hidden" name="signature" value="152a73ae0beffc93826f45a4aa77b239">
+            <button type="submit" class="btn">🚀 Test Method 6</button>
+        </form>
+    </div>
+    <div class="method">
+        <h3>Method 7: Method 7 (Passphrase first)</h3>
+        <p>Signature: <span class="signature">c3aea0163fd2fcd4b2c97a45ff31eb1d</span></p>
+        
+        <form action="https://www.payfast.co.za/eng/process" method="post" style="display: inline;">
+            <input type="hidden" name="merchant_id" value="13245841">
+            <input type="hidden" name="merchant_key" value="kzyobsh5zlvrw">
+            <input type="hidden" name="return_url" value="https://fletcraft.co.za/payment/success">
+            <input type="hidden" name="cancel_url" value="https://fletcraft.co.za/payment/cancel">
+            <input type="hidden" name="notify_url" value="https://fletcraft-software.onrender.com/api/payment/notify/">
+            <input type="hidden" name="name_first" value="Test">
+            <input type="hidden" name="name_last" value="Customer">
+            <input type="hidden" name="email_address" value="test@fletcraft.co.za">
+            <input type="hidden" name="m_payment_id" value="TEST-7">
+            <input type="hidden" name="amount" value="5.00">
+            <input type="hidden" name="item_name" value="Test Service">
+            <input type="hidden" name="item_description" value="Test payment for debugging">
+            <input type="hidden" name="custom_str1" value="test">
+            <input type="hidden" name="custom_str2" value="debug">
+            <input type="hidden" name="custom_str3" value="Fletcraft">
+            <input type="hidden" name="signature" value="c3aea0163fd2fcd4b2c97a45ff31eb1d">
+            <button type="submit" class="btn">🚀 Test Method 7</button>
+        </form>
+    </div>
+    <div class="method">
+        <h3>Method 8: Method 8 (Doc order)</h3>
+        <p>Signature: <span class="signature">aa3ae2d2fcb22274c2546a4c4a0a84f6</span></p>
+        
+        <form action="https://www.payfast.co.za/eng/process" method="post" style="display: inline;">
+            <input type="hidden" name="merchant_id" value="13245841">
+            <input type="hidden" name="merchant_key" value="kzyobsh5zlvrw">
+            <input type="hidden" name="return_url" value="https://fletcraft.co.za/payment/success">
+            <input type="hidden" name="cancel_url" value="https://fletcraft.co.za/payment/cancel">
+            <input type="hidden" name="notify_url" value="https://fletcraft-software.onrender.com/api/payment/notify/">
+            <input type="hidden" name="name_first" value="Test">
+            <input type="hidden" name="name_last" value="Customer">
+            <input type="hidden" name="email_address" value="test@fletcraft.co.za">
+            <input type="hidden" name="m_payment_id" value="TEST-8">
+            <input type="hidden" name="amount" value="5.00">
+            <input type="hidden" name="item_name" value="Test Service">
+            <input type="hidden" name="item_description" value="Test payment for debugging">
+            <input type="hidden" name="custom_str1" value="test">
+            <input type="hidden" name="custom_str2" value="debug">
+            <input type="hidden" name="custom_str3" value="Fletcraft">
+            <input type="hidden" name="signature" value="aa3ae2d2fcb22274c2546a4c4a0a84f6">
+            <button type="submit" class="btn">🚀 Test Method 8</button>
+        </form>
+    </div>
+</body>
+</html>

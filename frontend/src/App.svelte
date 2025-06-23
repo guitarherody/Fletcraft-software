@@ -12,6 +12,9 @@
   import Team from './components/Team.svelte';
   import Contact from './components/Contact.svelte';
   
+  // Glass Morphism Components
+  import LiquidGlass from './components/LiquidGlass.svelte';
+  
   // Simple Components
   import ParticleSystem from './components/ParticleSystem.svelte';
   
@@ -48,12 +51,21 @@
 
 <!-- Simple loading indicator (removed artificial delay) -->
 
-<!-- Scroll Progress Indicator -->
-<div class="fixed top-0 left-0 w-full h-1 bg-primary/20 z-40">
-  <div 
-    class="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-75"
-    style="width: {scrollProgress}%"
-  ></div>
+<!-- Enhanced Scroll Progress Indicator with Liquid Glass -->
+<div class="fixed top-0 left-0 w-full h-1 z-40">
+  <LiquidGlass variant="panel" intensity="light" className="w-full h-full">
+    <div class="relative w-full h-full bg-glass-primary-10 backdrop-blur-lg">
+      <div 
+        class="h-full bg-gradient-to-r from-primary via-secondary to-accent transition-all duration-75 shadow-liquid"
+        style="width: {scrollProgress}%"
+      ></div>
+      <!-- Shimmer effect that follows progress -->
+      <div 
+        class="absolute top-0 h-full w-8 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-glass-shimmer"
+        style="left: {Math.max(0, scrollProgress - 5)}%"
+      ></div>
+    </div>
+  </LiquidGlass>
 </div>
 
 <main class="relative">

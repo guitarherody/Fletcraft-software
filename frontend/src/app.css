@@ -2,6 +2,9 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* Apple Liquid Glass UI Components */
+@import './liquid-glass.css';
+
 /* Ensure proper mobile viewport handling */
 html {
   font-size: 16px;

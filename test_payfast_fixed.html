@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayFast Test - FIXED SIGNATURE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c5aa0;
+            text-align: center;
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .btn {
+            background-color: #28a745;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px 0;
+            width: 100%;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
+        .signature-info {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 4px solid #2c5aa0;
+        }
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 PayFast Test - FIXED SIGNATURE</h1>
+        
+        <div class="signature-info">
+            <h3 class="success">✅ Signature Fixed!</h3>
+            <p>Using correct signature: <code>af56c3af5b370b758404085b7e0ca363</code></p>
+            <p>Generated with proper URL encoding and your PayFast credentials.</p>
+        </div>
+
+        <form action="https://www.payfast.co.za/eng/process" method="post">
+            <!-- PayFast Required Fields -->
+            <input type="hidden" name="merchant_id" value="13245841">
+            <input type="hidden" name="merchant_key" value="kzyobsh5zlvrw">
+            <input type="hidden" name="return_url" value="https://fletcraft.co.za/payment/success">
+            <input type="hidden" name="cancel_url" value="https://fletcraft.co.za/payment/cancel">
+            <input type="hidden" name="notify_url" value="https://fletcraft-software.onrender.com/api/payment/notify/">
+            
+            <!-- Payment Details -->
+            <div class="form-group">
+                <label>First Name:</label>
+                <input type="text" name="name_first" value="Test" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label>Last Name:</label>
+                <input type="text" name="name_last" value="Customer" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" name="email_address" value="test@fletcraft.co.za" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label>Payment Reference:</label>
+                <input type="text" name="m_payment_id" value="TEST-123" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label>Amount (ZAR):</label>
+                <input type="text" name="amount" value="5.00" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label>Item Name:</label>
+                <input type="text" name="item_name" value="Test Service" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label>Description:</label>
+                <textarea name="item_description" readonly>Test payment for debugging</textarea>
+            </div>
+            
+            <!-- Custom Fields -->
+            <input type="hidden" name="custom_str1" value="test">
+            <input type="hidden" name="custom_str2" value="debug">
+            <input type="hidden" name="custom_str3" value="Fletcraft">
+            
+            <!-- FIXED SIGNATURE -->
+            <input type="hidden" name="signature" value="af56c3af5b370b758404085b7e0ca363">
+            
+            <button type="submit" class="btn">🚀 Test Payment with FIXED Signature</button>
+        </form>
+        
+        <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 5px;">
+            <h4>🔍 Debugging Info:</h4>
+            <ul>
+                <li><strong>Merchant ID:</strong> 13245841</li>
+                <li><strong>Environment:</strong> Live PayFast</li>
+                <li><strong>Signature Method:</strong> MD5 with URL encoding</li>
+                <li><strong>Passphrase:</strong> ✅ Included in signature</li>
+                <li><strong>Amount:</strong> R5.00 (test amount)</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html> 

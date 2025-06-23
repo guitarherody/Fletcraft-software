@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple PayFast Test</title>
+</head>
+<body>
+    <h2>Simple PayFast Test Form</h2>
+    <p>This is a minimal test to verify your PayFast credentials work</p>
+    
+    <form action="https://www.payfast.co.za/eng/process" method="post">
+        <!-- Required fields -->
+        <input type="hidden" name="merchant_id" value="13245841">
+        <input type="hidden" name="merchant_key" value="kzyobsh5zlvrw">
+        <input type="hidden" name="return_url" value="https://fletcraft.co.za/payment/success">
+        <input type="hidden" name="cancel_url" value="https://fletcraft.co.za/payment/cancel">
+        <input type="hidden" name="notify_url" value="https://fletcraft-software.onrender.com/api/payment/notify/">
+        
+        <!-- Customer details -->
+        <input type="hidden" name="name_first" value="Test">
+        <input type="hidden" name="name_last" value="Customer">
+        <input type="hidden" name="email_address" value="test@fletcraft.co.za">
+        
+        <!-- Payment details -->
+        <input type="hidden" name="m_payment_id" value="TEST-123">
+        <input type="hidden" name="amount" value="5.00">
+        <input type="hidden" name="item_name" value="Test Service">
+        <input type="hidden" name="item_description" value="Test payment for debugging">
+        
+        <!-- Custom fields -->
+        <input type="hidden" name="custom_str1" value="test">
+        <input type="hidden" name="custom_str2" value="debug">
+        <input type="hidden" name="custom_str3" value="Fletcraft">
+        
+        <!-- Signature (calculated with your passphrase) -->
+        <input type="hidden" name="signature" value="ad8e7699c82d5fe8c6d949ab3d593af1">
+        
+        <p><strong>Test Details:</strong></p>
+        <ul>
+            <li>Amount: R5.00</li>
+            <li>Merchant ID: 13245841</li>
+            <li>Test Order: TEST-123</li>
+        </ul>
+        
+        <button type="submit" style="background: #007cba; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+            Test PayFast Payment (R5.00)
+        </button>
+    </form>
+    
+    <div style="margin-top: 20px; padding: 10px; background: #f0f0f0; border-radius: 5px;">
+        <h3>What this test does:</h3>
+        <ul>
+            <li>Uses your exact PayFast credentials</li>
+            <li>Tests with a minimal R5.00 payment</li>
+            <li>Bypasses our Django backend completely</li>
+            <li>If this works, the issue is in our Django code</li>
+            <li>If this fails, the issue is in your PayFast account setup</li>
+        </ul>
+    </div>
+</body>
+</html> 
