@@ -159,7 +159,7 @@
                   </p>
                   
                   <!-- Price Display with Glass Effect -->
-                  {#if service.price && service.price > 0}
+                  {#if service.price && parseFloat(String(service.price)) > 0}
                     <div class="mb-4">
                       <LiquidGlass variant="button" intensity="light" className="inline-block">
                         <div class="px-4 py-2 text-center">
@@ -173,7 +173,7 @@
                   {/if}
                   
                   <!-- Enhanced Purchase Button -->
-                  {#if service.price && service.price > 0}
+                  {#if service.price && parseFloat(String(service.price)) > 0}
                     <LiquidGlass variant="button" intensity="strong" shimmer={true} className="w-full mt-auto">
                       <button
                         on:click={() => openCheckout(service)}
