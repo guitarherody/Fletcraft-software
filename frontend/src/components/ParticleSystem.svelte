@@ -35,41 +35,71 @@
     overflow: hidden;
   }
 
-  /* Mysterious Glowing Particles */
+  /* Emerald-Purple Glowing Particles */
   .cinematic-particle {
     position: absolute;
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background: radial-gradient(circle, 
-      rgba(255, 120, 60, 1) 0%,
-      rgba(255, 80, 40, 0.8) 20%,
-      rgba(200, 60, 30, 0.4) 60%,
-      transparent 100%
-    );
     filter: blur(0.5px);
-    box-shadow: 
-      0 0 12px rgba(255, 100, 50, 0.9),
-      0 0 24px rgba(255, 80, 40, 0.5),
-      0 0 36px rgba(200, 60, 30, 0.3);
     animation: mysteriousFloat 12s ease-in-out infinite;
   }
 
-  /* Dynamic Light Rays */
+  /* Alternate between emerald and purple particles */
+  .cinematic-particle:nth-child(odd) {
+    background: radial-gradient(circle, 
+      rgba(16, 185, 129, 1) 0%,
+      rgba(5, 150, 105, 0.8) 20%,
+      rgba(4, 120, 87, 0.4) 60%,
+      transparent 100%
+    );
+    box-shadow: 
+      0 0 12px rgba(16, 185, 129, 0.9),
+      0 0 24px rgba(5, 150, 105, 0.5),
+      0 0 36px rgba(4, 120, 87, 0.3);
+  }
+
+  .cinematic-particle:nth-child(even) {
+    background: radial-gradient(circle, 
+      rgba(147, 51, 234, 1) 0%,
+      rgba(126, 34, 206, 0.8) 20%,
+      rgba(107, 33, 168, 0.4) 60%,
+      transparent 100%
+    );
+    box-shadow: 
+      0 0 12px rgba(147, 51, 234, 0.9),
+      0 0 24px rgba(126, 34, 206, 0.5),
+      0 0 36px rgba(107, 33, 168, 0.3);
+  }
+
+  /* Emerald-Purple Dynamic Light Rays */
   .light-ray {
     position: absolute;
     width: 250px;
     height: 1px;
-    background: linear-gradient(90deg, 
-      transparent 0%,
-      rgba(255, 100, 50, 0.1) 25%,
-      rgba(255, 120, 60, 0.4) 50%,
-      rgba(255, 100, 50, 0.1) 75%,
-      transparent 100%
-    );
     filter: blur(0.8px);
     animation: ominousLightSweep 18s ease-in-out infinite;
     transform-origin: left center;
+  }
+
+  .light-ray:nth-child(odd) {
+    background: linear-gradient(90deg, 
+      transparent 0%,
+      rgba(16, 185, 129, 0.1) 25%,
+      rgba(16, 185, 129, 0.4) 50%,
+      rgba(16, 185, 129, 0.1) 75%,
+      transparent 100%
+    );
+  }
+
+  .light-ray:nth-child(even) {
+    background: linear-gradient(90deg, 
+      transparent 0%,
+      rgba(147, 51, 234, 0.1) 25%,
+      rgba(147, 51, 234, 0.4) 50%,
+      rgba(147, 51, 234, 0.1) 75%,
+      transparent 100%
+    );
   }
 
   /* Realistic Smoke Effects */

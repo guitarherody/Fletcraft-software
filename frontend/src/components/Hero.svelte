@@ -54,7 +54,7 @@
     
     <!-- Badge -->
     <div class="animate-in mb-8" style="animation-delay: 0ms;">
-      <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-white/10 text-white border border-orange-400/30 backdrop-blur-sm">
+      <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-white/10 text-white border border-emerald-400/30 backdrop-blur-sm">
         Welcome to Fletcraft Software
       </span>
     </div>
@@ -64,7 +64,7 @@
       <span class="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-purple-400 to-white">
         Crafting Software
       </span>
-      <span class="block text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-400">
+      <span class="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-violet-400">
         Excellence
       </span>
     </h1>
@@ -78,13 +78,13 @@
     <div class="animate-in flex flex-col sm:flex-row gap-4 justify-center items-center" style="animation-delay: 600ms;">
       <button 
         on:click={() => handleNavigation('/pricing')}
-        class="px-8 py-4 bg-gradient-to-r from-orange-600 to-red-600 text-white rounded-lg font-semibold hover:from-orange-700 hover:to-red-700 transition-all duration-300 shadow-lg hover:shadow-orange-500/25 hover:scale-105"
+        class="px-8 py-4 bg-gradient-to-r from-emerald-600 to-purple-600 text-white rounded-lg font-semibold hover:from-emerald-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-emerald-500/25 hover:scale-105"
       >
         Get Started
       </button>
       <button 
         on:click={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-        class="px-8 py-4 bg-white/10 text-white rounded-lg font-semibold backdrop-blur-sm border border-orange-400/30 hover:bg-orange-500/20 hover:border-orange-400/50 transition-all duration-300"
+        class="px-8 py-4 bg-white/10 text-white rounded-lg font-semibold backdrop-blur-sm border border-purple-400/30 hover:bg-purple-500/20 hover:border-purple-400/50 transition-all duration-300"
       >
         Learn More
       </button>
@@ -93,7 +93,7 @@
     <!-- Simple feature highlights -->
     <div class="animate-in mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto" style="animation-delay: 800ms;">
       
-      <div class="glass-card p-6 rounded-2xl bg-white/5 border border-orange-400/20 backdrop-blur-sm">
+      <div class="glass-card p-6 rounded-2xl bg-white/5 border border-emerald-400/20 backdrop-blur-sm">
         <div class="text-3xl mb-4">⚡</div>
         <h3 class="text-white font-semibold mb-2">Lightning Fast</h3>
         <p class="text-gray-400 text-sm">Optimized performance and cutting-edge technology</p>
@@ -117,8 +117,8 @@
 
   <!-- Scroll indicator -->
   <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-    <div class="w-6 h-10 border-2 border-orange-400/50 rounded-full flex justify-center">
-      <div class="w-1 h-3 bg-orange-400/60 rounded-full mt-2 animate-pulse"></div>
+    <div class="w-6 h-10 border-2 border-emerald-400/50 rounded-full flex justify-center">
+      <div class="w-1 h-3 bg-emerald-400/60 rounded-full mt-2 animate-pulse"></div>
     </div>
   </div>
 

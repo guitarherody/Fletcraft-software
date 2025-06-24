@@ -64,7 +64,7 @@
   }
 </script>
 
-<nav bind:this={nav} class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-11/12 max-w-4xl transition-all duration-300">
+<nav bind:this={nav} class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-11/12 max-w-4xl transition-all duration-300 {isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}">
   <!-- Vaporous Effect Layers -->
   <div class="vapor-layer vapor-1"></div>
   <div class="vapor-layer vapor-2"></div>
@@ -112,7 +112,7 @@
 
       <!-- CTA Button -->
       <div class="flex items-center space-x-4">
-        <button on:click={() => handleNavigation('/pricing')} class="cta-button px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-orange-600 to-red-600 text-white hover:from-orange-700 hover:to-red-700 transition-all duration-200">
+        <button on:click={() => handleNavigation('/pricing')} class="cta-button px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-emerald-600 to-purple-600 text-white hover:from-emerald-700 hover:to-purple-700 transition-all duration-200">
           Get Started
         </button>
         
@@ -132,14 +132,19 @@
     position: relative;
   }
 
-  /* Vaporous Glass Effect */
+  /* Enhanced Translucent Glass Effect */
   .nav-container {
-    background: rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(25px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.01);
+    backdrop-filter: blur(20px) saturate(220%) contrast(120%) hue-rotate(10deg);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     transition: all 0.4s ease;
     position: relative;
     overflow: hidden;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.1);
   }
 
   .nav-container::before {
@@ -182,14 +187,16 @@
   }
 
   .nav-container.scrolled {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.2);
     box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.4),
-      0 0 20px rgba(147, 51, 234, 0.1),
-      0 0 40px rgba(16, 185, 129, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(30px) saturate(200%);
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 0 20px rgba(147, 51, 234, 0.15),
+      0 0 40px rgba(16, 185, 129, 0.12),
+      0 0 60px rgba(255, 255, 255, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(25px) saturate(250%) contrast(130%) hue-rotate(15deg);
   }
 
   /* Vapor Layers */
