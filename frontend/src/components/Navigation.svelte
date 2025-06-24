@@ -83,7 +83,7 @@
 
       <!-- CTA Button -->
       <div class="flex items-center space-x-4">
-        <button on:click={() => handleNavigation('/pricing')} class="cta-button px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 transition-all duration-200">
+        <button on:click={() => handleNavigation('/pricing')} class="cta-button px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-orange-600 to-red-600 text-white hover:from-orange-700 hover:to-red-700 transition-all duration-200">
           Get Started
         </button>
         
@@ -123,6 +123,6 @@
 
   .cta-button:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
   }
 </style> 

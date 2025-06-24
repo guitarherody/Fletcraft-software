@@ -145,11 +145,6 @@
   <!-- Navigation -->
   <Navigation />
   
-  <!-- Debug indicator (remove in production) -->
-  <div class="fixed top-4 right-4 z-50 bg-black/80 text-white px-3 py-1 rounded-lg text-sm font-mono">
-    Page: {currentPage}
-  </div>
-  
   <!-- Route-based content -->
   {#if currentPage === 'home'}
     <!-- Main Home Sections -->
