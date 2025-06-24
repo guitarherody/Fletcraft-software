@@ -105,15 +105,20 @@ class OrderViewSet(viewsets.ModelViewSet):
             # Remove empty values while preserving order
             payment_data = OrderedDict([(k, v) for k, v in payment_data.items() if v])
             
-            # Generate signature using PayFast official method
-            # Based on PayFast FAQ: "The most-likely cause is if you generated the MD5 hashed string with the variables in the wrong order"
-            # Must use URL encoding for signature generation and ensure proper field order
-            signature_params = []
+            # Generate signature using ALPHABETICAL ORDER (API method)
+            # Try alphabetical field order instead of form field order
+            signature_data = {}
             for key, value in payment_data.items():
                 if key != 'merchant_key' and key != 'signature':  # Exclude merchant_key and signature from signature
-                    # PayFast requires URL encoding for signature generation
-                    encoded_value = urllib.parse.quote_plus(str(value))
-                    signature_params.append(f'{key}={encoded_value}')
+                    signature_data[key] = value
+            
+            # Sort fields alphabetically
+            signature_params = []
+            for key in sorted(signature_data.keys()):
+                value = signature_data[key]
+                # PayFast requires URL encoding for signature generation
+                encoded_value = urllib.parse.quote_plus(str(value))
+                signature_params.append(f'{key}={encoded_value}')
             
             # Create signature string with proper encoding
             signature_string = '&'.join(signature_params)
@@ -174,9 +179,11 @@ class PaymentTransactionViewSet(viewsets.ModelViewSet):
             # Remove signature from data for verification (and merchant_key if present)
             data_for_signature = {k: v for k, v in payment_data.items() if k not in ['signature', 'merchant_key']}
             
-            # Use PayFast official signature verification method (same as form generation)
+            # Use ALPHABETICAL ORDER signature verification method (same as form generation)
             signature_params = []
-            for key, value in data_for_signature.items():  # Preserve original order
+            # Sort fields alphabetically for signature verification
+            for key in sorted(data_for_signature.keys()):
+                value = data_for_signature[key]
                 # PayFast requires URL encoding for signature verification
                 encoded_value = urllib.parse.quote_plus(str(value))
                 signature_params.append(f'{key}={encoded_value}')
