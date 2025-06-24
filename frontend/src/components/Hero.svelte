@@ -60,8 +60,10 @@
     </div>
 
     <!-- Main title -->
-    <h1 class="animate-in text-5xl md:text-7xl font-bold text-white mb-6" style="animation-delay: 200ms;">
-      Crafting Software
+    <h1 class="animate-in text-5xl md:text-7xl font-bold mb-6" style="animation-delay: 200ms;">
+      <span class="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-purple-400 to-white">
+        Crafting Software
+      </span>
       <span class="block text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-400">
         Excellence
       </span>

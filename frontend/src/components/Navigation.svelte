@@ -8,17 +8,32 @@
 
   let nav: HTMLElement;
   let isScrolled = false;
+  let isVisible = true;
+  let lastScrollY = 0;
 
   onMount(() => {
-    // Simple scroll effect
+    // Enhanced scroll effect with sticky behavior
     const handleScroll = () => {
-      const scrolled = window.scrollY > 80;
+      const currentScrollY = window.scrollY;
+      const scrolled = currentScrollY > 80;
+      
+      // Determine if navbar should be visible (sticky behavior)
+      if (currentScrollY > lastScrollY && currentScrollY > 200) {
+        // Scrolling down - hide navbar
+        isVisible = false;
+      } else {
+        // Scrolling up or at top - show navbar
+        isVisible = true;
+      }
+      
       if (scrolled !== isScrolled) {
         isScrolled = scrolled;
       }
+      
+      lastScrollY = currentScrollY;
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   });
 
