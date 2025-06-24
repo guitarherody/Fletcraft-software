@@ -3,20 +3,20 @@
 
   let container: HTMLDivElement;
   let particles: HTMLElement[] = [];
-  let particleCount = 80; // Much more particles for better ambiance
+  let particleCount = 120; // Increased particle count for more visibility
 
   // Detect if user is on mobile
   const isMobile = () => window.innerWidth < 768;
   
   onMount(() => {
     // Adjust particle count based on screen size
-    particleCount = isMobile() ? 50 : 80;
+    particleCount = isMobile() ? 80 : 120;
     
     createParticles();
     
     // Handle resize
     const handleResize = () => {
-      const newParticleCount = isMobile() ? 50 : 80;
+      const newParticleCount = isMobile() ? 80 : 120;
       if (newParticleCount !== particleCount) {
         particleCount = newParticleCount;
         clearParticles();
@@ -45,14 +45,14 @@
     const particle = document.createElement('div');
     particle.className = 'floating-particle';
     
-    // Random particle type
+    // Random particle type with higher chance for visible types
     const type = Math.random();
-    if (type < 0.3) {
-      particle.classList.add('sparkle');
-    } else if (type < 0.6) {
-      particle.classList.add('dot');
+    if (type < 0.4) {
+      particle.classList.add('sparkle-bright');
+    } else if (type < 0.7) {
+      particle.classList.add('orb-bright');
     } else {
-      particle.classList.add('orb');
+      particle.classList.add('glow-dot');
     }
     
     return particle;
@@ -68,8 +68,8 @@
       const x = Math.random() * window.innerWidth;
       const y = Math.random() * window.innerHeight;
       
-      // Random size
-      const size = Math.random() * 4 + 2; // 2-6px
+      // Larger, more visible size range
+      const size = Math.random() * 6 + 3; // 3-9px instead of 2-6px
       
       // Set initial position and properties
       particle.style.left = x + 'px';
@@ -77,7 +77,7 @@
       particle.style.width = size + 'px';
       particle.style.height = size + 'px';
       particle.style.animationDelay = Math.random() * 10 + 's';
-      particle.style.animationDuration = (15 + Math.random() * 25) + 's'; // 15-40s float time
+      particle.style.animationDuration = (12 + Math.random() * 20) + 's'; // 12-32s float time
       
       container.appendChild(particle);
       particles.push(particle);
@@ -97,43 +97,51 @@
     animation: gentleFloat linear infinite;
   }
 
-  :global(.floating-particle.sparkle) {
+  :global(.floating-particle.sparkle-bright) {
     background: radial-gradient(circle, 
-      rgba(255, 255, 255, 0.8) 0%,
-      rgba(232, 121, 249, 0.6) 50%,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(249, 115, 22, 0.8) 30%,
+      rgba(234, 88, 12, 0.6) 60%,
       transparent 100%
     );
     border-radius: 50%;
     box-shadow: 
-      0 0 6px rgba(255, 255, 255, 0.5),
-      0 0 12px rgba(232, 121, 249, 0.3);
-    animation: gentleFloat linear infinite, sparkle 3s ease-in-out infinite;
+      0 0 8px rgba(249, 115, 22, 0.8),
+      0 0 16px rgba(234, 88, 12, 0.6),
+      0 0 24px rgba(249, 115, 22, 0.4);
+    animation: gentleFloat linear infinite, brightSparkle 2s ease-in-out infinite;
   }
 
-  :global(.floating-particle.dot) {
+  :global(.floating-particle.orb-bright) {
     background: radial-gradient(circle, 
-      rgba(192, 132, 252, 0.7) 0%,
-      rgba(168, 85, 247, 0.4) 70%,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(168, 85, 247, 0.8) 40%,
+      rgba(147, 51, 234, 0.6) 70%,
       transparent 100%
     );
     border-radius: 50%;
-    box-shadow: 0 0 4px rgba(192, 132, 252, 0.4);
-    animation: gentleFloat linear infinite, pulse 4s ease-in-out infinite;
+    box-shadow: 
+      0 0 10px rgba(168, 85, 247, 0.7),
+      0 0 20px rgba(147, 51, 234, 0.5),
+      0 0 30px rgba(168, 85, 247, 0.3);
+    animation: gentleFloat linear infinite, orbPulse 3s ease-in-out infinite;
   }
 
-  :global(.floating-particle.orb) {
+  :global(.floating-particle.glow-dot) {
     background: radial-gradient(circle at 30% 30%, 
-      rgba(139, 92, 246, 0.5) 0%,
-      rgba(99, 102, 241, 0.3) 60%,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(16, 185, 129, 0.8) 50%,
+      rgba(5, 150, 105, 0.6) 80%,
       transparent 100%
     );
     border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(1px);
     box-shadow: 
-      0 0 8px rgba(139, 92, 246, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    animation: gentleFloat linear infinite, drift 6s ease-in-out infinite;
+      0 0 12px rgba(16, 185, 129, 0.6),
+      0 0 24px rgba(5, 150, 105, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    animation: gentleFloat linear infinite, glowDrift 4s ease-in-out infinite;
   }
 
   @keyframes gentleFloat {
@@ -141,70 +149,96 @@
       transform: translateY(100vh) translateX(0px) rotate(0deg);
       opacity: 0;
     }
+    5% {
+      opacity: 0.8;
+    }
     10% {
       opacity: 1;
     }
     90% {
-      opacity: 1;
+      opacity: 0.8;
     }
     100% {
-      transform: translateY(-10vh) translateX(50px) rotate(180deg);
+      transform: translateY(-10vh) translateX(60px) rotate(180deg);
       opacity: 0;
     }
   }
 
-  @keyframes sparkle {
+  @keyframes brightSparkle {
     0%, 100% {
-      transform: scale(1);
+      transform: scale(1) rotate(0deg);
       filter: brightness(1);
+      box-shadow: 
+        0 0 8px rgba(249, 115, 22, 0.8),
+        0 0 16px rgba(234, 88, 12, 0.6);
     }
     50% {
-      transform: scale(1.5);
-      filter: brightness(1.5);
+      transform: scale(1.5) rotate(180deg);
+      filter: brightness(1.8);
+      box-shadow: 
+        0 0 16px rgba(249, 115, 22, 1),
+        0 0 32px rgba(234, 88, 12, 0.8),
+        0 0 48px rgba(249, 115, 22, 0.6);
     }
   }
 
-  @keyframes pulse {
+  @keyframes orbPulse {
     0%, 100% {
       transform: scale(1);
-      opacity: 0.7;
+      opacity: 0.8;
+      box-shadow: 
+        0 0 10px rgba(168, 85, 247, 0.7),
+        0 0 20px rgba(147, 51, 234, 0.5);
     }
     50% {
-      transform: scale(1.2);
+      transform: scale(1.3);
       opacity: 1;
+      box-shadow: 
+        0 0 20px rgba(168, 85, 247, 1),
+        0 0 40px rgba(147, 51, 234, 0.8),
+        0 0 60px rgba(168, 85, 247, 0.6);
     }
   }
 
-  @keyframes drift {
+  @keyframes glowDrift {
     0%, 100% {
-      transform: translateX(0px);
+      transform: translateX(0px) scale(1);
+      box-shadow: 
+        0 0 12px rgba(16, 185, 129, 0.6),
+        0 0 24px rgba(5, 150, 105, 0.4);
     }
     25% {
-      transform: translateX(-20px);
+      transform: translateX(-30px) scale(1.1);
+      box-shadow: 
+        0 0 18px rgba(16, 185, 129, 0.8),
+        0 0 36px rgba(5, 150, 105, 0.6);
     }
     75% {
-      transform: translateX(20px);
+      transform: translateX(30px) scale(0.9);
+      box-shadow: 
+        0 0 15px rgba(16, 185, 129, 0.7),
+        0 0 30px rgba(5, 150, 105, 0.5);
     }
   }
 
   /* Responsive adjustments */
   @media (max-width: 768px) {
     :global(.floating-particle) {
-      animation-duration: 20s, 4s;
+      animation-duration: 18s, 3s;
     }
   }
 
   /* Performance optimizations */
   @media (prefers-reduced-motion: reduce) {
     :global(.floating-particle) {
-      animation-duration: 30s;
+      animation-duration: 40s;
       animation-timing-function: linear;
     }
     
-    :global(.floating-particle.sparkle),
-    :global(.floating-particle.dot),
-    :global(.floating-particle.orb) {
-      animation: gentleFloat 30s linear infinite;
+    :global(.floating-particle.sparkle-bright),
+    :global(.floating-particle.orb-bright),
+    :global(.floating-particle.glow-dot) {
+      animation: gentleFloat 40s linear infinite;
     }
   }
 </style>
