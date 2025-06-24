@@ -1,12 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import gsap from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
   import { fetchServices, type Service } from '../lib/api';
   import Checkout from './Checkout.svelte';
-  import LiquidGlass from './LiquidGlass.svelte';
-
-  gsap.registerPlugin(ScrollTrigger);
 
   let services: Service[] = [];
   let loading = true;
@@ -16,75 +11,13 @@
 
   onMount(async () => {
     try {
-      // Fetch services from API
       services = await fetchServices();
-      console.log('SERVICES LOADED:', services);
-      console.log('TOTAL SERVICES:', services.length);
-      services.forEach((service, index) => {
-        console.log(`Service ${index}:`, service.title, 'Price:', service.price);
-      });
       loading = false;
     } catch (err) {
       console.error('Failed to load services:', err);
       error = 'Failed to load services. Please try again later.';
       loading = false;
     }
-
-    // Enhanced animate service cards only after they're rendered
-    setTimeout(() => {
-      const serviceCards = document.querySelectorAll('.service-card');
-      const servicesGrid = document.querySelector('.services-grid');
-      
-      if (serviceCards.length > 0 && servicesGrid) {
-        // Staggered entrance animation
-        gsap.fromTo(serviceCards, 
-          {
-            y: 60,
-            opacity: 0,
-            scale: 0.8,
-            rotationY: 45
-          },
-          {
-            scrollTrigger: {
-              trigger: servicesGrid,
-              start: 'top center+=100',
-              toggleActions: 'play none none reverse'
-            },
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            rotationY: 0,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: 'back.out(1.7)'
-          }
-        );
-
-        // Add continuous floating animation
-        gsap.to(serviceCards, {
-          y: '+=10',
-          duration: 3,
-          ease: 'sine.inOut',
-          yoyo: true,
-          repeat: -1,
-          stagger: 0.2
-        });
-
-        // Icon animation on scroll
-        gsap.from('.service-icon', {
-          scrollTrigger: {
-            trigger: servicesGrid,
-            start: 'top center+=150',
-            toggleActions: 'play none none reverse'
-          },
-          scale: 0,
-          rotation: 180,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: 'elastic.out(1, 0.5)'
-        });
-      }
-    }, 100);
   });
 
   // Icon mapping for services
@@ -111,18 +44,17 @@
   }
 </script>
 
-<section id="services" class="section relative overflow-hidden bg-background py-16 sm:py-20 lg:py-24">
-  <!-- Background Elements -->
-  <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(99,102,241,0.05)_0%,transparent_100%)]"></div>
-  <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(139,92,246,0.05)_0%,transparent_100%)]"></div>
+<section id="services" class="relative py-20 px-4">
+  <!-- Simple background -->
+  <div class="absolute inset-0 bg-gradient-to-b from-gray-900 to-black"></div>
   
-  <div class="container relative px-4 sm:px-6 lg:px-8">
+  <div class="relative max-w-6xl mx-auto">
     <!-- Section Header -->
-    <div class="text-center mb-12 sm:mb-16">
-      <h2 class="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4 sm:mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-        Our Services
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white">
+        Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">Services</span>
       </h2>
-      <p class="text-text-secondary max-w-2xl mx-auto text-base sm:text-lg">
+      <p class="text-gray-300 max-w-2xl mx-auto text-lg">
         We deliver innovative solutions across a wide range of technologies, helping businesses thrive in the digital age.
       </p>
     </div>
@@ -130,49 +62,50 @@
     <!-- Services Grid -->
     {#if loading}
       <div class="flex justify-center items-center py-16">
-        <div class="animate-spin rounded-full h-12 w-12 sm:h-16 sm:w-16 border-t-2 border-b-2 border-primary"></div>
+        <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-purple-500"></div>
       </div>
     {:else if error}
       <div class="flex justify-center items-center py-16">
-        <div class="text-red-500 text-center px-4">
+        <div class="text-red-400 text-center">
           <p class="text-lg font-semibold mb-2">⚠️ Error</p>
-          <p class="text-sm sm:text-base">{error}</p>
+          <p>{error}</p>
         </div>
       </div>
     {:else}
-      <div class="services-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {#each services as service}
-          <div class="service-card group bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6 hover:scale-105 transition-transform duration-500">
+          <div class="service-card group bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-300">
+            
             <!-- Icon -->
-            <div class="service-icon relative mb-6 text-center">
-              <div class="w-16 h-16 mx-auto bg-primary/20 rounded-full flex items-center justify-center text-3xl">
+            <div class="text-center mb-6">
+              <div class="w-16 h-16 mx-auto bg-purple-500/20 rounded-2xl flex items-center justify-center text-3xl border border-purple-400/30">
                 {getServiceIcon(service.icon)}
               </div>
             </div>
 
             <!-- Service Content -->
-            <div class="flex-1 flex flex-col">
-              <h3 class="text-xl font-bold mb-3 text-white text-center">
+            <div class="text-center">
+              <h3 class="text-xl font-bold mb-3 text-white">
                 {service.title}
               </h3>
-              <p class="text-gray-300 leading-relaxed text-sm mb-4 flex-1 text-center">
+              <p class="text-gray-300 leading-relaxed text-sm mb-6">
                 {service.description}
               </p>
               
               <!-- Price Display -->
-              <div class="mb-4">
-                <div class="bg-green-500/20 border border-green-400/30 rounded-lg px-4 py-3 text-center">
+              <div class="mb-6">
+                <div class="bg-green-500/10 border border-green-400/30 rounded-lg px-4 py-3">
                   <div class="text-2xl font-bold text-green-400">
                     R {service.price || '0.00'}
                   </div>
-                  <div class="text-xs text-gray-300">One-time payment</div>
+                  <div class="text-xs text-gray-400">One-time payment</div>
                 </div>
               </div>
               
               <!-- Purchase Button -->
               <button
                 on:click={() => openCheckout(service)}
-                class="w-full px-4 py-3 bg-primary hover:bg-primary/80 text-white font-semibold rounded-lg transition-all duration-300">
+                class="w-full px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-lg transition-all duration-200 hover:scale-105">
                 Purchase Now
               </button>
             </div>
@@ -182,23 +115,21 @@
     {/if}
     
     <!-- Call to Action -->
-    <div class="text-center mt-12 sm:mt-16 space-y-4">
-      <LiquidGlass variant="button" intensity="strong" shimmer={true} className="inline-block">
-        <a href="/pricing" 
-           class="inline-flex items-center space-x-3 px-8 py-4 text-white font-bold text-lg transition-colors">
-          <span>View All Pricing & Purchase</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-          </svg>
-        </a>
-      </LiquidGlass>
+    <div class="text-center mt-16 space-y-4">
+      <a href="/pricing" 
+         class="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold text-lg rounded-lg transition-all duration-200 hover:scale-105">
+        <span>View All Pricing & Purchase</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
       
       <div class="mt-4">
         <a href="#contact" 
-           class="inline-flex items-center space-x-2 px-6 sm:px-8 py-3 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors text-sm sm:text-base">
+           class="inline-flex items-center space-x-2 px-8 py-3 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors border border-white/20">
           <span>Or Start Custom Project</span>
-          <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
           </svg>
         </a>
       </div>
@@ -206,49 +137,26 @@
   </div>
 </section>
 
+<!-- Checkout Modal -->
 {#if showCheckout && selectedService}
-  <Checkout service={selectedService} onClose={closeCheckout} />
+  <div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div class="bg-gray-900 rounded-2xl p-6 max-w-md w-full border border-white/10">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-bold text-white">Purchase Service</h3>
+        <button on:click={closeCheckout} class="text-gray-400 hover:text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <Checkout service={selectedService} on:close={closeCheckout} />
+    </div>
+  </div>
 {/if}
 
 <style>
-  /* Enhanced service card with liquid glass effects */
-  .service-card {
-    perspective: 1000px;
-    transform-style: preserve-3d;
-  }
-
-  .service-icon {
-    filter: drop-shadow(0 4px 8px rgba(99,102,241,0.3));
-  }
-
-  /* Subtle floating animation for service cards */
   .service-card:hover {
-    transform: translateY(-2px) rotateX(2deg);
-  }
-
-  /* Animated background gradient */
-  .services-grid::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(from 0deg, transparent, rgba(99,102,241,0.05), transparent);
-    animation: rotate-bg 30s linear infinite;
-    opacity: 0.3;
-    pointer-events: none;
-    border-radius: 50%;
-  }
-
-  @keyframes rotate-bg {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  /* Performance optimizations */
-  .service-card {
-    will-change: transform;
-    backface-visibility: hidden;
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(139, 92, 246, 0.15);
   }
 </style> 

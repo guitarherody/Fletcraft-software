@@ -1,29 +1,28 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import gsap from 'gsap';
 
   let container: HTMLDivElement;
   let particles: HTMLElement[] = [];
-  let particleCount = 20; // Reduced particles for better performance
+  let particleCount = 80; // Much more particles for better ambiance
 
   // Detect if user is on mobile
   const isMobile = () => window.innerWidth < 768;
   
   onMount(() => {
     // Adjust particle count based on screen size
-    particleCount = isMobile() ? 12 : 20;
+    particleCount = isMobile() ? 50 : 80;
     
     createParticles();
     
     // Handle resize
-          const handleResize = () => {
-        const newParticleCount = isMobile() ? 12 : 20;
-        if (newParticleCount !== particleCount) {
-          particleCount = newParticleCount;
-          clearParticles();
-          createParticles();
-        }
-      };
+    const handleResize = () => {
+      const newParticleCount = isMobile() ? 50 : 80;
+      if (newParticleCount !== particleCount) {
+        particleCount = newParticleCount;
+        clearParticles();
+        createParticles();
+      }
+    };
     
     window.addEventListener('resize', handleResize);
     
@@ -42,20 +41,19 @@
     particles = [];
   }
 
-  function createSpaceParticle() {
+  function createFloatingParticle() {
     const particle = document.createElement('div');
-    particle.className = 'space-particle';
+    particle.className = 'floating-particle';
     
-    // Create glowing core
-    const core = document.createElement('div');
-    core.className = 'particle-core';
-    
-    // Create trailing streak that will point toward center
-    const trail = document.createElement('div');
-    trail.className = 'particle-trail';
-    
-    particle.appendChild(core);
-    particle.appendChild(trail);
+    // Random particle type
+    const type = Math.random();
+    if (type < 0.3) {
+      particle.classList.add('sparkle');
+    } else if (type < 0.6) {
+      particle.classList.add('dot');
+    } else {
+      particle.classList.add('orb');
+    }
     
     return particle;
   }
@@ -63,144 +61,26 @@
   function createParticles() {
     if (!container) return;
     
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-    
     for (let i = 0; i < particleCount; i++) {
-      const particle = createSpaceParticle();
+      const particle = createFloatingParticle();
       
-      // Random angle for direction from center
-      const angle = Math.random() * Math.PI * 2;
+      // Random starting position
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight;
       
-      // Start at center point (simulating infinite distance)
-      const startX = centerX;
-      const startY = centerY;
-      
-      // Calculate end position way past screen edges
-      const maxDimension = Math.max(window.innerWidth, window.innerHeight);
-      const endRadius = maxDimension * 2; // Go way beyond screen
-      const endX = centerX + Math.cos(angle) * endRadius;
-      const endY = centerY + Math.sin(angle) * endRadius;
+      // Random size
+      const size = Math.random() * 4 + 2; // 2-6px
       
       // Set initial position and properties
-      gsap.set(particle, {
-        x: startX,
-        y: startY,
-        scale: 0.05, // Start incredibly small
-        opacity: 0,
-        rotation: (angle * 180 / Math.PI) + 90 // Point trail toward center
-      });
+      particle.style.left = x + 'px';
+      particle.style.top = y + 'px';
+      particle.style.width = size + 'px';
+      particle.style.height = size + 'px';
+      particle.style.animationDelay = Math.random() * 10 + 's';
+      particle.style.animationDuration = (15 + Math.random() * 25) + 's'; // 15-40s float time
       
       container.appendChild(particle);
       particles.push(particle);
-      
-      // Create the warp-speed movement animation
-      const createWarpMovement = (element: HTMLElement, delay: number = 0) => {
-        const duration = isMobile() ? 1.8 + Math.random() * 0.8 : 1.2 + Math.random() * 0.6; // Very fast
-        
-        // Reset to center
-        gsap.set(element, {
-          x: startX,
-          y: startY,
-          scale: 0.05,
-          opacity: 0,
-        });
-        
-        // Fade in quickly
-        gsap.to(element, {
-          opacity: 1,
-          duration: duration * 0.1,
-          delay: delay,
-          ease: 'power2.out'
-        });
-        
-        // Main warp movement - exponential acceleration
-        gsap.to(element, {
-          x: endX,
-          y: endY,
-          scale: 8 + Math.random() * 4, // Massive scale increase
-          duration: duration,
-          ease: 'power4.in', // Very aggressive acceleration
-          delay: delay,
-          onUpdate: function() {
-            // Dynamic trail effects based on progress
-            const progress = this.progress();
-            const currentScale = gsap.getProperty(element, 'scale') as number;
-            
-            element.classList.remove('small', 'medium', 'large', 'massive');
-            
-            if (currentScale > 6) {
-              element.classList.add('massive');
-            } else if (currentScale > 3) {
-              element.classList.add('large');
-            } else if (currentScale > 1) {
-              element.classList.add('medium');
-            } else {
-              element.classList.add('small');
-            }
-            
-            // Add motion blur effect as speed increases
-            if (progress > 0.5) {
-              element.style.filter = `blur(${(progress - 0.5) * 4}px)`;
-            }
-          },
-          onComplete: () => {
-            // Reset and loop with new random delay and angle
-            const newDelay = Math.random() * 2;
-            const newAngle = Math.random() * Math.PI * 2;
-            const newEndX = centerX + Math.cos(newAngle) * endRadius;
-            const newEndY = centerY + Math.sin(newAngle) * endRadius;
-            
-            // Update rotation for new direction
-            gsap.set(element, {
-              rotation: (newAngle * 180 / Math.PI) + 90
-            });
-            
-            // Update end position
-            gsap.to(element, {
-              x: newEndX,
-              y: newEndY,
-              scale: 8 + Math.random() * 4,
-              duration: duration,
-              ease: 'power4.in',
-              delay: newDelay,
-              onUpdate: function() {
-                const progress = this.progress();
-                const currentScale = gsap.getProperty(element, 'scale') as number;
-                
-                element.classList.remove('small', 'medium', 'large', 'massive');
-                
-                if (currentScale > 6) {
-                  element.classList.add('massive');
-                } else if (currentScale > 3) {
-                  element.classList.add('large');
-                } else if (currentScale > 1) {
-                  element.classList.add('medium');
-                } else {
-                  element.classList.add('small');
-                }
-                
-                if (progress > 0.5) {
-                  element.style.filter = `blur(${(progress - 0.5) * 4}px)`;
-                }
-              },
-              onComplete: () => createWarpMovement(element, newDelay)
-            });
-          }
-        });
-        
-        // Fade out as it gets very large (passing through viewer)
-        gsap.to(element, {
-          opacity: 0,
-          duration: duration * 0.2,
-          delay: delay + duration * 0.8,
-          ease: 'power2.in'
-        });
-      };
-      
-      // Start each particle with a random delay for continuous effect
-      const initialDelay = Math.random() * 3;
-      createWarpMovement(particle, initialDelay);
     }
   }
 </script>
@@ -210,121 +90,121 @@
 </div>
 
 <style>
-  :global(.space-particle) {
+  :global(.floating-particle) {
     position: absolute;
     pointer-events: none;
-    will-change: transform, opacity;
-    transform-origin: center;
+    will-change: transform;
+    animation: gentleFloat linear infinite;
   }
 
-  :global(.particle-core) {
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
+  :global(.floating-particle.sparkle) {
     background: radial-gradient(circle, 
-      #E879F9 0%,
-      #C084FC 40%,
-      #A855F7 80%,
+      rgba(255, 255, 255, 0.8) 0%,
+      rgba(232, 121, 249, 0.6) 50%,
       transparent 100%
     );
+    border-radius: 50%;
     box-shadow: 
-      0 0 4px #E879F9,
-      0 0 8px #C084FC,
-      0 0 12px rgba(232, 121, 249, 0.6);
-    position: relative;
-    z-index: 2;
+      0 0 6px rgba(255, 255, 255, 0.5),
+      0 0 12px rgba(232, 121, 249, 0.3);
+    animation: gentleFloat linear infinite, sparkle 3s ease-in-out infinite;
   }
 
-  :global(.particle-trail) {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 1px;
-    height: 8px;
-    background: linear-gradient(to top,
-      transparent 0%,
-      rgba(232, 121, 249, 0.9) 30%,
-      rgba(192, 132, 252, 0.7) 70%,
+  :global(.floating-particle.dot) {
+    background: radial-gradient(circle, 
+      rgba(192, 132, 252, 0.7) 0%,
+      rgba(168, 85, 247, 0.4) 70%,
       transparent 100%
     );
-    border-radius: 0.5px;
-    z-index: 1;
-    opacity: 0.8;
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(192, 132, 252, 0.4);
+    animation: gentleFloat linear infinite, pulse 4s ease-in-out infinite;
   }
 
-  /* Dynamic trail effects based on particle scale */
-  :global(.space-particle.small .particle-trail) {
-    height: 12px;
-    width: 1px;
-    opacity: 0.6;
-  }
-
-  :global(.space-particle.medium .particle-trail) {
-    height: 25px;
-    width: 2px;
-    opacity: 0.8;
-    box-shadow: 0 0 3px rgba(232, 121, 249, 0.4);
-  }
-
-  :global(.space-particle.large .particle-trail) {
-    height: 45px;
-    width: 3px;
-    opacity: 1;
-    box-shadow: 0 0 6px rgba(232, 121, 249, 0.6);
-  }
-
-  :global(.space-particle.massive .particle-trail) {
-    height: 80px;
-    width: 4px;
-    opacity: 1;
+  :global(.floating-particle.orb) {
+    background: radial-gradient(circle at 30% 30%, 
+      rgba(139, 92, 246, 0.5) 0%,
+      rgba(99, 102, 241, 0.3) 60%,
+      transparent 100%
+    );
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(2px);
     box-shadow: 
-      0 0 8px rgba(232, 121, 249, 0.8),
-      0 0 16px rgba(192, 132, 252, 0.4);
+      0 0 8px rgba(139, 92, 246, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    animation: gentleFloat linear infinite, drift 6s ease-in-out infinite;
   }
 
-  /* Enhanced core scaling */
-  :global(.space-particle.medium .particle-core) {
-    width: 4px;
-    height: 4px;
-    box-shadow: 
-      0 0 6px #E879F9,
-      0 0 12px #C084FC,
-      0 0 18px rgba(232, 121, 249, 0.6);
+  @keyframes gentleFloat {
+    0% {
+      transform: translateY(100vh) translateX(0px) rotate(0deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-10vh) translateX(50px) rotate(180deg);
+      opacity: 0;
+    }
   }
 
-  :global(.space-particle.large .particle-core) {
-    width: 6px;
-    height: 6px;
-    box-shadow: 
-      0 0 8px #E879F9,
-      0 0 16px #C084FC,
-      0 0 24px rgba(232, 121, 249, 0.7);
+  @keyframes sparkle {
+    0%, 100% {
+      transform: scale(1);
+      filter: brightness(1);
+    }
+    50% {
+      transform: scale(1.5);
+      filter: brightness(1.5);
+    }
   }
 
-  :global(.space-particle.massive .particle-core) {
-    width: 8px;
-    height: 8px;
-    box-shadow: 
-      0 0 12px #E879F9,
-      0 0 24px #C084FC,
-      0 0 36px rgba(232, 121, 249, 0.8);
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+  }
+
+  @keyframes drift {
+    0%, 100% {
+      transform: translateX(0px);
+    }
+    25% {
+      transform: translateX(-20px);
+    }
+    75% {
+      transform: translateX(20px);
+    }
   }
 
   /* Responsive adjustments */
   @media (max-width: 768px) {
-    :global(.particle-core) {
-      width: 2px;
-      height: 2px;
+    :global(.floating-particle) {
+      animation-duration: 20s, 4s;
+    }
+  }
+
+  /* Performance optimizations */
+  @media (prefers-reduced-motion: reduce) {
+    :global(.floating-particle) {
+      animation-duration: 30s;
+      animation-timing-function: linear;
     }
     
-    :global(.particle-trail) {
-      height: 6px;
-    }
-    
-    :global(.space-particle.massive .particle-trail) {
-      height: 60px;
-      width: 3px;
+    :global(.floating-particle.sparkle),
+    :global(.floating-particle.dot),
+    :global(.floating-particle.orb) {
+      animation: gentleFloat 30s linear infinite;
     }
   }
 </style>

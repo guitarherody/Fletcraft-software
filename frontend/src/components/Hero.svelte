@@ -1,448 +1,128 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import gsap from 'gsap';
-  import LiquidGlass from './LiquidGlass.svelte';
 
   let heroSection: HTMLElement;
-  let fireflyContainer: HTMLElement;
-  let liquidGlassContainer: HTMLElement;
-  let glassCardContainer: HTMLElement;
 
   onMount(() => {
-    // Enhanced entrance animations with Apple-style easing
+    // Simple, clean entrance animation
     if (heroSection) {
-      gsap.timeline()
-        .from('.hero-badge', {
-          duration: 1.2,
-          y: -30,
-          opacity: 0,
-          ease: 'power2.out'
-        })
-        .from('.hero-title', {
-          duration: 1.5,
-          y: 50,
-          opacity: 0,
-          ease: 'power3.out'
-        }, '-=0.8')
-        .from('.hero-subtitle', {
-          duration: 1.2,
-          y: 30,
-          opacity: 0,
-          ease: 'power2.out'
-        }, '-=1')
-        .from('.hero-buttons', {
-          duration: 1,
-          y: 20,
-          opacity: 0,
-          ease: 'power2.out'
-        }, '-=0.8')
-        .from('.liquid-glass-orb', {
-          duration: 2,
-          scale: 0,
-          opacity: 0,
-          ease: 'back.out(1.7)',
-          stagger: 0.2
-        }, '-=1.5')
-        .from('.glass-feature-card', {
-          duration: 1.5,
-          y: 40,
-          opacity: 0,
-          ease: 'power2.out',
-          stagger: 0.1
-        }, '-=1.2');
-
-      // Enhanced sparkle animation with liquid glass effect
-      gsap.to('.sparkle', {
-        scale: 1.2,
-        opacity: 0.8,
-        duration: 1.5,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-        stagger: 0.3
+      const elements = heroSection.querySelectorAll('.animate-in');
+      elements.forEach((el, index) => {
+        setTimeout(() => {
+          el.classList.add('visible');
+        }, index * 200);
       });
     }
-
-    // Create enhanced firefly system
-    createFireflies();
-    // Create liquid glass background elements
-    createLiquidGlass();
-    // Create floating glass cards
-    createFloatingGlassCards();
   });
-
-  function createFloatingGlassCards() {
-    if (!glassCardContainer) return;
-    
-    // Completely clean - no floating cards for ultra-cinematic look
-  }
-
-  function createLiquidGlass() {
-    if (!liquidGlassContainer) return;
-    
-    // Add beautiful floating swirling orbs back!
-    for (let i = 0; i < 6; i++) {
-      const orb = document.createElement('div');
-      orb.className = 'floating-swirl-orb';
-      
-      // Strategic positioning across the screen
-      const x = 15 + Math.random() * 70;
-      const y = 20 + Math.random() * 60;
-      orb.style.left = x + '%';
-      orb.style.top = y + '%';
-      
-      // Bright, vibrant orb styling
-      const size = 40 + Math.random() * 60;
-      orb.style.width = size + 'px';
-      orb.style.height = size + 'px';
-      orb.style.borderRadius = '50%';
-      orb.style.position = 'absolute';
-      
-      // Much brighter glass styling
-      orb.style.background = `
-        radial-gradient(circle at 30% 30%, 
-          rgba(255, 255, 255, 0.3) 0%,
-          rgba(139, 92, 246, 0.2) 40%,
-          rgba(168, 85, 247, 0.1) 100%
-        )
-      `;
-      orb.style.backdropFilter = 'blur(15px) saturate(200%)';
-      orb.style.border = '1px solid rgba(255, 255, 255, 0.4)';
-      orb.style.boxShadow = `
-        0 0 30px rgba(139, 92, 246, 0.4),
-        0 0 60px rgba(168, 85, 247, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3)
-      `;
-      
-      liquidGlassContainer.appendChild(orb);
-
-      // Beautiful swirling motion
-      gsap.to(orb, {
-        x: `+=${(Math.random() - 0.5) * 200}`,
-        y: `+=${(Math.random() - 0.5) * 100}`,
-        duration: 8 + Math.random() * 12,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-        delay: Math.random() * 4
-      });
-
-      // Swirling rotation
-      gsap.to(orb, {
-        rotation: 360,
-        duration: 15 + Math.random() * 20,
-        repeat: -1,
-        ease: 'none'
-      });
-
-      // Pulsing glow effect
-      gsap.to(orb, {
-        scale: 0.8 + Math.random() * 0.6,
-        duration: 4 + Math.random() * 6,
-        repeat: -1,
-        yoyo: true,
-        ease: 'power1.inOut',
-        delay: Math.random() * 2
-      });
-
-      // Brightness pulsing
-      gsap.to(orb, {
-        opacity: 0.6 + Math.random() * 0.4,
-        duration: 3 + Math.random() * 4,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
-      });
-    }
-
-    // Add some morphing background blobs
-    for (let i = 0; i < 3; i++) {
-      const blob = document.createElement('div');
-      blob.className = 'floating-morph-blob';
-      
-      const x = 20 + (i * 30);
-      const y = 30 + Math.random() * 40;
-      blob.style.left = x + '%';
-      blob.style.top = y + '%';
-      
-      const size = 100 + Math.random() * 80;
-      blob.style.width = size + 'px';
-      blob.style.height = size + 'px';
-      blob.style.position = 'absolute';
-      blob.style.borderRadius = '60% 40% 30% 70%';
-      
-      // Bright morphing blob styling
-      blob.style.background = `
-        linear-gradient(135deg, 
-          rgba(139, 92, 246, 0.15) 0%,
-          rgba(168, 85, 247, 0.1) 50%,
-          rgba(236, 72, 153, 0.08) 100%
-        )
-      `;
-      blob.style.backdropFilter = 'blur(20px) saturate(180%)';
-      blob.style.border = '1px solid rgba(255, 255, 255, 0.2)';
-      blob.style.boxShadow = `
-        0 0 40px rgba(139, 92, 246, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2)
-      `;
-      blob.style.filter = 'blur(1px)';
-      
-      liquidGlassContainer.appendChild(blob);
-
-      // Morphing animation
-      gsap.to(blob, {
-        borderRadius: '30% 70% 60% 40%',
-        duration: 6 + Math.random() * 6,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
-      });
-
-      // Floating movement
-      gsap.to(blob, {
-        x: `+=${(Math.random() - 0.5) * 120}`,
-        y: `+=${(Math.random() - 0.5) * 80}`,
-        duration: 12 + Math.random() * 8,
-        repeat: -1,
-        yoyo: true,
-        ease: 'power1.inOut',
-        delay: Math.random() * 4
-      });
-
-      // Scale pulsing
-      gsap.to(blob, {
-        scale: 0.8 + Math.random() * 0.4,
-        duration: 8 + Math.random() * 4,
-        repeat: -1,
-        yoyo: true,
-        ease: 'power1.inOut',
-        delay: Math.random() * 3
-      });
-    }
-  }
-
-  function createFireflies() {
-    if (!fireflyContainer) return;
-    
-    // Create BLAZING WARP SPEED particle system - ultra bright cinematic effect
-    const numParticles = 50;
-    const colors = ['#FFFFFF', '#F0F9FF', '#E0E7FF', '#C084FC', '#8B5CF6', '#A855F7', '#EC4899'];
-
-    for (let i = 0; i < numParticles; i++) {
-      const particle = document.createElement('div');
-      particle.className = 'warp-particle';
-      
-      // Start from left edge with varied vertical positions
-      const startX = -5;
-      const startY = 10 + Math.random() * 80;
-      particle.style.left = startX + '%';
-      particle.style.top = startY + '%';
-      
-            // Enhanced warp speed trail effect - ULTRA BRIGHT
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      const brightness = Math.random() * 0.3 + 0.7; // 0.7 to 1.0 - much brighter!
-      
-      // Core particle - super intense and bright
-      particle.style.width = '5px';
-      particle.style.height = '2px';
-      particle.style.background = color;
-      particle.style.position = 'absolute';
-      particle.style.filter = 'blur(0.2px)';
-      particle.style.boxShadow = `0 0 20px ${color}, 0 0 40px ${color}80, 0 0 60px ${color}40`;
-      particle.style.opacity = brightness.toString();
-      
-      // Create longer trailing streaks for intense warp effect - SUPER BRIGHT
-      for (let j = 0; j < 6; j++) {
-        const trail = document.createElement('div');
-        trail.className = `warp-trail trail-${j + 1}`;
-        trail.style.position = 'absolute';
-        trail.style.width = `${25 + j * 15}px`;
-        trail.style.height = '2px';
-        trail.style.background = `linear-gradient(90deg, ${color}${95 - j * 12}, ${color}${40 - j * 6}, transparent)`;
-        trail.style.left = `-${25 + j * 15}px`;
-        trail.style.top = '0';
-        trail.style.transformOrigin = 'left center';
-        trail.style.opacity = `${1.0 - j * 0.12}`;
-        trail.style.filter = 'blur(0.1px)';
-        trail.style.boxShadow = `0 0 6px ${color}60`;
-        particle.appendChild(trail);
-      }
-      
-      fireflyContainer.appendChild(particle);
-
-      // ULTRA WARP SPEED animation - blazing fast
-      gsap.fromTo(particle, 
-        {
-          x: '0vw',
-          opacity: 0,
-          scale: 0.3
-        },
-        {
-          x: '150vw',
-          opacity: brightness,
-          scale: 1,
-          duration: 0.4 + Math.random() * 0.8, // Much faster
-          repeat: -1,
-          ease: 'power4.out',
-          delay: Math.random() * 3
-        }
-      );
-
-      // Minimal vertical drift to maintain speed feeling
-      gsap.to(particle, {
-        y: `+=${(Math.random() - 0.5) * 15}`,
-        duration: 0.8 + Math.random() * 0.5,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-        delay: Math.random() * 0.5
-      });
-    }
-  }
 </script>
 
-<section bind:this={heroSection} id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
-  <!-- Enhanced Background Effects -->
-  <div bind:this={liquidGlassContainer} class="absolute inset-0 pointer-events-none overflow-hidden"></div>
-  <div bind:this={fireflyContainer} class="absolute inset-0 pointer-events-none overflow-hidden"></div>
-  <div bind:this={glassCardContainer} class="absolute inset-0 pointer-events-none overflow-hidden"></div>
-
-  <!-- Main Content with Liquid Glass Container -->
-  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <!-- Hero Badge with Enhanced Glass Effect -->
-    <div class="hero-badge mb-8">
-      <LiquidGlass variant="button" intensity="medium" shimmer={true} className="inline-block">
-        <div class="px-6 py-3 flex items-center space-x-2">
-          <div class="sparkle w-2 h-2 bg-primary rounded-full"></div>
-          <span class="text-sm font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            ✨ Crafting Digital Excellence
-          </span>
-        </div>
-      </LiquidGlass>
+<section 
+  bind:this={heroSection}
+  class="relative min-h-screen flex items-center justify-center px-4 overflow-hidden"
+>
+  <!-- Simple background gradient -->
+  <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-purple-900/20 to-blue-900/20"></div>
+  
+  <!-- Main content -->
+  <div class="relative z-10 max-w-6xl mx-auto text-center">
+    
+    <!-- Badge -->
+    <div class="animate-in opacity-0 translate-y-4 transition-all duration-700 ease-out mb-8">
+      <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-white/10 text-white border border-white/20 backdrop-blur-sm">
+        🚀 Powered by AI & Innovation
+      </span>
     </div>
 
-    <!-- Clean Cinematic Title -->
-    <div class="hero-title mb-8 relative">
-      <h1 class="text-6xl md:text-8xl lg:text-9xl font-bold leading-tight tracking-tight">
-        <span class="block bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent">
-          Fletcraft
-        </span>
-        <span class="block text-2xl md:text-4xl lg:text-5xl bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent font-light tracking-wide mt-2">
-          Software Excellence
-        </span>
-      </h1>
+    <!-- Main title -->
+    <h1 class="animate-in opacity-0 translate-y-4 transition-all duration-700 ease-out text-5xl md:text-7xl font-bold text-white mb-6">
+      Fletcher Software
+      <span class="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+        Solutions
+      </span>
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="animate-in opacity-0 translate-y-4 transition-all duration-700 ease-out text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+      Transforming ideas into powerful digital solutions with cutting-edge technology and innovative design.
+    </p>
+
+    <!-- CTA Buttons -->
+    <div class="animate-in opacity-0 translate-y-4 transition-all duration-700 ease-out flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <a 
+        href="/pricing"
+        class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-300 shadow-lg hover:shadow-purple-500/25 hover:scale-105"
+      >
+        Get Started
+      </a>
+      <a 
+        href="#services"
+        class="px-8 py-4 bg-white/10 text-white rounded-lg font-semibold backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
+      >
+        Learn More
+      </a>
     </div>
 
-    <!-- Clean Subtitle -->
-    <div class="hero-subtitle mb-16">
-      <p class="text-lg md:text-xl text-gray-400 leading-relaxed max-w-2xl mx-auto font-light">
-        We transform ideas into stunning digital experiences using cutting-edge technology and innovative design.
-      </p>
-    </div>
-
-    <!-- Enhanced CTA Buttons -->
-    <div class="hero-buttons flex flex-col sm:flex-row items-center justify-center gap-6">
-      <LiquidGlass variant="button" intensity="strong" shimmer={true} animated={true}>
-        <a href="#contact" class="px-8 py-4 text-white font-semibold text-lg transition-all duration-300">
-          Start Your Project
-        </a>
-      </LiquidGlass>
+    <!-- Simple feature highlights -->
+    <div class="animate-in opacity-0 translate-y-4 transition-all duration-700 ease-out mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
       
-      <LiquidGlass variant="button" intensity="light" className="group">
-        <a href="#portfolio" class="px-8 py-4 text-text-primary font-medium text-lg flex items-center space-x-2 transition-all duration-300">
-          <span>View Our Work</span>
-          <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-          </svg>
-        </a>
-      </LiquidGlass>
-    </div>
+      <div class="glass-card p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+        <div class="text-3xl mb-4">⚡</div>
+        <h3 class="text-white font-semibold mb-2">Lightning Fast</h3>
+        <p class="text-gray-400 text-sm">Optimized performance and cutting-edge technology</p>
+      </div>
 
+      <div class="glass-card p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+        <div class="text-3xl mb-4">🛡️</div>
+        <h3 class="text-white font-semibold mb-2">Secure & Reliable</h3>
+        <p class="text-gray-400 text-sm">Enterprise-grade security and 99.9% uptime</p>
+      </div>
+
+      <div class="glass-card p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+        <div class="text-3xl mb-4">🎯</div>
+        <h3 class="text-white font-semibold mb-2">Custom Solutions</h3>
+        <p class="text-gray-400 text-sm">Tailored to your unique business needs</p>
+      </div>
+
+    </div>
 
   </div>
 
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+    <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+      <div class="w-1 h-3 bg-white/60 rounded-full mt-2 animate-pulse"></div>
+    </div>
+  </div>
 
 </section>
 
 <style>
-  /* Cinematic Warp Speed Particle Effects */
-  :global(.warp-particle) {
-    position: absolute;
-    pointer-events: none;
-    will-change: transform;
-    backface-visibility: hidden;
+  .animate-in {
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  :global(.warp-trail) {
-    position: absolute;
-    pointer-events: none;
-    will-change: transform;
+  .animate-in.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
-  /* Enhanced sparkle animation */
-  :global(.sparkle) {
-    box-shadow: 0 0 6px currentColor;
-    animation: sparkle-glow 3s ease-in-out infinite;
+  .glass-card {
+    transition: all 0.3s ease;
   }
 
-  @keyframes sparkle-glow {
-    0%, 100% { 
-      box-shadow: 0 0 6px currentColor;
-      transform: scale(1);
-    }
-    50% { 
-      box-shadow: 0 0 15px currentColor, 0 0 25px currentColor;
-      transform: scale(1.1);
+  .glass-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  /* Responsive text scaling */
+  @media (max-width: 640px) {
+    h1 {
+      font-size: 2.5rem;
+      line-height: 1.1;
     }
   }
-
-  /* Cinematic background */
-  section {
-    background: 
-      radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.03) 0%, transparent 50%),
-      linear-gradient(135deg, rgba(0, 0, 0, 0.98) 0%, rgba(10, 10, 10, 1) 100%);
-  }
-
-  /* Performance optimizations */
-  section {
-    transform: translateZ(0);
-    will-change: transform;
-  }
-
-  /* Typography enhancements */
-  h1 {
-    text-shadow: 0 0 40px rgba(139, 92, 246, 0.3);
-  }
-
-  /* Clean animations */
-  .hero-badge,
-  .hero-title,
-  .hero-subtitle,
-  .hero-buttons {
-    animation: fadeInUp 1s ease-out;
-  }
-
-  .hero-title {
-    animation-delay: 0.2s;
-  }
-
-  .hero-subtitle {
-    animation-delay: 0.4s;
-  }
-
-  .hero-buttons {
-    animation-delay: 0.6s;
-  }
-
-  @keyframes fadeInUp {
-    0% {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-     }
- </style> 
+</style> 

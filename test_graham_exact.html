@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PayFast Test - Graham Smith Exact Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1a73e8;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: #1a73e8;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 PayFast Test - Graham Smith Exact Data</h1>
+        
+        <p><strong>Customer:</strong> Graham Smith</p>
+        <p><strong>Email:</strong> gg@gmail.com</p>
+        <p><strong>Phone:</strong> 8210006767</p>
+        <p><strong>Order:</strong> 10a8203b-76c8-4543-96c3-f086a6164188</p>
+        <p><strong>Amount:</strong> R100.00</p>
+        <p><strong>Service:</strong> Cybersecurity</p>
+        <p><strong>Signature:</strong> 329210146d8e87a03778f6742dee12d1</p>
+
+        <form action="https://www.payfast.co.za/eng/process" method="post">
+            <input type="hidden" name="merchant_id" value="13245841"/>
+            <input type="hidden" name="merchant_key" value="kzyobsh5zlvrw"/>
+            <input type="hidden" name="return_url" value="https://fletcraft.co.za/payment/success"/>
+            <input type="hidden" name="cancel_url" value="https://fletcraft.co.za/payment/cancel"/>
+            <input type="hidden" name="notify_url" value="https://fletcraft-software.onrender.com/api/payfast/itn/"/>
+            <input type="hidden" name="name_first" value="Graham"/>
+            <input type="hidden" name="name_last" value="Smith"/>
+            <input type="hidden" name="email_address" value="gg@gmail.com"/>
+            <input type="hidden" name="m_payment_id" value="10a8203b-76c8-4543-96c3-f086a6164188"/>
+            <input type="hidden" name="amount" value="100.00"/>
+            <input type="hidden" name="item_name" value="Cybersecurity"/>
+            <input type="hidden" name="item_description" value="Comprehensive security solutions to protect your digital assets and maintain data integrity at all times."/>
+            <input type="hidden" name="cell_number" value="8210006767"/>
+            <input type="hidden" name="custom_int1" value="1"/>
+            <input type="hidden" name="custom_str1" value="order_reference_10a8203b-76c8-4543-96c3-f086a6164188"/>
+            <input type="hidden" name="custom_str2" value="fletcraft_service"/>
+            <input type="hidden" name="custom_str3" value="web_development"/>
+            <input type="hidden" name="signature" value="329210146d8e87a03778f6742dee12d1"/>
+            
+            <button type="submit" class="btn">🚀 Test Graham Smith PayFast Payment</button>
+        </form>
+    </div>
+</body>
+</html>

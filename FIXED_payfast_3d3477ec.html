@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIXED PayFast Payment - Emma Wilson</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .container { background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .success { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .warning { background: #fff3cd; border: 1px solid #ffeaa7; color: #856404; }
+        .btn { background: #28a745; color: white; padding: 15px 30px; border: none; border-radius: 4px; 
+                font-size: 18px; cursor: pointer; margin: 10px 0; font-weight: bold; }
+        .btn:hover { background: #218838; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f2f2f2; }
+        .signature { font-family: monospace; word-break: break-all; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>✅ FIXED PayFast Payment</h1>
+    
+    <div class="container success">
+        <h3>✅ PAYMENT READY - GRAHAM'S METHOD APPLIED</h3>
+        <p><strong>Customer:</strong> Emma Wilson</p>
+        <p><strong>Email:</strong> emma.wilson@example.com</p>
+        <p><strong>Order ID:</strong> 3d3477ec-e636-42a9-966c-8eefeb531d47</p>
+        <p><strong>Amount:</strong> R100.00</p>
+        <p><strong>Service:</strong> 390</p>
+    </div>
+    
+    <div class="container error">
+        <h3>❌ Django Backend Issue (FIXED HERE)</h3>
+        <p><strong>Problem:</strong> Django was adding <code>cell_number</code> causing signature mismatches</p>
+        <p><strong>Django Signature:</strong> <span class="signature">19f10d6a6267f1293680b01c02387545</span></p>
+        <p><strong>Solution Applied:</strong> Removed cell_number + Graham's method</p>
+    </div>
+    
+    <div class="container success">
+        <h3>✅ Fixed Payment Data</h3>
+        <table>
+            <tr><th>Field</th><th>Value</th></tr><tr><td>merchant_id</td><td>13245841</td></tr><tr><td>merchant_key</td><td>kzyobsh5zlvrw</td></tr><tr><td>return_url</td><td>https://fletcraft.co.za/payment/success</td></tr><tr><td>cancel_url</td><td>https://fletcraft.co.za/payment/cancel</td></tr><tr><td>notify_url</td><td>https://fletcraft-software.onrender.com/api/payfast/itn/</td></tr><tr><td>name_first</td><td>Emma</td></tr><tr><td>name_last</td><td>Wilson</td></tr><tr><td>email_address</td><td>emma.wilson@example.com</td></tr><tr><td>m_payment_id</td><td>3d3477ec-e636-42a9-966c-8eefeb531d47</td></tr><tr><td>amount</td><td>100.00</td></tr><tr><td>item_name</td><td>Cybersecurity</td></tr><tr><td>item_description</td><td>Comprehensive security solutions to protect your digital assets and maintain data integrity at all times.</td></tr><tr><td>custom_int1</td><td>1</td></tr><tr><td>custom_str1</td><td>order_reference_3d3477ec-e636-42a9-966c-8eefeb531d47</td></tr><tr><td>custom_str2</td><td>fletcraft_service</td></tr><tr><td>custom_str3</td><td>web_development</td></tr>
+            <tr><td><strong>signature</strong></td><td class="signature">ac3032515c6bbb212d6a0051017dd48f</td></tr>
+        </table>
+    </div>
+    
+    <div class="container warning">
+        <h3>🚀 TEST THIS PAYMENT</h3>
+        <p>This uses Graham's proven working method with your live PayFast credentials.</p>
+        <p><strong>What was fixed:</strong></p>
+        <ul>
+            <li>❌ Removed invalid cell_number field</li>
+            <li>✅ Applied Byron's form field order</li>
+            <li>✅ Correct signature: ac3032515c6bbb212d6a0051017dd48f</li>
+            <li>✅ Live credentials: Merchant ID 13245841</li>
+        </ul>
+    </div>
+    
+    <div class="container">
+        <form action="https://www.payfast.co.za/eng/process" method="post">
+            <input type="hidden" name="merchant_id" value="13245841">
+            <input type="hidden" name="merchant_key" value="kzyobsh5zlvrw">
+            <input type="hidden" name="return_url" value="https://fletcraft.co.za/payment/success">
+            <input type="hidden" name="cancel_url" value="https://fletcraft.co.za/payment/cancel">
+            <input type="hidden" name="notify_url" value="https://fletcraft-software.onrender.com/api/payfast/itn/">
+            <input type="hidden" name="name_first" value="Emma">
+            <input type="hidden" name="name_last" value="Wilson">
+            <input type="hidden" name="email_address" value="emma.wilson@example.com">
+            <input type="hidden" name="m_payment_id" value="3d3477ec-e636-42a9-966c-8eefeb531d47">
+            <input type="hidden" name="amount" value="100.00">
+            <input type="hidden" name="item_name" value="Cybersecurity">
+            <input type="hidden" name="item_description" value="Comprehensive security solutions to protect your digital assets and maintain data integrity at all times.">
+            <input type="hidden" name="custom_int1" value="1">
+            <input type="hidden" name="custom_str1" value="order_reference_3d3477ec-e636-42a9-966c-8eefeb531d47">
+            <input type="hidden" name="custom_str2" value="fletcraft_service">
+            <input type="hidden" name="custom_str3" value="web_development">
+            <input type="hidden" name="signature" value="ac3032515c6bbb212d6a0051017dd48f">
+            <button type="submit" class="btn">
+                🚀 PAY R100.00 WITH PAYFAST (FIXED)
+            </button>
+        </form>
+        
+        <p><small>This will process a REAL payment with your live PayFast account using the corrected signature.</small></p>
+    </div>
+    
+    <div class="container">
+        <h3>📋 Verification Checklist</h3>
+        <ul>
+            <li>✅ Using Graham's working method (form field order)</li>
+            <li>✅ NO cell_number field (the fix that made Graham work)</li>
+            <li>✅ Merchant key included in signature calculation</li>
+            <li>✅ HTTPS notify_url</li>
+            <li>✅ Proper URL encoding</li>
+            <li>✅ Live PayFast credentials</li>
+            <li>✅ Correct signature generated: ac3032515c6bbb212d6a0051017dd48f</li>
+        </ul>
+    </div>
+</body>
+</html>
