@@ -1,25 +1,8 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
-  let heroSection: HTMLElement;
-
-  onMount(() => {
-    // Simple, clean entrance animation
-    if (heroSection) {
-      const elements = heroSection.querySelectorAll('.animate-in');
-      elements.forEach((el, index) => {
-        setTimeout(() => {
-          el.classList.add('visible');
-        }, index * 200);
-      });
-    }
-  });
+  // Simple hero component with CSS-only animations
 </script>
 
-<section 
-  bind:this={heroSection}
-  class="relative min-h-screen flex items-center justify-center px-4 overflow-hidden"
->
+<section class="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
   <!-- Simple background gradient -->
   <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-purple-900/20 to-blue-900/20"></div>
   
@@ -27,14 +10,14 @@
   <div class="relative z-10 max-w-6xl mx-auto text-center">
     
     <!-- Badge -->
-    <div class="animate-in opacity-0 translate-y-4 transition-all duration-700 ease-out mb-8">
+    <div class="animate-in mb-8" style="animation-delay: 0ms;">
       <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-white/10 text-white border border-white/20 backdrop-blur-sm">
         Welcome to Fletcraft Software
       </span>
     </div>
 
     <!-- Main title -->
-    <h1 class="animate-in opacity-0 translate-y-4 transition-all duration-700 ease-out text-5xl md:text-7xl font-bold text-white mb-6">
+    <h1 class="animate-in text-5xl md:text-7xl font-bold text-white mb-6" style="animation-delay: 200ms;">
       Crafting Software
       <span class="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
         Excellence
@@ -42,12 +25,12 @@
     </h1>
 
     <!-- Subtitle -->
-    <p class="animate-in opacity-0 translate-y-4 transition-all duration-700 ease-out text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+    <p class="animate-in text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed" style="animation-delay: 400ms;">
       Transforming ideas into powerful digital solutions with cutting-edge technology and innovative design.
     </p>
 
     <!-- CTA Buttons -->
-    <div class="animate-in opacity-0 translate-y-4 transition-all duration-700 ease-out flex flex-col sm:flex-row gap-4 justify-center items-center">
+    <div class="animate-in flex flex-col sm:flex-row gap-4 justify-center items-center" style="animation-delay: 600ms;">
       <a 
         href="/pricing"
         class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-300 shadow-lg hover:shadow-purple-500/25 hover:scale-105"
@@ -63,7 +46,7 @@
     </div>
 
     <!-- Simple feature highlights -->
-    <div class="animate-in opacity-0 translate-y-4 transition-all duration-700 ease-out mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+    <div class="animate-in mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto" style="animation-delay: 800ms;">
       
       <div class="glass-card p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
         <div class="text-3xl mb-4">⚡</div>
@@ -98,14 +81,18 @@
 
 <style>
   .animate-in {
-    opacity: 0;
-    transform: translateY(1rem);
-    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeInUp 0.8s ease-out both;
   }
 
-  .animate-in.visible {
-    opacity: 1;
-    transform: translateY(0);
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(2rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .glass-card {
