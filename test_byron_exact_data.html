@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>PayFast Test - Byron's EXACT Working Data</title>
+    <meta charset="UTF-8">
+</head>
+<body onLoad="document.payfast_form.submit();">
+    <h1>PayFast Test - Byron's EXACT Working Example</h1>
+    <p>Using Byron's exact working test data with our live credentials...</p>
+    
+    <form action="https://www.payfast.co.za/eng/process" method="post" name="payfast_form">
+        <!-- Byron's EXACT working form with our live credentials -->
+        <input type="hidden" name="merchant_id" value="13245841"/>
+        <input type="hidden" name="merchant_key" value="kzyobsh5zlvrw"/>
+        <input type="hidden" name="return_url" value="https://www.fletcraft.co.za/payment/success"/>
+        <input type="hidden" name="cancel_url" value="https://www.fletcraft.co.za/payment/cance"/>
+        <input type="hidden" name="notify_url" value="https://fletcraft-backend.onrender.com/api/payfast/itn/"/>
+        <input type="hidden" name="name_first" value="John"/>
+        <input type="hidden" name="name_last" value="Doe"/>
+        <input type="hidden" name="email_address" value="test@fletcraft.co.za"/>
+        <input type="hidden" name="m_payment_id" value="TEST_ORDER_123456"/>
+        <input type="hidden" name="amount" value="100.00"/>
+        <input type="hidden" name="item_name" value="Web Development Service"/>
+        <input type="hidden" name="item_description" value="Custom website development and design"/>
+        <input type="hidden" name="custom_int1" value="1"/>
+        <input type="hidden" name="custom_str1" value="order_reference_123"/>
+        <input type="hidden" name="custom_str2" value="fletcraft_service"/>
+        <input type="hidden" name="custom_str3" value="web_development"/>
+        <!-- Signature calculated using Byron's exact method with our credentials -->
+        <input type="hidden" name="signature" value="9e805c7f75733df918e2dfd12e293242"/>
+        
+        <p><strong>If auto-submit doesn't work, click the button below:</strong></p>
+        <input type="submit" value="Pay with PayFast" style="background: #1a73e8; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+    </form>
+    
+    <div style="margin-top: 20px; padding: 15px; background: #f0f8ff; border-left: 4px solid #1a73e8;">
+        <h3>Byron's Exact Test Details:</h3>
+        <ul>
+            <li><strong>Data:</strong> Byron's exact working form fields</li>
+            <li><strong>Signature:</strong> Byron's confirmed working signature</li>
+            <li><strong>Email:</strong> test@fletcraft.co.za (Byron's example)</li>
+            <li><strong>Method:</strong> Exactly as Byron demonstrated</li>
+            <li><strong>Tools Used:</strong> https://www.md5.cz/ and https://www.urlencoder.org/</li>
+        </ul>
+        
+        <p><strong>Byron's Signature String:</strong><br>
+        <code style="font-size: 11px; word-break: break-all;">
+        merchant_id=13245841&merchant_key=kzyobsh5zlvrw&return_url=https%3A%2F%2Fwww.fletcraft.co.za%2Fpayment%2Fsuccess&cancel_url=https%3A%2F%2Fwww.fletcraft.co.za%2Fpayment%2Fcance&notify_url=https%3A%2F%2Ffletcraft-backend.onrender.com%2Fapi%2Fpayfast%2Fitn%2F&name_first=John&name_last=Doe&email_address=test%40fletcraft.co.za&m_payment_id=TEST_ORDER_123456&amount=100.00&item_name=Web+Development+Service&item_description=Custom+website+development+and+design&custom_int1=1&custom_str1=order_reference_123&custom_str2=fletcraft_service&custom_str3=web_development&passphrase=Redeclip5e-8298
+        </code>
+        </p>
+    </div>
+</body>
+</html> 

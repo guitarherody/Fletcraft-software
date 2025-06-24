@@ -98,12 +98,12 @@ class OrderViewSet(viewsets.ModelViewSet):
                 if len(clean_phone) >= 10:
                     payment_data['cell_number'] = clean_phone[-10:]
             
-            # Add custom fields exactly as Byron did - MATCH HTML TEST VALUES
-            payment_data['custom_int1'] = '1'  # Byron used this
-            # CRITICAL: Use same custom field values as working HTML test
-            payment_data['custom_str1'] = 'order_reference_123'  # Match HTML test exactly
-            payment_data['custom_str2'] = 'fletcraft_service'    # Match HTML test exactly  
-            payment_data['custom_str3'] = 'web_development'      # Match HTML test exactly
+            # Add custom fields using DYNAMIC order data (Byron's method but with real values)
+            payment_data['custom_int1'] = '1'  # Keep Byron's working value
+            # DYNAMIC: Use actual order data instead of hardcoded test values
+            payment_data['custom_str1'] = f'order_{order.order_id}'[:255]          # Unique order reference
+            payment_data['custom_str2'] = order.service.title[:255]                # Actual service name
+            payment_data['custom_str3'] = 'Fletcraft_Software'[:255]              # Company identifier
             
             # Remove empty values while preserving order
             payment_data = OrderedDict([(k, v) for k, v in payment_data.items() if v])
