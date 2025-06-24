@@ -34,6 +34,19 @@
     <div class="hero-smoke-particle hero-smoke-1"></div>
     <div class="hero-smoke-particle hero-smoke-2"></div>
     <div class="hero-smoke-particle hero-smoke-3"></div>
+    <div class="hero-smoke-particle hero-smoke-4"></div>
+    <div class="hero-smoke-particle hero-smoke-5"></div>
+    <div class="hero-smoke-particle hero-smoke-6"></div>
+  </div>
+  
+  <!-- Purple & Emerald Accent Particles -->
+  <div class="hero-accent-particles">
+    <div class="accent-particle purple-particle accent-1"></div>
+    <div class="accent-particle emerald-particle accent-2"></div>
+    <div class="accent-particle purple-particle accent-3"></div>
+    <div class="accent-particle emerald-particle accent-4"></div>
+    <div class="accent-particle purple-particle accent-5"></div>
+    <div class="accent-particle emerald-particle accent-6"></div>
   </div>
   
   <!-- Main content -->
@@ -1072,6 +1085,27 @@
     transform: scale(1.5);
   }
 
+  .hero-smoke-4 {
+    bottom: 45%;
+    right: 35%;
+    animation-delay: 8s;
+    transform: scale(1.1);
+  }
+
+  .hero-smoke-5 {
+    bottom: 35%;
+    left: 50%;
+    animation-delay: 16s;
+    transform: scale(0.9);
+  }
+
+  .hero-smoke-6 {
+    bottom: 20%;
+    right: 60%;
+    animation-delay: 24s;
+    transform: scale(1.3);
+  }
+
   @keyframes heroSmokeFloat {
     0% {
       transform: translateY(0) translateX(0) rotate(0deg);
@@ -1107,6 +1141,119 @@
     100% {
       transform: rotate(360deg) scale(1);
       opacity: 0.4;
+    }
+  }
+
+  /* Purple & Emerald Accent Particles */
+  .hero-accent-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .accent-particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    filter: blur(0.8px);
+    animation: accentFloat 14s ease-in-out infinite;
+  }
+
+  .purple-particle {
+    background: radial-gradient(circle, 
+      rgba(147, 51, 234, 1) 0%,
+      rgba(126, 34, 206, 0.8) 30%,
+      rgba(109, 40, 217, 0.6) 60%,
+      rgba(88, 28, 135, 0.3) 80%,
+      transparent 100%
+    );
+    box-shadow: 
+      0 0 12px rgba(147, 51, 234, 0.8),
+      0 0 24px rgba(126, 34, 206, 0.4),
+      0 0 36px rgba(109, 40, 217, 0.2);
+  }
+
+  .emerald-particle {
+    background: radial-gradient(circle, 
+      rgba(16, 185, 129, 1) 0%,
+      rgba(5, 150, 105, 0.8) 30%,
+      rgba(4, 120, 87, 0.6) 60%,
+      rgba(6, 95, 70, 0.3) 80%,
+      transparent 100%
+    );
+    box-shadow: 
+      0 0 12px rgba(16, 185, 129, 0.8),
+      0 0 24px rgba(5, 150, 105, 0.4),
+      0 0 36px rgba(4, 120, 87, 0.2);
+  }
+
+  /* Accent Particle Positions */
+  .accent-1 {
+    top: 20%;
+    left: 25%;
+    animation-delay: 0s;
+  }
+
+  .accent-2 {
+    top: 70%;
+    right: 30%;
+    animation-delay: 2s;
+  }
+
+  .accent-3 {
+    top: 45%;
+    left: 15%;
+    animation-delay: 4s;
+  }
+
+  .accent-4 {
+    top: 30%;
+    right: 15%;
+    animation-delay: 6s;
+  }
+
+  .accent-5 {
+    top: 65%;
+    left: 60%;
+    animation-delay: 8s;
+  }
+
+  .accent-6 {
+    top: 15%;
+    left: 75%;
+    animation-delay: 10s;
+  }
+
+  @keyframes accentFloat {
+    0% {
+      transform: translateY(0) translateX(0) scale(0.8) rotate(0deg);
+      opacity: 0.7;
+      filter: blur(0.8px) brightness(1) hue-rotate(0deg);
+    }
+    25% {
+      transform: translateY(-25px) translateX(15px) scale(1.4) rotate(90deg);
+      opacity: 1.2;
+      filter: blur(0.4px) brightness(1.6) hue-rotate(45deg);
+    }
+    50% {
+      transform: translateY(-15px) translateX(-12px) scale(1.1) rotate(180deg);
+      opacity: 0.9;
+      filter: blur(0.6px) brightness(1.3) hue-rotate(90deg);
+    }
+    75% {
+      transform: translateY(-35px) translateX(20px) scale(1.6) rotate(270deg);
+      opacity: 1.4;
+      filter: blur(0.3px) brightness(1.8) hue-rotate(135deg);
+    }
+    100% {
+      transform: translateY(0) translateX(0) scale(0.8) rotate(360deg);
+      opacity: 0.7;
+      filter: blur(0.8px) brightness(1) hue-rotate(180deg);
     }
   }
 </style> 
