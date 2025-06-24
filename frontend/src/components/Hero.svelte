@@ -78,7 +78,7 @@
     <div class="animate-in flex flex-col sm:flex-row gap-4 justify-center items-center" style="animation-delay: 600ms;">
       <button 
         on:click={() => handleNavigation('/pricing')}
-        class="px-8 py-4 bg-gradient-to-r from-emerald-600 to-purple-600 text-white rounded-lg font-semibold hover:from-emerald-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-emerald-500/25 hover:scale-105"
+        class="px-8 py-4 bg-gradient-to-r from-emerald-600 via-orange-600 to-purple-600 text-white rounded-lg font-semibold hover:from-emerald-700 hover:via-red-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-orange-500/25 hover:scale-105"
       >
         Get Started
       </button>
