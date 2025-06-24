@@ -29,6 +29,13 @@
     <div class="hero-light-beam beam-2"></div>
   </div>
   
+  <!-- Atmospheric Smoke -->
+  <div class="hero-smoke">
+    <div class="hero-smoke-particle hero-smoke-1"></div>
+    <div class="hero-smoke-particle hero-smoke-2"></div>
+    <div class="hero-smoke-particle hero-smoke-3"></div>
+  </div>
+  
   <!-- Main content -->
   <div class="relative z-10 max-w-6xl mx-auto text-center">
     
@@ -997,6 +1004,109 @@
       transform: translateX(calc(100vw + 180px)) scale(0.7) rotate(3deg);
       opacity: 0;
       filter: hue-rotate(120deg) brightness(0.9);
+    }
+  }
+
+  /* Hero Atmospheric Smoke */
+  .hero-smoke {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero-smoke-particle {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, 
+      rgba(80, 40, 30, 0.08) 0%,
+      rgba(100, 50, 40, 0.06) 30%,
+      rgba(120, 60, 50, 0.04) 60%,
+      transparent 100%
+    );
+    filter: blur(12px);
+    animation: heroSmokeFloat 30s ease-in-out infinite;
+    opacity: 0.4;
+  }
+
+  .hero-smoke-particle::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    width: 130%;
+    height: 130%;
+    border-radius: 50%;
+    background: radial-gradient(circle, 
+      rgba(60, 30, 25, 0.04) 0%,
+      rgba(80, 40, 35, 0.03) 50%,
+      transparent 100%
+    );
+    filter: blur(16px);
+    animation: heroSmokeSwirl 35s linear infinite;
+  }
+
+  .hero-smoke-1 {
+    bottom: 30%;
+    left: 15%;
+    animation-delay: 0s;
+    transform: scale(1.2);
+  }
+
+  .hero-smoke-2 {
+    bottom: 40%;
+    right: 20%;
+    animation-delay: 10s;
+    transform: scale(0.8);
+  }
+
+  .hero-smoke-3 {
+    bottom: 25%;
+    left: 70%;
+    animation-delay: 20s;
+    transform: scale(1.5);
+  }
+
+  @keyframes heroSmokeFloat {
+    0% {
+      transform: translateY(0) translateX(0) rotate(0deg);
+      opacity: 0.4;
+    }
+    25% {
+      transform: translateY(-30vh) translateX(15px) rotate(90deg);
+      opacity: 0.3;
+    }
+    50% {
+      transform: translateY(-50vh) translateX(-10px) rotate(180deg);
+      opacity: 0.2;
+    }
+    75% {
+      transform: translateY(-70vh) translateX(20px) rotate(270deg);
+      opacity: 0.15;
+    }
+    100% {
+      transform: translateY(-90vh) translateX(-25px) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes heroSmokeSwirl {
+    0% {
+      transform: rotate(0deg) scale(1);
+      opacity: 0.4;
+    }
+    50% {
+      transform: rotate(180deg) scale(1.8);
+      opacity: 0.2;
+    }
+    100% {
+      transform: rotate(360deg) scale(1);
+      opacity: 0.4;
     }
   }
 </style> 

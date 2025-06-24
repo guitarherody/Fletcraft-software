@@ -16,6 +16,11 @@
   {#each Array(3) as _, i}
     <div class="light-ray ray-{i + 1}"></div>
   {/each}
+  
+  <!-- Realistic Smoke Effects -->
+  {#each Array(8) as _, i}
+    <div class="smoke-particle smoke-{i + 1}"></div>
+  {/each}
 </div>
 
 <style>
@@ -65,6 +70,60 @@
     filter: blur(0.8px);
     animation: ominousLightSweep 18s ease-in-out infinite;
     transform-origin: left center;
+  }
+
+  /* Realistic Smoke Effects */
+  .smoke-particle {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle, 
+      rgba(60, 30, 20, 0.15) 0%,
+      rgba(80, 40, 30, 0.12) 20%,
+      rgba(100, 50, 40, 0.08) 40%,
+      rgba(120, 60, 50, 0.05) 60%,
+      rgba(140, 70, 60, 0.03) 80%,
+      transparent 100%
+    );
+    filter: blur(8px);
+    animation: smokeRise 25s ease-out infinite;
+    opacity: 0.6;
+  }
+
+  .smoke-particle::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 120%;
+    height: 120%;
+    border-radius: 50%;
+    background: radial-gradient(circle, 
+      rgba(40, 20, 15, 0.08) 0%,
+      rgba(60, 30, 25, 0.06) 30%,
+      rgba(80, 40, 35, 0.04) 60%,
+      transparent 100%
+    );
+    filter: blur(12px);
+    animation: smokeSwirl 30s ease-in-out infinite;
+  }
+
+  .smoke-particle::after {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 140%;
+    height: 140%;
+    border-radius: 50%;
+    background: radial-gradient(circle, 
+      rgba(20, 10, 8, 0.04) 0%,
+      rgba(40, 20, 16, 0.03) 40%,
+      transparent 100%
+    );
+    filter: blur(16px);
+    animation: smokeDisperse 35s linear infinite;
   }
 
   /* Particle Positions */
@@ -162,6 +221,63 @@
     animation-delay: 14s;
   }
 
+  /* Smoke Particle Positions */
+  .smoke-1 {
+    bottom: 20%;
+    left: 10%;
+    animation-delay: 0s;
+    transform: scale(1.2);
+  }
+  
+  .smoke-2 {
+    bottom: 15%;
+    right: 25%;
+    animation-delay: 3s;
+    transform: scale(0.8);
+  }
+  
+  .smoke-3 {
+    bottom: 30%;
+    left: 60%;
+    animation-delay: 6s;
+    transform: scale(1.4);
+  }
+  
+  .smoke-4 {
+    bottom: 10%;
+    left: 40%;
+    animation-delay: 9s;
+    transform: scale(1);
+  }
+  
+  .smoke-5 {
+    bottom: 25%;
+    right: 10%;
+    animation-delay: 12s;
+    transform: scale(1.1);
+  }
+  
+  .smoke-6 {
+    bottom: 35%;
+    left: 20%;
+    animation-delay: 15s;
+    transform: scale(0.9);
+  }
+  
+  .smoke-7 {
+    bottom: 18%;
+    right: 45%;
+    animation-delay: 18s;
+    transform: scale(1.3);
+  }
+  
+  .smoke-8 {
+    bottom: 12%;
+    left: 75%;
+    animation-delay: 21s;
+    transform: scale(0.7);
+  }
+
   @keyframes mysteriousFloat {
     0% {
       transform: translateY(0) translateX(0) scale(0.8) rotate(0deg);
@@ -230,6 +346,87 @@
       transform: translateX(calc(100vw + 250px)) scale(0.6) rotate(5deg);
       opacity: 0;
       filter: hue-rotate(100deg) brightness(0.8);
+    }
+  }
+
+  @keyframes smokeRise {
+    0% {
+      transform: translateY(0) translateX(0) rotate(0deg) scale(0.5);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.6;
+      transform: translateY(-20vh) translateX(5px) rotate(15deg) scale(0.8);
+    }
+    25% {
+      opacity: 0.4;
+      transform: translateY(-40vh) translateX(-10px) rotate(45deg) scale(1.2);
+    }
+    50% {
+      opacity: 0.3;
+      transform: translateY(-60vh) translateX(20px) rotate(90deg) scale(1.5);
+    }
+    75% {
+      opacity: 0.2;
+      transform: translateY(-80vh) translateX(-15px) rotate(135deg) scale(1.8);
+    }
+    90% {
+      opacity: 0.1;
+      transform: translateY(-95vh) translateX(25px) rotate(180deg) scale(2);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-110vh) translateX(-30px) rotate(220deg) scale(2.5);
+    }
+  }
+
+  @keyframes smokeSwirl {
+    0% {
+      transform: rotate(0deg) scale(1);
+      opacity: 0.8;
+    }
+    25% {
+      transform: rotate(90deg) scale(1.3);
+      opacity: 0.6;
+    }
+    50% {
+      transform: rotate(180deg) scale(1.1);
+      opacity: 0.4;
+    }
+    75% {
+      transform: rotate(270deg) scale(1.4);
+      opacity: 0.3;
+    }
+    100% {
+      transform: rotate(360deg) scale(1);
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes smokeDisperse {
+    0% {
+      transform: rotate(0deg) scale(1) translateX(0);
+      opacity: 0.4;
+    }
+    20% {
+      transform: rotate(72deg) scale(1.5) translateX(10px);
+      opacity: 0.3;
+    }
+    40% {
+      transform: rotate(144deg) scale(2) translateX(-15px);
+      opacity: 0.2;
+    }
+    60% {
+      transform: rotate(216deg) scale(2.5) translateX(20px);
+      opacity: 0.15;
+    }
+    80% {
+      transform: rotate(288deg) scale(3) translateX(-25px);
+      opacity: 0.1;
+    }
+    100% {
+      transform: rotate(360deg) scale(3.5) translateX(30px);
+      opacity: 0.05;
     }
   }
 </style>
