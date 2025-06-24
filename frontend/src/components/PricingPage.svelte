@@ -366,6 +366,9 @@
                 class="w-full px-4 py-3 rounded-lg bg-background/50 border border-primary/20 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 text-text-primary"
                 placeholder="Enter your email address"
               />
+              <p class="text-xs text-text-secondary mt-1">
+                💡 For testing: Use a different email address than your PayFast merchant account
+              </p>
             </div>
 
             <div>
