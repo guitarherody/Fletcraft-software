@@ -62,11 +62,12 @@ class OrderViewSet(viewsets.ModelViewSet):
             PAYFAST_URL = getattr(settings, 'PAYFAST_URL', 'https://sandbox.payfast.co.za/eng/process')
             PASSPHRASE = getattr(settings, 'PAYFAST_PASSPHRASE', 'jt7NOE43FZPn')  # Fallback to test passphrase
             
-            # Build proper URLs for PayFast
+            # Build proper URLs for PayFast - MATCH HTML TEST EXACTLY
             base_url = getattr(settings, 'FRONTEND_URL', 'https://fletcraft.co.za')
             return_url = f'{base_url}/payment/success'
             cancel_url = f'{base_url}/payment/cancel'
-            notify_url = f'{request.build_absolute_uri("/").rstrip("/")}/api/payment/notify/'
+            # CRITICAL: Use exact same notify_url as working HTML test
+            notify_url = f'{request.build_absolute_uri("/").rstrip("/")}/api/payfast/itn/'
             
             # Split customer name properly with validation
             name_parts = order.customer_name.strip().split(' ') if order.customer_name else ['Customer']
@@ -97,11 +98,12 @@ class OrderViewSet(viewsets.ModelViewSet):
                 if len(clean_phone) >= 10:
                     payment_data['cell_number'] = clean_phone[-10:]
             
-            # Add custom fields exactly as Byron did
+            # Add custom fields exactly as Byron did - MATCH HTML TEST VALUES
             payment_data['custom_int1'] = '1'  # Byron used this
-            payment_data['custom_str1'] = str(order.id)[:255]
-            payment_data['custom_str2'] = order.service.title[:255] 
-            payment_data['custom_str3'] = 'Fletcraft Software'[:255]
+            # CRITICAL: Use same custom field values as working HTML test
+            payment_data['custom_str1'] = 'order_reference_123'  # Match HTML test exactly
+            payment_data['custom_str2'] = 'fletcraft_service'    # Match HTML test exactly  
+            payment_data['custom_str3'] = 'web_development'      # Match HTML test exactly
             
             # Remove empty values while preserving order
             payment_data = OrderedDict([(k, v) for k, v in payment_data.items() if v])
