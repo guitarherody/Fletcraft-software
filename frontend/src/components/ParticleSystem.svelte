@@ -415,12 +415,12 @@
   /* Diamond Light Refraction Effects */
   :global(.light-refraction) {
     position: absolute;
-    width: 200px;
-    height: 4px;
+    width: 120px;
+    height: 2px;
     pointer-events: none;
     transform-origin: left center;
-    animation: refractionBeam 12s linear infinite;
-    opacity: 0.7;
+    animation: elegantRefraction 18s ease-in-out infinite;
+    opacity: 0.3;
   }
 
   :global(.light-refraction::before) {
@@ -432,85 +432,85 @@
     height: 100%;
     background: linear-gradient(90deg, 
       transparent 0%,
-      rgba(255, 0, 150, 0.8) 10%,
-      rgba(255, 50, 0, 0.8) 20%,
-      rgba(255, 200, 0, 0.8) 30%,
-      rgba(150, 255, 0, 0.8) 40%,
-      rgba(0, 255, 100, 0.8) 50%,
-      rgba(0, 200, 255, 0.8) 60%,
-      rgba(100, 0, 255, 0.8) 70%,
-      rgba(255, 0, 200, 0.8) 80%,
+      rgba(255, 245, 240, 0.1) 15%,
+      rgba(255, 220, 200, 0.2) 25%,
+      rgba(255, 200, 150, 0.3) 35%,
+      rgba(200, 255, 200, 0.25) 45%,
+      rgba(180, 220, 255, 0.3) 55%,
+      rgba(200, 180, 255, 0.25) 65%,
+      rgba(255, 200, 220, 0.2) 75%,
+      rgba(255, 240, 245, 0.1) 85%,
       transparent 100%
     );
-    filter: blur(1px);
+    filter: blur(0.8px);
     opacity: 0.6;
   }
 
   :global(.light-refraction::after) {
     content: '';
     position: absolute;
-    top: -2px;
+    top: -1px;
     left: 0;
     width: 100%;
-    height: 8px;
+    height: 4px;
     background: linear-gradient(90deg, 
       transparent 0%,
-      rgba(255, 255, 255, 0.4) 30%,
-      rgba(255, 255, 255, 0.8) 50%,
-      rgba(255, 255, 255, 0.4) 70%,
+      rgba(255, 255, 255, 0.05) 30%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0.05) 70%,
       transparent 100%
     );
-    filter: blur(3px);
-    opacity: 0.3;
+    filter: blur(2px);
+    opacity: 0.4;
   }
 
   :global(.refraction-1) {
-    transform: rotate(15deg);
+    transform: rotate(8deg);
     animation-delay: 0s;
   }
   
   :global(.refraction-2) {
-    transform: rotate(-25deg);
-    animation-delay: 1.5s;
+    transform: rotate(-12deg);
+    animation-delay: 2s;
   }
   
   :global(.refraction-3) {
-    transform: rotate(45deg);
-    animation-delay: 3s;
+    transform: rotate(15deg);
+    animation-delay: 4s;
   }
   
   :global(.refraction-4) {
-    transform: rotate(-10deg);
-    animation-delay: 4.5s;
-  }
-  
-  :global(.refraction-5) {
-    transform: rotate(35deg);
+    transform: rotate(-6deg);
     animation-delay: 6s;
   }
   
+  :global(.refraction-5) {
+    transform: rotate(10deg);
+    animation-delay: 8s;
+  }
+  
   :global(.refraction-6) {
-    transform: rotate(-45deg);
-    animation-delay: 7.5s;
+    transform: rotate(-18deg);
+    animation-delay: 10s;
   }
   
   :global(.refraction-7) {
-    transform: rotate(60deg);
-    animation-delay: 9s;
+    transform: rotate(20deg);
+    animation-delay: 12s;
   }
   
   :global(.refraction-8) {
-    transform: rotate(-30deg);
-    animation-delay: 10.5s;
+    transform: rotate(-8deg);
+    animation-delay: 14s;
   }
 
   /* Diamond Sparkle Points */
   :global(.diamond-sparkle) {
     position: absolute;
-    width: 12px;
-    height: 12px;
+    width: 8px;
+    height: 8px;
     pointer-events: none;
-    animation: diamondSparkle 6s ease-in-out infinite;
+    animation: subtleSparkle 8s ease-in-out infinite;
   }
 
   :global(.diamond-sparkle::before) {
@@ -518,20 +518,20 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 2px;
-    height: 20px;
+    width: 1px;
+    height: 12px;
     background: linear-gradient(to bottom,
       transparent 0%,
-      rgba(255, 255, 255, 1) 30%,
-      rgba(255, 255, 255, 1) 70%,
+      rgba(255, 255, 255, 0.4) 30%,
+      rgba(255, 255, 255, 0.8) 50%,
+      rgba(255, 255, 255, 0.4) 70%,
       transparent 100%
     );
     transform: translate(-50%, -50%);
-    filter: blur(0.5px);
+    filter: blur(0.3px);
     box-shadow: 
-      0 0 10px rgba(255, 255, 255, 0.8),
-      0 0 20px rgba(255, 255, 255, 0.6),
-      0 0 30px rgba(255, 255, 255, 0.4);
+      0 0 4px rgba(255, 255, 255, 0.3),
+      0 0 8px rgba(255, 255, 255, 0.1);
   }
 
   :global(.diamond-sparkle::after) {
@@ -539,20 +539,20 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 20px;
-    height: 2px;
+    width: 12px;
+    height: 1px;
     background: linear-gradient(to right,
       transparent 0%,
-      rgba(255, 255, 255, 1) 30%,
-      rgba(255, 255, 255, 1) 70%,
+      rgba(255, 255, 255, 0.4) 30%,
+      rgba(255, 255, 255, 0.8) 50%,
+      rgba(255, 255, 255, 0.4) 70%,
       transparent 100%
     );
     transform: translate(-50%, -50%);
-    filter: blur(0.5px);
+    filter: blur(0.3px);
     box-shadow: 
-      0 0 10px rgba(255, 255, 255, 0.8),
-      0 0 20px rgba(255, 255, 255, 0.6),
-      0 0 30px rgba(255, 255, 255, 0.4);
+      0 0 4px rgba(255, 255, 255, 0.3),
+      0 0 8px rgba(255, 255, 255, 0.1);
   }
 
   :global(.sparkle-1) {
@@ -560,94 +560,89 @@
   }
   
   :global(.sparkle-2) {
-    animation-delay: 1.2s;
+    animation-delay: 1.6s;
   }
   
   :global(.sparkle-3) {
-    animation-delay: 2.4s;
+    animation-delay: 3.2s;
   }
   
   :global(.sparkle-4) {
-    animation-delay: 3.6s;
+    animation-delay: 4.8s;
   }
   
   :global(.sparkle-5) {
-    animation-delay: 4.8s;
+    animation-delay: 6.4s;
   }
 
-  @keyframes refractionBeam {
+  @keyframes elegantRefraction {
     0% {
       opacity: 0;
-      transform: scale(0) translateX(-100px);
-      filter: hue-rotate(0deg) brightness(0.5);
+      transform: scale(0.8) translateX(-60px);
+      filter: hue-rotate(0deg) brightness(0.8);
     }
-    10% {
-      opacity: 0.7;
+    15% {
+      opacity: 0.3;
       transform: scale(1) translateX(0px);
-      filter: hue-rotate(30deg) brightness(1.5);
+      filter: hue-rotate(20deg) brightness(1.1);
     }
-    25% {
-      opacity: 1;
-      transform: scale(1.2) translateX(50px);
-      filter: hue-rotate(90deg) brightness(2);
+    35% {
+      opacity: 0.4;
+      transform: scale(1.1) translateX(30px);
+      filter: hue-rotate(60deg) brightness(1.3);
     }
-    50% {
-      opacity: 0.9;
-      transform: scale(1) translateX(100px);
-      filter: hue-rotate(180deg) brightness(1.8);
+    55% {
+      opacity: 0.35;
+      transform: scale(1) translateX(60px);
+      filter: hue-rotate(120deg) brightness(1.2);
     }
     75% {
-      opacity: 0.6;
-      transform: scale(0.8) translateX(150px);
-      filter: hue-rotate(270deg) brightness(1.2);
+      opacity: 0.2;
+      transform: scale(0.9) translateX(90px);
+      filter: hue-rotate(180deg) brightness(1);
     }
     90% {
-      opacity: 0.3;
-      transform: scale(0.5) translateX(200px);
-      filter: hue-rotate(330deg) brightness(0.8);
+      opacity: 0.1;
+      transform: scale(0.8) translateX(110px);
+      filter: hue-rotate(200deg) brightness(0.9);
     }
     100% {
       opacity: 0;
-      transform: scale(0) translateX(250px);
-      filter: hue-rotate(360deg) brightness(0.5);
+      transform: scale(0.6) translateX(130px);
+      filter: hue-rotate(220deg) brightness(0.8);
     }
   }
 
-  @keyframes diamondSparkle {
+  @keyframes subtleSparkle {
     0% {
       transform: scale(0) rotate(0deg);
       opacity: 0;
-      filter: brightness(1) blur(0px);
+      filter: brightness(1);
     }
-    15% {
-      transform: scale(1.5) rotate(45deg);
-      opacity: 1;
-      filter: brightness(2) blur(0.5px);
+    20% {
+      transform: scale(0.8) rotate(45deg);
+      opacity: 0.6;
+      filter: brightness(1.5);
     }
-    30% {
+    40% {
       transform: scale(1) rotate(90deg);
       opacity: 0.8;
-      filter: brightness(1.5) blur(0px);
+      filter: brightness(1.8);
     }
-    50% {
-      transform: scale(1.8) rotate(180deg);
+    60% {
+      transform: scale(1.2) rotate(135deg);
       opacity: 1;
-      filter: brightness(2.5) blur(1px);
+      filter: brightness(2);
     }
-    70% {
-      transform: scale(1.2) rotate(270deg);
-      opacity: 0.6;
-      filter: brightness(1.8) blur(0.5px);
-    }
-    85% {
-      transform: scale(0.8) rotate(315deg);
-      opacity: 0.3;
-      filter: brightness(1.2) blur(0px);
+    80% {
+      transform: scale(0.9) rotate(180deg);
+      opacity: 0.4;
+      filter: brightness(1.3);
     }
     100% {
-      transform: scale(0) rotate(360deg);
+      transform: scale(0) rotate(225deg);
       opacity: 0;
-      filter: brightness(1) blur(0px);
+      filter: brightness(1);
     }
   }
 </style>

@@ -45,4 +45,17 @@
 <!-- Global Prismatic Light Container -->
 <div bind:this={prismaticContainer} class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
 
+<!-- Global Prismatic Light Effects -->
+<div class="global-prismatic-effects">
+  <!-- Elegant Prismatic Light Beams -->
+  <div class="prismatic-light" style="top: 15vh; left: -250px; transform: rotate(8deg);"></div>
+  <div class="prismatic-light" style="top: 45vh; left: -250px; transform: rotate(-12deg); animation-delay: 8s;"></div>
+  <div class="prismatic-light" style="top: 75vh; left: -250px; transform: rotate(15deg); animation-delay: 16s;"></div>
+  
+  <!-- Subtle Rainbow Beams -->
+  <div class="rainbow-beam" style="top: 25vh; left: -300px; transform: rotate(-6deg);"></div>
+  <div class="rainbow-beam" style="top: 60vh; left: -300px; transform: rotate(10deg); animation-delay: 10s;"></div>
+  <div class="rainbow-beam" style="top: 85vh; left: -300px; transform: rotate(-4deg); animation-delay: 20s;"></div>
+</div>
+
 <!-- Page content --> 

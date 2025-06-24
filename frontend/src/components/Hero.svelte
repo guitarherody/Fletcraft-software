@@ -551,11 +551,11 @@
 
   .hero-refraction {
     position: absolute;
-    width: 300px;
-    height: 6px;
+    width: 180px;
+    height: 3px;
     pointer-events: none;
     transform-origin: left center;
-    animation: heroRefractionBeam 15s ease-in-out infinite;
+    animation: elegantHeroRefraction 20s ease-in-out infinite;
   }
 
   .hero-refraction::before {
@@ -567,77 +567,76 @@
     height: 100%;
     background: linear-gradient(90deg, 
       transparent 0%,
-      rgba(255, 20, 147, 0.9) 8%,
-      rgba(255, 69, 0, 0.9) 16%,
-      rgba(255, 215, 0, 0.9) 24%,
-      rgba(173, 255, 47, 0.9) 32%,
-      rgba(0, 255, 127, 0.9) 40%,
-      rgba(0, 191, 255, 0.9) 48%,
-      rgba(138, 43, 226, 0.9) 56%,
-      rgba(255, 20, 147, 0.9) 64%,
-      rgba(255, 105, 180, 0.9) 72%,
-      rgba(255, 182, 193, 0.7) 80%,
+      rgba(255, 248, 245, 0.15) 12%,
+      rgba(255, 235, 215, 0.25) 20%,
+      rgba(255, 220, 185, 0.35) 28%,
+      rgba(240, 255, 240, 0.3) 36%,
+      rgba(220, 240, 255, 0.35) 44%,
+      rgba(235, 220, 255, 0.3) 52%,
+      rgba(255, 235, 245, 0.25) 60%,
+      rgba(255, 245, 250, 0.2) 68%,
+      rgba(252, 252, 255, 0.15) 76%,
       transparent 100%
     );
-    filter: blur(1.5px);
+    filter: blur(1px);
     box-shadow: 
-      0 0 15px rgba(255, 255, 255, 0.6),
-      0 0 30px rgba(255, 100, 200, 0.4);
+      0 0 8px rgba(255, 255, 255, 0.15),
+      0 0 16px rgba(255, 240, 245, 0.08);
   }
 
   .hero-refraction::after {
     content: '';
     position: absolute;
-    top: -3px;
+    top: -2px;
     left: 0;
     width: 100%;
-    height: 12px;
+    height: 7px;
     background: linear-gradient(90deg, 
       transparent 0%,
-      rgba(255, 255, 255, 0.5) 25%,
-      rgba(255, 255, 255, 1) 50%,
-      rgba(255, 255, 255, 0.5) 75%,
+      rgba(255, 255, 255, 0.08) 25%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.08) 75%,
       transparent 100%
     );
-    filter: blur(4px);
-    opacity: 0.4;
+    filter: blur(3px);
+    opacity: 0.6;
   }
 
   .refraction-beam-1 {
-    top: 20%;
-    left: 10%;
-    transform: rotate(25deg);
+    top: 25%;
+    left: 15%;
+    transform: rotate(12deg);
     animation-delay: 0s;
   }
 
   .refraction-beam-2 {
-    top: 60%;
-    right: 15%;
-    transform: rotate(-35deg);
-    animation-delay: 3s;
+    top: 65%;
+    right: 20%;
+    transform: rotate(-18deg);
+    animation-delay: 5s;
   }
 
   .refraction-beam-3 {
-    top: 30%;
-    left: 70%;
-    transform: rotate(15deg);
-    animation-delay: 6s;
+    top: 35%;
+    left: 65%;
+    transform: rotate(8deg);
+    animation-delay: 10s;
   }
 
   .refraction-beam-4 {
-    top: 80%;
-    left: 30%;
-    transform: rotate(-20deg);
-    animation-delay: 9s;
+    top: 75%;
+    left: 35%;
+    transform: rotate(-10deg);
+    animation-delay: 15s;
   }
 
   /* Hero Diamond Sparkles */
   .hero-diamond-sparkle {
     position: absolute;
-    width: 16px;
-    height: 16px;
+    width: 10px;
+    height: 10px;
     pointer-events: none;
-    animation: heroDiamondSparkle 8s ease-in-out infinite;
+    animation: elegantHeroSparkle 12s ease-in-out infinite;
   }
 
   .hero-diamond-sparkle::before {
@@ -645,21 +644,20 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 3px;
-    height: 30px;
+    width: 1.5px;
+    height: 16px;
     background: linear-gradient(to bottom,
       transparent 0%,
-      rgba(255, 255, 255, 0.8) 20%,
-      rgba(255, 255, 255, 1) 50%,
-      rgba(255, 255, 255, 0.8) 80%,
+      rgba(255, 255, 255, 0.3) 25%,
+      rgba(255, 255, 255, 0.7) 50%,
+      rgba(255, 255, 255, 0.3) 75%,
       transparent 100%
     );
     transform: translate(-50%, -50%);
-    filter: blur(0.8px);
+    filter: blur(0.4px);
     box-shadow: 
-      0 0 15px rgba(255, 255, 255, 1),
-      0 0 30px rgba(255, 200, 255, 0.8),
-      0 0 45px rgba(200, 255, 255, 0.6);
+      0 0 6px rgba(255, 255, 255, 0.4),
+      0 0 12px rgba(255, 250, 255, 0.15);
   }
 
   .hero-diamond-sparkle::after {
@@ -667,39 +665,38 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 30px;
-    height: 3px;
+    width: 16px;
+    height: 1.5px;
     background: linear-gradient(to right,
       transparent 0%,
-      rgba(255, 255, 255, 0.8) 20%,
-      rgba(255, 255, 255, 1) 50%,
-      rgba(255, 255, 255, 0.8) 80%,
+      rgba(255, 255, 255, 0.3) 25%,
+      rgba(255, 255, 255, 0.7) 50%,
+      rgba(255, 255, 255, 0.3) 75%,
       transparent 100%
     );
     transform: translate(-50%, -50%);
-    filter: blur(0.8px);
+    filter: blur(0.4px);
     box-shadow: 
-      0 0 15px rgba(255, 255, 255, 1),
-      0 0 30px rgba(255, 200, 255, 0.8),
-      0 0 45px rgba(200, 255, 255, 0.6);
+      0 0 6px rgba(255, 255, 255, 0.4),
+      0 0 12px rgba(255, 250, 255, 0.15);
   }
 
   .diamond-1 {
-    top: 15%;
-    left: 50%;
+    top: 20%;
+    left: 45%;
     animation-delay: 0s;
   }
 
   .diamond-2 {
-    top: 70%;
-    right: 20%;
-    animation-delay: 2.5s;
+    top: 65%;
+    right: 25%;
+    animation-delay: 4s;
   }
 
   .diamond-3 {
-    top: 40%;
-    left: 20%;
-    animation-delay: 5s;
+    top: 45%;
+    left: 25%;
+    animation-delay: 8s;
   }
 
   /* Enhanced Glass Orbs with refraction */
@@ -716,184 +713,171 @@
   .glass-orb {
     position: absolute;
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, 
-      rgba(255, 255, 255, 0.3) 0%,
-      rgba(255, 255, 255, 0.1) 30%,
-      rgba(200, 150, 255, 0.08) 60%,
-      rgba(150, 200, 255, 0.05) 80%,
+    background: radial-gradient(circle at 35% 25%, 
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.08) 25%,
+      rgba(240, 248, 255, 0.06) 50%,
+      rgba(248, 240, 255, 0.04) 70%,
+      rgba(255, 248, 240, 0.03) 85%,
       transparent 100%
     );
-    backdrop-filter: blur(15px);
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: 
-      inset 0 1px 0 rgba(255, 255, 255, 0.4),
-      0 8px 32px rgba(0, 0, 0, 0.2),
-      0 0 20px rgba(255, 255, 255, 0.1);
-    animation: orbRefractionFloat 12s ease-in-out infinite;
+      inset 0 1px 0 rgba(255, 255, 255, 0.25),
+      0 4px 20px rgba(0, 0, 0, 0.15),
+      0 0 12px rgba(255, 255, 255, 0.06);
+    animation: elegantOrbFloat 16s ease-in-out infinite;
   }
 
   .glass-orb::before {
     content: '';
     position: absolute;
-    top: 15%;
-    left: 25%;
-    width: 30%;
-    height: 30%;
-    border-radius: 50%;
-    background: radial-gradient(circle, 
-      rgba(255, 255, 255, 0.6) 0%,
-      rgba(255, 255, 255, 0.3) 40%,
-      transparent 100%
-    );
-    filter: blur(2px);
-  }
-
-  .glass-orb::after {
-    content: '';
-    position: absolute;
-    top: 60%;
-    right: 30%;
-    width: 15%;
-    height: 15%;
+    top: 20%;
+    left: 30%;
+    width: 25%;
+    height: 25%;
     border-radius: 50%;
     background: radial-gradient(circle, 
       rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.2) 50%,
       transparent 100%
     );
     filter: blur(1px);
   }
 
+  .glass-orb::after {
+    content: '';
+    position: absolute;
+    top: 65%;
+    right: 35%;
+    width: 12%;
+    height: 12%;
+    border-radius: 50%;
+    background: radial-gradient(circle, 
+      rgba(255, 255, 255, 0.25) 0%,
+      transparent 100%
+    );
+    filter: blur(0.5px);
+  }
+
   .orb-1 {
-    top: 20%;
-    left: 80%;
-    width: 80px;
-    height: 80px;
+    top: 15%;
+    left: 75%;
+    width: 65px;
+    height: 65px;
     animation-delay: 0s;
   }
 
   .orb-2 {
     top: 70%;
-    left: 10%;
-    width: 60px;
-    height: 60px;
-    animation-delay: 2s;
+    left: 8%;
+    width: 50px;
+    height: 50px;
+    animation-delay: 3s;
   }
 
   .orb-3 {
-    top: 30%;
-    right: 10%;
-    width: 50px;
-    height: 50px;
-    animation-delay: 4s;
-  }
-
-  .orb-4 {
-    top: 80%;
-    right: 30%;
-    width: 70px;
-    height: 70px;
+    top: 25%;
+    right: 8%;
+    width: 40px;
+    height: 40px;
     animation-delay: 6s;
   }
 
-  .orb-5 {
-    top: 50%;
-    left: 5%;
-    width: 45px;
-    height: 45px;
-    animation-delay: 8s;
+  .orb-4 {
+    top: 85%;
+    right: 35%;
+    width: 55px;
+    height: 55px;
+    animation-delay: 9s;
   }
 
-  @keyframes heroRefractionBeam {
+  .orb-5 {
+    top: 55%;
+    left: 3%;
+    width: 35px;
+    height: 35px;
+    animation-delay: 12s;
+  }
+
+  @keyframes elegantHeroRefraction {
     0% {
       opacity: 0;
-      transform: scale(0) translateX(-150px);
-      filter: hue-rotate(0deg) brightness(0.8);
+      transform: scale(0.9) translateX(-90px);
+      filter: hue-rotate(0deg) brightness(0.9);
     }
-    15% {
-      opacity: 0.8;
+    20% {
+      opacity: 0.4;
       transform: scale(1) translateX(0px);
-      filter: hue-rotate(60deg) brightness(1.8);
+      filter: hue-rotate(30deg) brightness(1.2);
     }
-    30% {
-      opacity: 1;
-      transform: scale(1.3) translateX(80px);
-      filter: hue-rotate(120deg) brightness(2.2);
+    40% {
+      opacity: 0.5;
+      transform: scale(1.05) translateX(50px);
+      filter: hue-rotate(80deg) brightness(1.4);
     }
-    50% {
-      opacity: 0.9;
-      transform: scale(1.1) translateX(160px);
-      filter: hue-rotate(240deg) brightness(2);
+    60% {
+      opacity: 0.45;
+      transform: scale(1) translateX(100px);
+      filter: hue-rotate(140deg) brightness(1.3);
     }
-    70% {
-      opacity: 0.6;
-      transform: scale(0.9) translateX(240px);
-      filter: hue-rotate(300deg) brightness(1.5);
-    }
-    85% {
-      opacity: 0.3;
-      transform: scale(0.6) translateX(300px);
-      filter: hue-rotate(330deg) brightness(1);
+    80% {
+      opacity: 0.25;
+      transform: scale(0.95) translateX(150px);
+      filter: hue-rotate(200deg) brightness(1.1);
     }
     100% {
       opacity: 0;
-      transform: scale(0) translateX(350px);
-      filter: hue-rotate(360deg) brightness(0.8);
+      transform: scale(0.8) translateX(200px);
+      filter: hue-rotate(240deg) brightness(0.9);
     }
   }
 
-  @keyframes heroDiamondSparkle {
+  @keyframes elegantHeroSparkle {
     0% {
       transform: scale(0) rotate(0deg);
       opacity: 0;
-      filter: brightness(1) blur(0px) hue-rotate(0deg);
+      filter: brightness(1);
     }
-    20% {
-      transform: scale(2) rotate(90deg);
+    25% {
+      transform: scale(0.9) rotate(90deg);
+      opacity: 0.7;
+      filter: brightness(1.6);
+    }
+    50% {
+      transform: scale(1.1) rotate(180deg);
       opacity: 1;
-      filter: brightness(2.5) blur(1px) hue-rotate(60deg);
+      filter: brightness(2);
     }
-    40% {
-      transform: scale(1.2) rotate(180deg);
-      opacity: 0.8;
-      filter: brightness(1.8) blur(0.5px) hue-rotate(120deg);
-    }
-    60% {
-      transform: scale(2.5) rotate(270deg);
-      opacity: 1;
-      filter: brightness(3) blur(1.5px) hue-rotate(240deg);
-    }
-    80% {
-      transform: scale(1.5) rotate(360deg);
-      opacity: 0.6;
-      filter: brightness(2) blur(0.8px) hue-rotate(300deg);
+    75% {
+      transform: scale(0.8) rotate(270deg);
+      opacity: 0.5;
+      filter: brightness(1.4);
     }
     100% {
-      transform: scale(0) rotate(450deg);
+      transform: scale(0) rotate(360deg);
       opacity: 0;
-      filter: brightness(1) blur(0px) hue-rotate(360deg);
+      filter: brightness(1);
     }
   }
 
-  @keyframes orbRefractionFloat {
+  @keyframes elegantOrbFloat {
     0% {
       transform: translateY(0) translateX(0) scale(1);
       filter: hue-rotate(0deg) brightness(1);
     }
-    25% {
-      transform: translateY(-20px) translateX(15px) scale(1.1);
-      filter: hue-rotate(90deg) brightness(1.3);
+    30% {
+      transform: translateY(-15px) translateX(12px) scale(1.03);
+      filter: hue-rotate(60deg) brightness(1.1);
     }
-    50% {
-      transform: translateY(-10px) translateX(-10px) scale(0.9);
-      filter: hue-rotate(180deg) brightness(1.1);
-    }
-    75% {
-      transform: translateY(-30px) translateX(20px) scale(1.05);
-      filter: hue-rotate(270deg) brightness(1.2);
+    60% {
+      transform: translateY(-8px) translateX(-8px) scale(0.98);
+      filter: hue-rotate(120deg) brightness(1.05);
     }
     100% {
       transform: translateY(0) translateX(0) scale(1);
-      filter: hue-rotate(360deg) brightness(1);
+      filter: hue-rotate(180deg) brightness(1);
     }
   }
 </style> 
