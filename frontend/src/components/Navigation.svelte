@@ -12,19 +12,13 @@
   let lastScrollY = 0;
 
   onMount(() => {
-    // Enhanced scroll effect with sticky behavior
+    // Sticky navbar that always stays visible
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const scrolled = currentScrollY > 80;
       
-      // Determine if navbar should be visible (sticky behavior)
-      if (currentScrollY > lastScrollY && currentScrollY > 200) {
-        // Scrolling down - hide navbar
-        isVisible = false;
-      } else {
-        // Scrolling up or at top - show navbar
-        isVisible = true;
-      }
+      // Navbar is always visible (sticky behavior)
+      isVisible = true;
       
       if (scrolled !== isScrolled) {
         isScrolled = scrolled;
@@ -64,7 +58,8 @@
   }
 </script>
 
-<nav bind:this={nav} class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-11/12 max-w-4xl transition-all duration-300 {isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}">
+<nav bind:this={nav} class="fixed top-0 left-0 right-0 z-50 px-4 pt-4 transition-all duration-300">
+  <div class="w-11/12 max-w-4xl mx-auto">
   <!-- Vaporous Effect Layers -->
   <div class="vapor-layer vapor-1"></div>
   <div class="vapor-layer vapor-2"></div>
@@ -123,6 +118,7 @@
           </svg>
         </button>
       </div>
+    </div>
     </div>
   </div>
 </nav>
