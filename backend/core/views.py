@@ -98,12 +98,12 @@ class OrderViewSet(viewsets.ModelViewSet):
                 if len(clean_phone) >= 10:
                     payment_data['cell_number'] = clean_phone[-10:]
             
-            # Add custom fields using DYNAMIC order data (Byron's method but with real values)
-            payment_data['custom_int1'] = '1'  # Keep Byron's working value
-            # DYNAMIC: Use actual order data instead of hardcoded test values
-            payment_data['custom_str1'] = f'order_{order.order_id}'[:255]          # Unique order reference
-            payment_data['custom_str2'] = order.service.title[:255]                # Actual service name
-            payment_data['custom_str3'] = 'Fletcraft_Software'[:255]              # Company identifier
+            # Add custom fields using Byron's EXACT format with real order data
+            payment_data['custom_int1'] = '1'  # Keep Byron's exact format
+            # Use Byron's proven format but with real order identifiers
+            payment_data['custom_str1'] = f'order_reference_{order.order_id}'[:255]  # Byron's format: "order_reference_XXX"
+            payment_data['custom_str2'] = 'fletcraft_service'[:255]                  # Keep Byron's exact working value
+            payment_data['custom_str3'] = 'web_development'[:255]                    # Keep Byron's exact working value
             
             # Remove empty values while preserving order
             payment_data = OrderedDict([(k, v) for k, v in payment_data.items() if v])
