@@ -199,6 +199,14 @@ CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# PayFast Configuration - LIVE CREDENTIALS
+# These should be set as environment variables in production
+PAYFAST_MERCHANT_ID = os.environ.get('PAYFAST_MERCHANT_ID', '13245841')
+PAYFAST_MERCHANT_KEY = os.environ.get('PAYFAST_MERCHANT_KEY', 'kzyobsh5zlvrw')  
+PAYFAST_PASSPHRASE = os.environ.get('PAYFAST_PASSPHRASE', 'Redeclip5e-8298')
+PAYFAST_URL = os.environ.get('PAYFAST_URL', 'https://www.payfast.co.za/eng/process')
+FRONTEND_URL = os.environ.get('FRONTEND_URL', 'https://fletcraft.co.za')
+
 # PayFast Configuration
 # Use environment variables for production security
 PAYFAST_MERCHANT_ID = os.environ.get('PAYFAST_MERCHANT_ID', '13245841')  # Live merchant ID

@@ -92,17 +92,28 @@ class OrderViewSet(viewsets.ModelViewSet):
                 ('item_description', (order.service.description[:200] if order.service.description else order.service.title[:200])),
             ])
             
-            # Add optional fields in Byron's order if they exist
-            if order.customer_phone:
-                clean_phone = ''.join(filter(str.isdigit, order.customer_phone))
-                if len(clean_phone) >= 10:
-                    payment_data['cell_number'] = clean_phone[-10:]
+            # CRITICAL FIX: Do NOT add cell_number field - it was causing signature mismatches!
+            # Graham's payment worked when we removed this field entirely.
+            # PayFast has strict validation for cell_number format - better to omit it than fail.
+            # Customers can still pay without providing cell_number to PayFast.
+            
+            # DEBUG: Verify no cell_number is being added
+            print(f"DEBUG: Payment data keys before signature: {list(payment_data.keys())}")
+            if 'cell_number' in payment_data:
+                print(f"WARNING: cell_number found in payment_data: {payment_data['cell_number']}")
+            else:
+                print("SUCCESS: No cell_number in payment_data")
             
             # Add custom fields using Byron's EXACT format with real order data
             payment_data['custom_int1'] = '1'  # Byron's exact format
             payment_data['custom_str1'] = f'order_reference_{order.order_id}'[:255]  # Byron's format
             payment_data['custom_str2'] = 'fletcraft_service'[:255]                  # Byron's exact value
             payment_data['custom_str3'] = 'web_development'[:255]                    # Byron's exact value
+            
+            # FORCE REMOVE cell_number if it somehow got added (Graham's critical fix)
+            if 'cell_number' in payment_data:
+                del payment_data['cell_number']
+                print("FORCED REMOVAL of cell_number field for Graham's fix compatibility")
             
             # Remove empty values while preserving order
             payment_data = OrderedDict([(k, v) for k, v in payment_data.items() if v])
