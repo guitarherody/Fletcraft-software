@@ -19,35 +19,15 @@
   <!-- Darker background gradient -->
   <div class="absolute inset-0 bg-gradient-to-br from-gray-950 via-slate-900 to-gray-900"></div>
   
-  <!-- Hero Particle Effects -->
-  <div class="hero-particles">
-    <div class="hero-particle particle-1"></div>
-    <div class="hero-particle particle-2"></div>
-    <div class="hero-particle particle-3"></div>
-    <div class="hero-particle particle-4"></div>
-    <div class="hero-particle particle-5"></div>
-    <div class="hero-particle particle-6"></div>
-    <div class="hero-particle particle-7"></div>
-    <div class="hero-particle particle-8"></div>
-    <div class="hero-particle particle-9"></div>
-    <div class="hero-particle particle-10"></div>
+  <!-- Clean Hero Lighting -->
+  <div class="hero-lighting">
+    <div class="hero-glow-particle glow-1"></div>
+    <div class="hero-glow-particle glow-2"></div>
+    <div class="hero-glow-particle glow-3"></div>
+    
+    <div class="hero-light-beam beam-1"></div>
+    <div class="hero-light-beam beam-2"></div>
   </div>
-
-  <!-- Hero Light Refractions -->
-  <div class="hero-refractions">
-    <div class="hero-refraction refraction-beam-1"></div>
-    <div class="hero-refraction refraction-beam-2"></div>
-    <div class="hero-refraction refraction-beam-3"></div>
-    <div class="hero-refraction refraction-beam-4"></div>
-    <div class="hero-diamond-sparkle diamond-1"></div>
-    <div class="hero-diamond-sparkle diamond-2"></div>
-    <div class="hero-diamond-sparkle diamond-3"></div>
-  </div>
-
-  <!-- Floating Glass Orbs with enhanced refractions -->
-  <div class="glass-orbs">{#each Array(5) as _, i}
-    <div class="glass-orb orb-{i + 1}"></div>
-  {/each}</div>
   
   <!-- Main content -->
   <div class="relative z-10 max-w-6xl mx-auto text-center">
@@ -878,6 +858,123 @@
     100% {
       transform: translateY(0) translateX(0) scale(1);
       filter: hue-rotate(180deg) brightness(1);
+    }
+  }
+
+  /* Clean Hero Lighting */
+  .hero-lighting {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero-glow-particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: radial-gradient(circle, 
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.6) 40%,
+      transparent 100%
+    );
+    filter: blur(0.4px);
+    box-shadow: 
+      0 0 6px rgba(255, 255, 255, 0.7),
+      0 0 12px rgba(255, 255, 255, 0.3);
+    animation: heroGlow 12s ease-in-out infinite;
+  }
+
+  .hero-light-beam {
+    position: absolute;
+    width: 150px;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      transparent 0%,
+      rgba(255, 255, 255, 0.08) 25%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.08) 75%,
+      transparent 100%
+    );
+    filter: blur(0.6px);
+    animation: heroBeamSweep 18s ease-in-out infinite;
+    transform-origin: left center;
+  }
+
+  .glow-1 {
+    top: 25%;
+    left: 20%;
+    animation-delay: 0s;
+  }
+
+  .glow-2 {
+    top: 70%;
+    right: 15%;
+    animation-delay: 4s;
+  }
+
+  .glow-3 {
+    top: 45%;
+    left: 75%;
+    animation-delay: 8s;
+  }
+
+  .beam-1 {
+    top: 35%;
+    left: -150px;
+    transform: rotate(6deg);
+    animation-delay: 2s;
+  }
+
+  .beam-2 {
+    top: 80%;
+    left: -150px;
+    transform: rotate(-8deg);
+    animation-delay: 10s;
+  }
+
+  @keyframes heroGlow {
+    0% {
+      transform: scale(0.7);
+      opacity: 0.5;
+      filter: blur(0.4px) brightness(1);
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 1;
+      filter: blur(0.2px) brightness(1.5);
+    }
+    100% {
+      transform: scale(0.7);
+      opacity: 0.5;
+      filter: blur(0.4px) brightness(1);
+    }
+  }
+
+  @keyframes heroBeamSweep {
+    0% {
+      transform: translateX(-150px) scale(0.8);
+      opacity: 0;
+    }
+    20% {
+      opacity: 0.2;
+      transform: translateX(0px) scale(1);
+    }
+    60% {
+      opacity: 0.3;
+      transform: translateX(60vw) scale(1.1);
+    }
+    80% {
+      opacity: 0.1;
+      transform: translateX(100vw) scale(0.9);
+    }
+    100% {
+      transform: translateX(calc(100vw + 150px)) scale(0.8);
+      opacity: 0;
     }
   }
 </style> 

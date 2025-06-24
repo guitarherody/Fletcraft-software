@@ -526,4 +526,78 @@ button:hover::after, .btn:hover::after {
     opacity: 0.8;
     filter: hue-rotate(120deg) blur(0.5px);
   }
+}
+
+/* Clean Dynamic Lighting */
+.dynamic-light {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.1;
+}
+
+.dynamic-light::before {
+  content: '';
+  position: absolute;
+  width: 180px;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 40%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0.15) 60%,
+    transparent 100%
+  );
+  filter: blur(0.5px);
+  animation: cleanLightSweep 25s linear infinite;
+}
+
+/* Enhanced interactions with subtle lighting */
+button:hover, .btn:hover {
+  filter: brightness(1.05);
+  box-shadow: 
+    0 0 15px rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+}
+
+/* Clean glass effect */
+.glass:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 15px rgba(255, 255, 255, 0.05);
+}
+
+/* Minimal scrollbar */
+::-webkit-scrollbar-thumb:hover {
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+}
+
+/* Clean text selection */
+::selection {
+  background: rgba(139, 92, 246, 0.25);
+  color: white;
+  text-shadow: 0 0 8px rgba(139, 92, 246, 0.3);
+}
+
+@keyframes cleanLightSweep {
+  0% {
+    transform: translateX(-180px);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.15;
+    transform: translateX(50vw);
+  }
+  85% {
+    opacity: 0.08;
+  }
+  100% {
+    transform: translateX(calc(100vw + 180px));
+    opacity: 0;
+  }
 } 

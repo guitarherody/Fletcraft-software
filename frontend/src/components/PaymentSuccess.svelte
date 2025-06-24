@@ -21,52 +21,14 @@
 <!-- Background Particles -->
 <ParticleSystem />
 
-<!-- Fast Swirling Particles -->
-<div class="swirling-particles">
-  <div class="swirl-particle swirl-1"></div>
-  <div class="swirl-particle swirl-2"></div>
-  <div class="swirl-particle swirl-3"></div>
-  <div class="swirl-particle swirl-4"></div>
-  <div class="swirl-particle swirl-5"></div>
-  <div class="swirl-particle swirl-6"></div>
-  <div class="swirl-particle swirl-7"></div>
-  <div class="swirl-particle swirl-8"></div>
-  <div class="swirl-particle swirl-9"></div>
-  <div class="swirl-particle swirl-10"></div>
-  <div class="swirl-particle swirl-11"></div>
-  <div class="swirl-particle swirl-12"></div>
-</div>
-
-<!-- Enhanced firefly-like fireworks -->
-<div class="fireworks-container">
-  <div class="firework firework-1"></div>
-  <div class="firework firework-2"></div>
-  <div class="firework firework-3"></div>
-  <div class="firework firework-4"></div>
-  <div class="firework firework-5"></div>
-  <div class="firework firework-6"></div>
-</div>
-
-<!-- Particle explosion effects with firefly trails -->
-<div class="particle-explosions">
-  <div class="explosion explosion-1"></div>
-  <div class="explosion explosion-2"></div>
-  <div class="explosion explosion-3"></div>
-  <div class="explosion explosion-4"></div>
-</div>
-
-<!-- Floating magic particles with enhanced firefly effect -->
-<div class="magic-particles">
-  <div class="magic-particle magic-1"></div>
-  <div class="magic-particle magic-2"></div>
-  <div class="magic-particle magic-3"></div>
-  <div class="magic-particle magic-4"></div>
-  <div class="magic-particle magic-5"></div>
-  <div class="magic-particle magic-6"></div>
-  <div class="magic-particle magic-7"></div>
-  <div class="magic-particle magic-8"></div>
-  <div class="magic-particle magic-9"></div>
-  <div class="magic-particle magic-10"></div>
+<!-- Clean Success Celebration -->
+<div class="success-celebration">
+  <div class="celebration-particle cel-1"></div>
+  <div class="celebration-particle cel-2"></div>
+  <div class="celebration-particle cel-3"></div>
+  <div class="celebration-particle cel-4"></div>
+  <div class="celebration-particle cel-5"></div>
+  <div class="celebration-particle cel-6"></div>
 </div>
 
 <div class="min-h-screen bg-gradient-to-br from-gray-950 via-slate-900 to-gray-900 flex items-center justify-center p-4">
@@ -198,8 +160,98 @@
 
   .glass-dark {
     background: rgba(15, 23, 42, 0.7);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Clean Success Celebration */
+  .success-celebration {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .celebration-particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: radial-gradient(circle, 
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.6) 40%,
+      transparent 100%
+    );
+    filter: blur(0.3px);
+    box-shadow: 
+      0 0 8px rgba(255, 255, 255, 0.8),
+      0 0 16px rgba(255, 255, 255, 0.4);
+    animation: celebrationFloat 6s ease-in-out infinite;
+  }
+
+  .cel-1 {
+    top: 20%;
+    left: 25%;
+    animation-delay: 0s;
+  }
+
+  .cel-2 {
+    top: 15%;
+    right: 30%;
+    animation-delay: 1s;
+  }
+
+  .cel-3 {
+    top: 35%;
+    left: 70%;
+    animation-delay: 2s;
+  }
+
+  .cel-4 {
+    top: 60%;
+    left: 15%;
+    animation-delay: 3s;
+  }
+
+  .cel-5 {
+    top: 75%;
+    right: 25%;
+    animation-delay: 4s;
+  }
+
+  .cel-6 {
+    top: 45%;
+    right: 15%;
+    animation-delay: 5s;
+  }
+
+  @keyframes celebrationFloat {
+    0% {
+      transform: translateY(0) scale(0.8);
+      opacity: 0.6;
+    }
+    25% {
+      transform: translateY(-20px) scale(1.2);
+      opacity: 1;
+    }
+    50% {
+      transform: translateY(-10px) scale(1);
+      opacity: 0.8;
+    }
+    75% {
+      transform: translateY(-25px) scale(1.1);
+      opacity: 0.9;
+    }
+         100% {
+       transform: translateY(0) scale(0.8);
+       opacity: 0.6;
+     }
+   }
+
+   .glass-dark {
+     backdrop-filter: blur(16px);
+     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   }
 

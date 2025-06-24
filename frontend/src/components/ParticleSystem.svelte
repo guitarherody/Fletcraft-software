@@ -1,648 +1,215 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  let container: HTMLDivElement;
-  let particles: HTMLElement[] = [];
-  let particleCount = 150; // Even more particles for firefly effect
-
-  // Detect if user is on mobile
-  const isMobile = () => window.innerWidth < 768;
-  
   onMount(() => {
-    // Adjust particle count based on screen size
-    particleCount = isMobile() ? 100 : 150;
-    
-    createParticles();
-    createLightRefractions();
-    
-    // Handle resize
-    const handleResize = () => {
-      const newParticleCount = isMobile() ? 100 : 150;
-      if (newParticleCount !== particleCount) {
-        particleCount = newParticleCount;
-        clearParticles();
-        createParticles();
-        createLightRefractions();
-      }
-    };
-    
-    window.addEventListener('resize', handleResize);
-    
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      clearParticles();
-    };
+    // Clean cinematic particle system
   });
-
-  function clearParticles() {
-    particles.forEach(particle => {
-      if (particle.parentNode) {
-        particle.parentNode.removeChild(particle);
-      }
-    });
-    particles = [];
-  }
-
-  function createLightRefractions() {
-    if (!container) return;
-    
-    // Create 8 prismatic light beams
-    for (let i = 0; i < 8; i++) {
-      const lightBeam = document.createElement('div');
-      lightBeam.className = `light-refraction refraction-${i + 1}`;
-      
-      // Random positioning
-      const x = Math.random() * window.innerWidth;
-      const y = Math.random() * window.innerHeight;
-      
-      lightBeam.style.left = x + 'px';
-      lightBeam.style.top = y + 'px';
-      lightBeam.style.animationDelay = Math.random() * 10 + 's';
-      
-      container.appendChild(lightBeam);
-      particles.push(lightBeam);
-    }
-    
-    // Create 5 diamond sparkle points
-    for (let i = 0; i < 5; i++) {
-      const sparkle = document.createElement('div');
-      sparkle.className = `diamond-sparkle sparkle-${i + 1}`;
-      
-      const x = Math.random() * window.innerWidth;
-      const y = Math.random() * window.innerHeight;
-      
-      sparkle.style.left = x + 'px';
-      sparkle.style.top = y + 'px';
-      sparkle.style.animationDelay = Math.random() * 8 + 's';
-      
-      container.appendChild(sparkle);
-      particles.push(sparkle);
-    }
-  }
-
-  function createFloatingParticle() {
-    const particle = document.createElement('div');
-    particle.className = 'floating-particle firefly';
-    
-    // Random firefly type
-    const type = Math.random();
-    if (type < 0.3) {
-      particle.classList.add('firefly-warm');
-    } else if (type < 0.6) {
-      particle.classList.add('firefly-cool');
-    } else {
-      particle.classList.add('firefly-magic');
-    }
-    
-    return particle;
-  }
-
-  function createParticles() {
-    if (!container) return;
-    
-    for (let i = 0; i < particleCount; i++) {
-      const particle = createFloatingParticle();
-      
-      // Random starting position
-      const x = Math.random() * window.innerWidth;
-      const y = Math.random() * window.innerHeight;
-      
-      // Firefly size range
-      const size = Math.random() * 4 + 2; // 2-6px for more realistic firefly size
-      
-      // Set initial position and properties
-      particle.style.left = x + 'px';
-      particle.style.top = y + 'px';
-      particle.style.width = size + 'px';
-      particle.style.height = size + 'px';
-      particle.style.animationDelay = Math.random() * 15 + 's';
-      particle.style.animationDuration = (20 + Math.random() * 25) + 's'; // Slower, more firefly-like
-      
-      container.appendChild(particle);
-      particles.push(particle);
-    }
-  }
 </script>
 
-<div bind:this={container} class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-  <!-- Particles will be added here dynamically -->
+<div class="particle-container">
+  <!-- Cinematic Glowing Particles -->
+  {#each Array(12) as _, i}
+    <div class="cinematic-particle particle-{i + 1}"></div>
+  {/each}
+  
+  <!-- Dynamic Light Rays -->
+  {#each Array(3) as _, i}
+    <div class="light-ray ray-{i + 1}"></div>
+  {/each}
 </div>
 
 <style>
-  :global(.floating-particle) {
-    position: absolute;
-    pointer-events: none;
-    will-change: transform;
-    animation: fireflyFloat linear infinite;
-  }
-
-  :global(.floating-particle.firefly) {
-    border-radius: 50%;
-  }
-
-  /* Firefly Trail Effect */
-  :global(.floating-particle.firefly::before) {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300%;
-    height: 300%;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0.3;
-    z-index: -1;
-    filter: blur(3px);
-  }
-
-  :global(.floating-particle.firefly::after) {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 600%;
-    height: 600%;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0.1;
-    z-index: -2;
-    filter: blur(8px);
-  }
-
-  :global(.floating-particle.firefly-warm) {
-    background: radial-gradient(circle, 
-      rgba(255, 220, 120, 1) 0%,
-      rgba(255, 180, 60, 0.9) 30%,
-      rgba(255, 140, 40, 0.7) 60%,
-      transparent 100%
-    );
-    box-shadow: 
-      0 0 15px rgba(255, 200, 80, 1),
-      0 0 30px rgba(255, 160, 50, 0.8),
-      0 0 45px rgba(255, 140, 40, 0.6),
-      0 0 60px rgba(255, 120, 30, 0.4);
-    animation: fireflyFloat linear infinite, fireflyGlow 3s ease-in-out infinite;
-  }
-
-  :global(.floating-particle.firefly-warm::before) {
-    background: radial-gradient(circle, 
-      rgba(255, 200, 80, 0.4) 0%,
-      rgba(255, 160, 50, 0.2) 50%,
-      transparent 100%
-    );
-  }
-
-  :global(.floating-particle.firefly-warm::after) {
-    background: radial-gradient(circle, 
-      rgba(255, 180, 60, 0.2) 0%,
-      rgba(255, 140, 40, 0.1) 50%,
-      transparent 100%
-    );
-  }
-
-  :global(.floating-particle.firefly-cool) {
-    background: radial-gradient(circle, 
-      rgba(120, 220, 255, 1) 0%,
-      rgba(80, 180, 255, 0.9) 30%,
-      rgba(60, 140, 255, 0.7) 60%,
-      transparent 100%
-    );
-    box-shadow: 
-      0 0 15px rgba(100, 200, 255, 1),
-      0 0 30px rgba(80, 180, 255, 0.8),
-      0 0 45px rgba(60, 160, 255, 0.6),
-      0 0 60px rgba(40, 140, 255, 0.4);
-    animation: fireflyFloat linear infinite, fireflyPulse 4s ease-in-out infinite;
-  }
-
-  :global(.floating-particle.firefly-cool::before) {
-    background: radial-gradient(circle, 
-      rgba(100, 200, 255, 0.4) 0%,
-      rgba(80, 180, 255, 0.2) 50%,
-      transparent 100%
-    );
-  }
-
-  :global(.floating-particle.firefly-cool::after) {
-    background: radial-gradient(circle, 
-      rgba(120, 220, 255, 0.2) 0%,
-      rgba(100, 200, 255, 0.1) 50%,
-      transparent 100%
-    );
-  }
-
-  :global(.floating-particle.firefly-magic) {
-    background: radial-gradient(circle, 
-      rgba(220, 120, 255, 1) 0%,
-      rgba(180, 80, 255, 0.9) 30%,
-      rgba(140, 60, 255, 0.7) 60%,
-      transparent 100%
-    );
-    box-shadow: 
-      0 0 15px rgba(200, 100, 255, 1),
-      0 0 30px rgba(180, 80, 255, 0.8),
-      0 0 45px rgba(160, 60, 255, 0.6),
-      0 0 60px rgba(140, 40, 255, 0.4);
-    animation: fireflyFloat linear infinite, fireflySparkle 2.5s ease-in-out infinite;
-  }
-
-  :global(.floating-particle.firefly-magic::before) {
-    background: radial-gradient(circle, 
-      rgba(200, 100, 255, 0.4) 0%,
-      rgba(180, 80, 255, 0.2) 50%,
-      transparent 100%
-    );
-  }
-
-  :global(.floating-particle.firefly-magic::after) {
-    background: radial-gradient(circle, 
-      rgba(220, 120, 255, 0.2) 0%,
-      rgba(200, 100, 255, 0.1) 50%,
-      transparent 100%
-    );
-  }
-
-  @keyframes fireflyFloat {
-    0% {
-      transform: translateY(100vh) translateX(0px) rotate(0deg);
-      opacity: 0;
-    }
-    5% {
-      opacity: 0.4;
-    }
-    15% {
-      opacity: 1;
-    }
-    85% {
-      opacity: 1;
-    }
-    95% {
-      opacity: 0.4;
-    }
-    100% {
-      transform: translateY(-10vh) translateX(80px) rotate(180deg);
-      opacity: 0;
-    }
-  }
-
-  @keyframes fireflyGlow {
-    0%, 100% {
-      transform: scale(1);
-      filter: brightness(1) blur(0px);
-      box-shadow: 
-        0 0 15px rgba(255, 200, 80, 1),
-        0 0 30px rgba(255, 160, 50, 0.8),
-        0 0 45px rgba(255, 140, 40, 0.6);
-    }
-    33% {
-      transform: scale(1.3);
-      filter: brightness(1.5) blur(0.5px);
-      box-shadow: 
-        0 0 25px rgba(255, 200, 80, 1),
-        0 0 50px rgba(255, 160, 50, 1),
-        0 0 75px rgba(255, 140, 40, 0.8),
-        0 0 100px rgba(255, 120, 30, 0.6);
-    }
-    66% {
-      transform: scale(0.8);
-      filter: brightness(0.7) blur(0px);
-      box-shadow: 
-        0 0 10px rgba(255, 200, 80, 0.8),
-        0 0 20px rgba(255, 160, 50, 0.6),
-        0 0 30px rgba(255, 140, 40, 0.4);
-    }
-  }
-
-  @keyframes fireflyPulse {
-    0%, 100% {
-      transform: scale(1);
-      filter: brightness(1);
-      box-shadow: 
-        0 0 15px rgba(100, 200, 255, 1),
-        0 0 30px rgba(80, 180, 255, 0.8),
-        0 0 45px rgba(60, 160, 255, 0.6);
-    }
-    50% {
-      transform: scale(1.2);
-      filter: brightness(1.8);
-      box-shadow: 
-        0 0 30px rgba(100, 200, 255, 1),
-        0 0 60px rgba(80, 180, 255, 1),
-        0 0 90px rgba(60, 160, 255, 0.8),
-        0 0 120px rgba(40, 140, 255, 0.6);
-    }
-  }
-
-  @keyframes fireflySparkle {
-    0%, 100% {
-      transform: scale(1) rotate(0deg);
-      filter: brightness(1) hue-rotate(0deg);
-      box-shadow: 
-        0 0 15px rgba(200, 100, 255, 1),
-        0 0 30px rgba(180, 80, 255, 0.8),
-        0 0 45px rgba(160, 60, 255, 0.6);
-    }
-    25% {
-      transform: scale(1.4) rotate(90deg);
-      filter: brightness(2) hue-rotate(30deg);
-      box-shadow: 
-        0 0 35px rgba(200, 100, 255, 1),
-        0 0 70px rgba(180, 80, 255, 1),
-        0 0 105px rgba(160, 60, 255, 0.8),
-        0 0 140px rgba(140, 40, 255, 0.6);
-    }
-    50% {
-      transform: scale(0.6) rotate(180deg);
-      filter: brightness(0.5) hue-rotate(60deg);
-      box-shadow: 
-        0 0 8px rgba(200, 100, 255, 0.8),
-        0 0 16px rgba(180, 80, 255, 0.6),
-        0 0 24px rgba(160, 60, 255, 0.4);
-    }
-    75% {
-      transform: scale(1.2) rotate(270deg);
-      filter: brightness(1.7) hue-rotate(90deg);
-      box-shadow: 
-        0 0 28px rgba(200, 100, 255, 1),
-        0 0 56px rgba(180, 80, 255, 0.9),
-        0 0 84px rgba(160, 60, 255, 0.7);
-    }
-  }
-
-  /* Enhanced responsiveness */
-  @media (max-width: 768px) {
-    :global(.floating-particle) {
-      animation-duration: 25s, 4s;
-    }
-    
-    :global(.floating-particle.firefly::before) {
-      width: 250%;
-      height: 250%;
-      filter: blur(2px);
-    }
-    
-    :global(.floating-particle.firefly::after) {
-      width: 400%;
-      height: 400%;
-      filter: blur(5px);
-    }
-  }
-
-  /* Performance optimizations */
-  @media (prefers-reduced-motion: reduce) {
-    :global(.floating-particle) {
-      animation-duration: 50s;
-      animation-timing-function: linear;
-    }
-    
-    :global(.floating-particle.firefly-warm),
-    :global(.floating-particle.firefly-cool),
-    :global(.floating-particle.firefly-magic) {
-      animation: fireflyFloat 50s linear infinite;
-    }
-    
-    :global(.floating-particle.firefly::before),
-    :global(.floating-particle.firefly::after) {
-      display: none;
-    }
-
-    :global(.light-refraction),
-    :global(.diamond-sparkle) {
-      display: none;
-    }
-  }
-
-  /* Diamond Light Refraction Effects */
-  :global(.light-refraction) {
-    position: absolute;
-    width: 120px;
-    height: 2px;
-    pointer-events: none;
-    transform-origin: left center;
-    animation: elegantRefraction 18s ease-in-out infinite;
-    opacity: 0.3;
-  }
-
-  :global(.light-refraction::before) {
-    content: '';
-    position: absolute;
+  .particle-container {
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  /* Cinematic Glowing Particles */
+  .cinematic-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: radial-gradient(circle, 
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.8) 20%,
+      rgba(255, 255, 255, 0.3) 60%,
+      transparent 100%
+    );
+    filter: blur(0.5px);
+    box-shadow: 
+      0 0 8px rgba(255, 255, 255, 0.8),
+      0 0 16px rgba(255, 255, 255, 0.4),
+      0 0 24px rgba(255, 255, 255, 0.2);
+    animation: cinematicFloat 15s ease-in-out infinite;
+  }
+
+  /* Dynamic Light Rays */
+  .light-ray {
+    position: absolute;
+    width: 200px;
+    height: 1px;
     background: linear-gradient(90deg, 
       transparent 0%,
-      rgba(255, 245, 240, 0.1) 15%,
-      rgba(255, 220, 200, 0.2) 25%,
-      rgba(255, 200, 150, 0.3) 35%,
-      rgba(200, 255, 200, 0.25) 45%,
-      rgba(180, 220, 255, 0.3) 55%,
-      rgba(200, 180, 255, 0.25) 65%,
-      rgba(255, 200, 220, 0.2) 75%,
-      rgba(255, 240, 245, 0.1) 85%,
+      rgba(255, 255, 255, 0.1) 30%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0.1) 70%,
       transparent 100%
     );
     filter: blur(0.8px);
-    opacity: 0.6;
+    animation: lightSweep 20s ease-in-out infinite;
+    transform-origin: left center;
   }
 
-  :global(.light-refraction::after) {
-    content: '';
-    position: absolute;
-    top: -1px;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, 
-      transparent 0%,
-      rgba(255, 255, 255, 0.05) 30%,
-      rgba(255, 255, 255, 0.15) 50%,
-      rgba(255, 255, 255, 0.05) 70%,
-      transparent 100%
-    );
-    filter: blur(2px);
-    opacity: 0.4;
+  /* Particle Positions */
+  .particle-1 {
+    top: 20%;
+    left: 15%;
+    animation-delay: 0s;
+  }
+  
+  .particle-2 {
+    top: 60%;
+    right: 25%;
+    animation-delay: 2s;
+  }
+  
+  .particle-3 {
+    top: 35%;
+    left: 70%;
+    animation-delay: 4s;
+  }
+  
+  .particle-4 {
+    top: 80%;
+    left: 40%;
+    animation-delay: 6s;
+  }
+  
+  .particle-5 {
+    top: 15%;
+    right: 15%;
+    animation-delay: 8s;
+  }
+  
+  .particle-6 {
+    top: 75%;
+    right: 8%;
+    animation-delay: 10s;
+  }
+  
+  .particle-7 {
+    top: 45%;
+    left: 8%;
+    animation-delay: 12s;
+  }
+  
+  .particle-8 {
+    top: 25%;
+    left: 45%;
+    animation-delay: 1s;
+  }
+  
+  .particle-9 {
+    top: 85%;
+    left: 75%;
+    animation-delay: 3s;
+  }
+  
+  .particle-10 {
+    top: 55%;
+    right: 45%;
+    animation-delay: 5s;
+  }
+  
+  .particle-11 {
+    top: 10%;
+    left: 85%;
+    animation-delay: 7s;
+  }
+  
+  .particle-12 {
+    top: 90%;
+    left: 25%;
+    animation-delay: 9s;
   }
 
-  :global(.refraction-1) {
+  /* Light Ray Positions */
+  .ray-1 {
+    top: 30%;
+    left: -200px;
     transform: rotate(8deg);
     animation-delay: 0s;
   }
   
-  :global(.refraction-2) {
-    transform: rotate(-12deg);
-    animation-delay: 2s;
+  .ray-2 {
+    top: 65%;
+    left: -200px;
+    transform: rotate(-5deg);
+    animation-delay: 7s;
   }
   
-  :global(.refraction-3) {
-    transform: rotate(15deg);
-    animation-delay: 4s;
-  }
-  
-  :global(.refraction-4) {
-    transform: rotate(-6deg);
-    animation-delay: 6s;
-  }
-  
-  :global(.refraction-5) {
-    transform: rotate(10deg);
-    animation-delay: 8s;
-  }
-  
-  :global(.refraction-6) {
-    transform: rotate(-18deg);
-    animation-delay: 10s;
-  }
-  
-  :global(.refraction-7) {
-    transform: rotate(20deg);
-    animation-delay: 12s;
-  }
-  
-  :global(.refraction-8) {
-    transform: rotate(-8deg);
+  .ray-3 {
+    top: 85%;
+    left: -200px;
+    transform: rotate(12deg);
     animation-delay: 14s;
   }
 
-  /* Diamond Sparkle Points */
-  :global(.diamond-sparkle) {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    pointer-events: none;
-    animation: subtleSparkle 8s ease-in-out infinite;
-  }
-
-  :global(.diamond-sparkle::before) {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 1px;
-    height: 12px;
-    background: linear-gradient(to bottom,
-      transparent 0%,
-      rgba(255, 255, 255, 0.4) 30%,
-      rgba(255, 255, 255, 0.8) 50%,
-      rgba(255, 255, 255, 0.4) 70%,
-      transparent 100%
-    );
-    transform: translate(-50%, -50%);
-    filter: blur(0.3px);
-    box-shadow: 
-      0 0 4px rgba(255, 255, 255, 0.3),
-      0 0 8px rgba(255, 255, 255, 0.1);
-  }
-
-  :global(.diamond-sparkle::after) {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 12px;
-    height: 1px;
-    background: linear-gradient(to right,
-      transparent 0%,
-      rgba(255, 255, 255, 0.4) 30%,
-      rgba(255, 255, 255, 0.8) 50%,
-      rgba(255, 255, 255, 0.4) 70%,
-      transparent 100%
-    );
-    transform: translate(-50%, -50%);
-    filter: blur(0.3px);
-    box-shadow: 
-      0 0 4px rgba(255, 255, 255, 0.3),
-      0 0 8px rgba(255, 255, 255, 0.1);
-  }
-
-  :global(.sparkle-1) {
-    animation-delay: 0s;
-  }
-  
-  :global(.sparkle-2) {
-    animation-delay: 1.6s;
-  }
-  
-  :global(.sparkle-3) {
-    animation-delay: 3.2s;
-  }
-  
-  :global(.sparkle-4) {
-    animation-delay: 4.8s;
-  }
-  
-  :global(.sparkle-5) {
-    animation-delay: 6.4s;
-  }
-
-  @keyframes elegantRefraction {
+  @keyframes cinematicFloat {
     0% {
+      transform: translateY(0) scale(0.8);
+      opacity: 0.6;
+      filter: blur(0.5px) brightness(1);
+    }
+    25% {
+      transform: translateY(-12px) scale(1);
+      opacity: 1;
+      filter: blur(0.3px) brightness(1.2);
+    }
+    50% {
+      transform: translateY(-8px) scale(1.1);
+      opacity: 0.9;
+      filter: blur(0.4px) brightness(1.4);
+    }
+    75% {
+      transform: translateY(-15px) scale(0.9);
+      opacity: 0.7;
+      filter: blur(0.6px) brightness(1.1);
+    }
+    100% {
+      transform: translateY(0) scale(0.8);
+      opacity: 0.6;
+      filter: blur(0.5px) brightness(1);
+    }
+  }
+
+  @keyframes lightSweep {
+    0% {
+      transform: translateX(-200px) scale(0.8);
       opacity: 0;
-      transform: scale(0.8) translateX(-60px);
-      filter: hue-rotate(0deg) brightness(0.8);
     }
     15% {
       opacity: 0.3;
-      transform: scale(1) translateX(0px);
-      filter: hue-rotate(20deg) brightness(1.1);
+      transform: translateX(0px) scale(1);
     }
-    35% {
-      opacity: 0.4;
-      transform: scale(1.1) translateX(30px);
-      filter: hue-rotate(60deg) brightness(1.3);
+    50% {
+      opacity: 0.5;
+      transform: translateX(50vw) scale(1.2);
     }
-    55% {
-      opacity: 0.35;
-      transform: scale(1) translateX(60px);
-      filter: hue-rotate(120deg) brightness(1.2);
-    }
-    75% {
+    85% {
       opacity: 0.2;
-      transform: scale(0.9) translateX(90px);
-      filter: hue-rotate(180deg) brightness(1);
-    }
-    90% {
-      opacity: 0.1;
-      transform: scale(0.8) translateX(110px);
-      filter: hue-rotate(200deg) brightness(0.9);
+      transform: translateX(100vw) scale(0.9);
     }
     100% {
+      transform: translateX(calc(100vw + 200px)) scale(0.8);
       opacity: 0;
-      transform: scale(0.6) translateX(130px);
-      filter: hue-rotate(220deg) brightness(0.8);
-    }
-  }
-
-  @keyframes subtleSparkle {
-    0% {
-      transform: scale(0) rotate(0deg);
-      opacity: 0;
-      filter: brightness(1);
-    }
-    20% {
-      transform: scale(0.8) rotate(45deg);
-      opacity: 0.6;
-      filter: brightness(1.5);
-    }
-    40% {
-      transform: scale(1) rotate(90deg);
-      opacity: 0.8;
-      filter: brightness(1.8);
-    }
-    60% {
-      transform: scale(1.2) rotate(135deg);
-      opacity: 1;
-      filter: brightness(2);
-    }
-    80% {
-      transform: scale(0.9) rotate(180deg);
-      opacity: 0.4;
-      filter: brightness(1.3);
-    }
-    100% {
-      transform: scale(0) rotate(225deg);
-      opacity: 0;
-      filter: brightness(1);
     }
   }
 </style>
