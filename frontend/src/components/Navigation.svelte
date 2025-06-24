@@ -62,7 +62,7 @@
             <path d="M2 12L12 17L22 12"/>
           </svg>
         </div>
-        <span class="font-bold text-lg text-white">Fletcher</span>
+        <span class="font-bold text-lg text-white">Fletcraft</span>
       </div>
 
       <!-- Navigation Links -->
