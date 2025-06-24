@@ -878,30 +878,32 @@
     height: 3px;
     border-radius: 50%;
     background: radial-gradient(circle, 
-      rgba(255, 255, 255, 1) 0%,
-      rgba(255, 255, 255, 0.6) 40%,
+      rgba(255, 120, 60, 1) 0%,
+      rgba(255, 80, 40, 0.8) 40%,
+      rgba(180, 50, 30, 0.4) 70%,
       transparent 100%
     );
     filter: blur(0.4px);
     box-shadow: 
-      0 0 6px rgba(255, 255, 255, 0.7),
-      0 0 12px rgba(255, 255, 255, 0.3);
-    animation: heroGlow 12s ease-in-out infinite;
+      0 0 8px rgba(255, 100, 50, 0.8),
+      0 0 16px rgba(255, 80, 40, 0.4),
+      0 0 24px rgba(200, 60, 30, 0.2);
+    animation: ominousHeroGlow 10s ease-in-out infinite;
   }
 
   .hero-light-beam {
     position: absolute;
-    width: 150px;
+    width: 180px;
     height: 1px;
     background: linear-gradient(90deg, 
       transparent 0%,
-      rgba(255, 255, 255, 0.08) 25%,
-      rgba(255, 255, 255, 0.2) 50%,
-      rgba(255, 255, 255, 0.08) 75%,
+      rgba(255, 100, 50, 0.12) 20%,
+      rgba(255, 120, 60, 0.3) 50%,
+      rgba(255, 100, 50, 0.12) 80%,
       transparent 100%
     );
     filter: blur(0.6px);
-    animation: heroBeamSweep 18s ease-in-out infinite;
+    animation: mysteriousHeroBeamSweep 16s ease-in-out infinite;
     transform-origin: left center;
   }
 
@@ -937,44 +939,64 @@
     animation-delay: 10s;
   }
 
-  @keyframes heroGlow {
+  @keyframes ominousHeroGlow {
     0% {
-      transform: scale(0.7);
+      transform: scale(0.7) translateX(0) translateY(0) rotate(0deg);
       opacity: 0.5;
-      filter: blur(0.4px) brightness(1);
+      filter: blur(0.4px) brightness(1) hue-rotate(0deg);
+    }
+    25% {
+      transform: scale(1.4) translateX(20px) translateY(-15px) rotate(90deg);
+      opacity: 1.2;
+      filter: blur(0.2px) brightness(1.8) hue-rotate(30deg);
     }
     50% {
-      transform: scale(1.2);
-      opacity: 1;
-      filter: blur(0.2px) brightness(1.5);
+      transform: scale(0.9) translateX(-10px) translateY(-25px) rotate(180deg);
+      opacity: 0.8;
+      filter: blur(0.5px) brightness(1.3) hue-rotate(60deg);
+    }
+    75% {
+      transform: scale(1.6) translateX(15px) translateY(-10px) rotate(270deg);
+      opacity: 1.4;
+      filter: blur(0.3px) brightness(2) hue-rotate(90deg);
     }
     100% {
-      transform: scale(0.7);
+      transform: scale(0.7) translateX(0) translateY(0) rotate(360deg);
       opacity: 0.5;
-      filter: blur(0.4px) brightness(1);
+      filter: blur(0.4px) brightness(1) hue-rotate(120deg);
     }
   }
 
-  @keyframes heroBeamSweep {
+  @keyframes mysteriousHeroBeamSweep {
     0% {
-      transform: translateX(-150px) scale(0.8);
+      transform: translateX(-180px) scale(0.8) rotate(0deg);
       opacity: 0;
+      filter: hue-rotate(0deg) brightness(0.9);
     }
     20% {
-      opacity: 0.2;
-      transform: translateX(0px) scale(1);
+      opacity: 0.3;
+      transform: translateX(-20px) scale(1.2) rotate(2deg);
+      filter: hue-rotate(25deg) brightness(1.4);
+    }
+    40% {
+      opacity: 0.5;
+      transform: translateX(35vw) scale(1.4) rotate(-3deg);
+      filter: hue-rotate(50deg) brightness(1.7);
     }
     60% {
-      opacity: 0.3;
-      transform: translateX(60vw) scale(1.1);
+      opacity: 0.4;
+      transform: translateX(70vw) scale(1.1) rotate(4deg);
+      filter: hue-rotate(75deg) brightness(1.5);
     }
     80% {
-      opacity: 0.1;
-      transform: translateX(100vw) scale(0.9);
+      opacity: 0.2;
+      transform: translateX(95vw) scale(0.9) rotate(-2deg);
+      filter: hue-rotate(100deg) brightness(1.2);
     }
     100% {
-      transform: translateX(calc(100vw + 150px)) scale(0.8);
+      transform: translateX(calc(100vw + 180px)) scale(0.7) rotate(3deg);
       opacity: 0;
+      filter: hue-rotate(120deg) brightness(0.9);
     }
   }
 </style> 

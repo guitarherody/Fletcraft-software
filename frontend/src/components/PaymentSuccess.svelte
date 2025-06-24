@@ -179,15 +179,17 @@
     height: 3px;
     border-radius: 50%;
     background: radial-gradient(circle, 
-      rgba(255, 255, 255, 1) 0%,
-      rgba(255, 255, 255, 0.6) 40%,
+      rgba(255, 120, 60, 1) 0%,
+      rgba(255, 80, 40, 0.8) 40%,
+      rgba(180, 50, 30, 0.4) 70%,
       transparent 100%
     );
     filter: blur(0.3px);
     box-shadow: 
-      0 0 8px rgba(255, 255, 255, 0.8),
-      0 0 16px rgba(255, 255, 255, 0.4);
-    animation: celebrationFloat 6s ease-in-out infinite;
+      0 0 10px rgba(255, 100, 50, 0.9),
+      0 0 20px rgba(255, 80, 40, 0.5),
+      0 0 30px rgba(200, 60, 30, 0.3);
+    animation: mysteriousCelebrationFloat 8s ease-in-out infinite;
   }
 
   .cel-1 {
@@ -226,32 +228,42 @@
     animation-delay: 5s;
   }
 
-  @keyframes celebrationFloat {
+  @keyframes mysteriousCelebrationFloat {
     0% {
-      transform: translateY(0) scale(0.8);
+      transform: translateY(0) translateX(0) scale(0.8) rotate(0deg);
       opacity: 0.6;
+      filter: blur(0.3px) brightness(1) hue-rotate(0deg);
     }
-    25% {
-      transform: translateY(-20px) scale(1.2);
-      opacity: 1;
+    20% {
+      transform: translateY(-30px) translateX(20px) scale(1.4) rotate(72deg);
+      opacity: 1.3;
+      filter: blur(0.2px) brightness(1.8) hue-rotate(30deg);
     }
-    50% {
-      transform: translateY(-10px) scale(1);
-      opacity: 0.8;
-    }
-    75% {
-      transform: translateY(-25px) scale(1.1);
+    40% {
+      transform: translateY(-15px) translateX(-15px) scale(0.9) rotate(144deg);
       opacity: 0.9;
+      filter: blur(0.4px) brightness(1.2) hue-rotate(60deg);
     }
-         100% {
-       transform: translateY(0) scale(0.8);
-       opacity: 0.6;
-     }
-   }
+    60% {
+      transform: translateY(-40px) translateX(25px) scale(1.6) rotate(216deg);
+      opacity: 1.5;
+      filter: blur(0.1px) brightness(2.2) hue-rotate(90deg);
+    }
+    80% {
+      transform: translateY(-20px) translateX(-10px) scale(0.7) rotate(288deg);
+      opacity: 0.8;
+      filter: blur(0.5px) brightness(1.1) hue-rotate(120deg);
+    }
+    100% {
+      transform: translateY(0) translateX(0) scale(0.8) rotate(360deg);
+      opacity: 0.6;
+      filter: blur(0.3px) brightness(1) hue-rotate(150deg);
+    }
+  }
 
-   .glass-dark {
-     backdrop-filter: blur(16px);
-     border: 1px solid rgba(255, 255, 255, 0.1);
+  .glass-dark {
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   }
 

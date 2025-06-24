@@ -30,40 +30,40 @@
     overflow: hidden;
   }
 
-  /* Cinematic Glowing Particles */
+  /* Mysterious Glowing Particles */
   .cinematic-particle {
     position: absolute;
     width: 4px;
     height: 4px;
     border-radius: 50%;
     background: radial-gradient(circle, 
-      rgba(255, 255, 255, 1) 0%,
-      rgba(255, 255, 255, 0.8) 20%,
-      rgba(255, 255, 255, 0.3) 60%,
+      rgba(255, 120, 60, 1) 0%,
+      rgba(255, 80, 40, 0.8) 20%,
+      rgba(200, 60, 30, 0.4) 60%,
       transparent 100%
     );
     filter: blur(0.5px);
     box-shadow: 
-      0 0 8px rgba(255, 255, 255, 0.8),
-      0 0 16px rgba(255, 255, 255, 0.4),
-      0 0 24px rgba(255, 255, 255, 0.2);
-    animation: cinematicFloat 15s ease-in-out infinite;
+      0 0 12px rgba(255, 100, 50, 0.9),
+      0 0 24px rgba(255, 80, 40, 0.5),
+      0 0 36px rgba(200, 60, 30, 0.3);
+    animation: mysteriousFloat 12s ease-in-out infinite;
   }
 
   /* Dynamic Light Rays */
   .light-ray {
     position: absolute;
-    width: 200px;
+    width: 250px;
     height: 1px;
     background: linear-gradient(90deg, 
       transparent 0%,
-      rgba(255, 255, 255, 0.1) 30%,
-      rgba(255, 255, 255, 0.3) 50%,
-      rgba(255, 255, 255, 0.1) 70%,
+      rgba(255, 100, 50, 0.1) 25%,
+      rgba(255, 120, 60, 0.4) 50%,
+      rgba(255, 100, 50, 0.1) 75%,
       transparent 100%
     );
     filter: blur(0.8px);
-    animation: lightSweep 20s ease-in-out infinite;
+    animation: ominousLightSweep 18s ease-in-out infinite;
     transform-origin: left center;
   }
 
@@ -162,54 +162,74 @@
     animation-delay: 14s;
   }
 
-  @keyframes cinematicFloat {
+  @keyframes mysteriousFloat {
     0% {
-      transform: translateY(0) scale(0.8);
+      transform: translateY(0) translateX(0) scale(0.8) rotate(0deg);
       opacity: 0.6;
-      filter: blur(0.5px) brightness(1);
+      filter: blur(0.5px) brightness(1) hue-rotate(0deg);
     }
-    25% {
-      transform: translateY(-12px) scale(1);
+    20% {
+      transform: translateY(-20px) translateX(15px) scale(1.2) rotate(45deg);
       opacity: 1;
-      filter: blur(0.3px) brightness(1.2);
+      filter: blur(0.3px) brightness(1.4) hue-rotate(15deg);
     }
-    50% {
-      transform: translateY(-8px) scale(1.1);
-      opacity: 0.9;
-      filter: blur(0.4px) brightness(1.4);
+    40% {
+      transform: translateY(-35px) translateX(-8px) scale(0.9) rotate(90deg);
+      opacity: 0.8;
+      filter: blur(0.6px) brightness(1.1) hue-rotate(30deg);
     }
-    75% {
-      transform: translateY(-15px) scale(0.9);
+    60% {
+      transform: translateY(-25px) translateX(25px) scale(1.3) rotate(135deg);
+      opacity: 1.2;
+      filter: blur(0.4px) brightness(1.6) hue-rotate(45deg);
+    }
+    80% {
+      transform: translateY(-45px) translateX(-12px) scale(0.7) rotate(180deg);
       opacity: 0.7;
-      filter: blur(0.6px) brightness(1.1);
+      filter: blur(0.7px) brightness(0.9) hue-rotate(60deg);
     }
     100% {
-      transform: translateY(0) scale(0.8);
+      transform: translateY(0) translateX(0) scale(0.8) rotate(225deg);
       opacity: 0.6;
-      filter: blur(0.5px) brightness(1);
+      filter: blur(0.5px) brightness(1) hue-rotate(75deg);
     }
   }
 
-  @keyframes lightSweep {
+  @keyframes ominousLightSweep {
     0% {
-      transform: translateX(-200px) scale(0.8);
+      transform: translateX(-250px) scale(0.8) rotate(0deg);
       opacity: 0;
+      filter: hue-rotate(0deg) brightness(0.8);
     }
     15% {
-      opacity: 0.3;
-      transform: translateX(0px) scale(1);
+      opacity: 0.4;
+      transform: translateX(-50px) scale(1.1) rotate(3deg);
+      filter: hue-rotate(20deg) brightness(1.2);
     }
-    50% {
+    35% {
+      opacity: 0.6;
+      transform: translateX(30vw) scale(1.3) rotate(-2deg);
+      filter: hue-rotate(40deg) brightness(1.5);
+    }
+    55% {
       opacity: 0.5;
-      transform: translateX(50vw) scale(1.2);
+      transform: translateX(60vw) scale(1.1) rotate(4deg);
+      filter: hue-rotate(60deg) brightness(1.3);
+    }
+    75% {
+      opacity: 0.3;
+      transform: translateX(90vw) scale(0.9) rotate(-3deg);
+      filter: hue-rotate(80deg) brightness(1.1);
     }
     85% {
-      opacity: 0.2;
-      transform: translateX(100vw) scale(0.9);
+      opacity: 0.1;
+      transform: translateX(100vw) scale(0.8) rotate(2deg);
+      filter: hue-rotate(90deg) brightness(0.9);
     }
     100% {
-      transform: translateX(calc(100vw + 200px)) scale(0.8);
+      transform: translateX(calc(100vw + 250px)) scale(0.6) rotate(5deg);
       opacity: 0;
+      filter: hue-rotate(100deg) brightness(0.8);
     }
   }
 </style>

@@ -45,10 +45,11 @@
 <!-- Global Prismatic Light Container -->
 <div bind:this={prismaticContainer} class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
 
-<!-- Clean Dynamic Lighting -->
+<!-- Ominous Dynamic Lighting -->
 <div class="global-lighting">
-  <div class="dynamic-light" style="top: 30vh; left: -180px; animation-delay: 5s;"></div>
-  <div class="dynamic-light" style="top: 70vh; left: -180px; animation-delay: 15s;"></div>
+  <div class="dynamic-light" style="top: 25vh; left: -220px; animation-delay: 3s;"></div>
+  <div class="dynamic-light" style="top: 65vh; left: -220px; animation-delay: 12s;"></div>
+  <div class="dynamic-light" style="top: 85vh; left: -220px; animation-delay: 18s;"></div>
 </div>
 
 <!-- Page content --> 
