@@ -367,7 +367,7 @@
                 placeholder="Enter your email address"
               />
               <p class="text-xs text-text-secondary mt-1">
-                💡 For testing: Use a different email address than your PayFast merchant account
+                💡 For testing: Don't use dylan@fletcraft.co.za or guitarherody@gmail.com (merchant accounts)
               </p>
             </div>
 
