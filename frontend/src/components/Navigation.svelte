@@ -132,19 +132,23 @@
     position: relative;
   }
 
-  /* Enhanced Translucent Glass Effect */
+  /* Deep Purple-Emerald Vaporous Glass Effect */
   .nav-container {
-    background: rgba(255, 255, 255, 0.01);
-    backdrop-filter: blur(20px) saturate(220%) contrast(120%) hue-rotate(10deg);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: linear-gradient(135deg, 
+      rgba(107, 33, 168, 0.08) 0%,
+      rgba(4, 120, 87, 0.06) 50%,
+      rgba(147, 51, 234, 0.08) 100%
+    );
+    backdrop-filter: blur(30px) saturate(200%) brightness(1.2) hue-rotate(5deg);
+    border: 1px solid rgba(147, 51, 234, 0.2);
     transition: all 0.4s ease;
     position: relative;
     overflow: hidden;
     box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.3),
-      0 0 0 1px rgba(255, 255, 255, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+      0 8px 32px rgba(107, 33, 168, 0.15),
+      0 2px 8px rgba(4, 120, 87, 0.1),
+      inset 0 1px 0 rgba(147, 51, 234, 0.3),
+      inset 0 -1px 0 rgba(16, 185, 129, 0.2);
   }
 
   .nav-container::before {
@@ -157,12 +161,12 @@
     background: linear-gradient(135deg, 
       rgba(147, 51, 234, 0.08) 0%,
       rgba(16, 185, 129, 0.06) 25%,
-      rgba(255, 120, 60, 0.04) 50%,
-      rgba(147, 51, 234, 0.06) 75%,
-      rgba(16, 185, 129, 0.08) 100%
+      rgba(107, 33, 168, 0.07) 50%,
+      rgba(4, 120, 87, 0.05) 75%,
+      rgba(147, 51, 234, 0.08) 100%
     );
     border-radius: inherit;
-    opacity: 0.6;
+    opacity: 0.9;
     animation: vaporShimmer 8s ease-in-out infinite;
   }
 
@@ -187,16 +191,20 @@
   }
 
   .nav-container.scrolled {
-    background: rgba(255, 255, 255, 0.02);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, 
+      rgba(107, 33, 168, 0.12) 0%,
+      rgba(4, 120, 87, 0.10) 50%,
+      rgba(147, 51, 234, 0.12) 100%
+    );
+    border-color: rgba(147, 51, 234, 0.3);
     box-shadow: 
-      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 8px 32px rgba(107, 33, 168, 0.2),
+      0 4px 12px rgba(4, 120, 87, 0.15),
       0 0 20px rgba(147, 51, 234, 0.15),
       0 0 40px rgba(16, 185, 129, 0.12),
-      0 0 60px rgba(255, 255, 255, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(25px) saturate(250%) contrast(130%) hue-rotate(15deg);
+      inset 0 1px 0 rgba(147, 51, 234, 0.4),
+      inset 0 -1px 0 rgba(16, 185, 129, 0.3);
+    backdrop-filter: blur(35px) saturate(220%) brightness(1.25) hue-rotate(8deg);
   }
 
   /* Vapor Layers */
@@ -213,8 +221,9 @@
     right: -5px;
     bottom: -5px;
     background: radial-gradient(ellipse at 30% 20%, 
-      rgba(147, 51, 234, 0.1) 0%,
-      rgba(16, 185, 129, 0.08) 50%,
+      rgba(147, 51, 234, 0.15) 0%,
+      rgba(16, 185, 129, 0.12) 50%,
+      rgba(107, 33, 168, 0.08) 80%,
       transparent 100%
     );
     filter: blur(8px);
@@ -227,8 +236,9 @@
     right: -8px;
     bottom: -8px;
     background: radial-gradient(ellipse at 70% 80%, 
-      rgba(16, 185, 129, 0.08) 0%,
-      rgba(255, 120, 60, 0.06) 50%,
+      rgba(16, 185, 129, 0.12) 0%,
+      rgba(4, 120, 87, 0.10) 30%,
+      rgba(147, 51, 234, 0.08) 70%,
       transparent 100%
     );
     filter: blur(12px);
@@ -241,8 +251,9 @@
     right: -10px;
     bottom: -10px;
     background: radial-gradient(ellipse at 50% 50%, 
-      rgba(255, 120, 60, 0.06) 0%,
-      rgba(147, 51, 234, 0.04) 50%,
+      rgba(107, 33, 168, 0.10) 0%,
+      rgba(147, 51, 234, 0.08) 40%,
+      rgba(4, 120, 87, 0.06) 70%,
       transparent 100%
     );
     filter: blur(15px);
