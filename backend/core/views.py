@@ -66,8 +66,8 @@ class OrderViewSet(viewsets.ModelViewSet):
             base_url = getattr(settings, 'FRONTEND_URL', 'https://fletcraft.co.za')
             return_url = f'{base_url}/payment/success'
             cancel_url = f'{base_url}/payment/cancel'
-            # CRITICAL: Use exact same notify_url as working HTML test
-            notify_url = f'{request.build_absolute_uri("/").rstrip("/")}/api/payfast/itn/'
+            # CRITICAL: Force HTTPS for notify_url (PayFast requires HTTPS)
+            notify_url = 'https://fletcraft-software.onrender.com/api/payfast/itn/'
             
             # Split customer name properly with validation
             name_parts = order.customer_name.strip().split(' ') if order.customer_name else ['Customer']
