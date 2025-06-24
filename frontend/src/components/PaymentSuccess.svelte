@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import ParticleSystem from '../../../components/ParticleSystem.svelte';
+  import ParticleSystem from './ParticleSystem.svelte';
 
   let paymentId = '';
   let merchantPaymentId = '';

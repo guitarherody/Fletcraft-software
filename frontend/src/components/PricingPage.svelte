@@ -308,6 +308,9 @@
 <!-- Checkout Modal -->
 {#if showCheckout && selectedService}
   <div 
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
     class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50"
     transition:fade={{ duration: 200 }}
     on:click={closeCheckout}
@@ -321,7 +324,7 @@
         <div class="p-8">
           <!-- Header -->
           <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold text-text-primary">Complete Purchase</h2>
+            <h2 id="modal-title" class="text-2xl font-bold text-text-primary">Complete Purchase</h2>
             <button 
               on:click={closeCheckout}
               class="text-text-secondary hover:text-text-primary transition-colors">
