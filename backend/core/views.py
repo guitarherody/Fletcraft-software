@@ -105,20 +105,25 @@ class OrderViewSet(viewsets.ModelViewSet):
             # Remove empty values while preserving order
             payment_data = OrderedDict([(k, v) for k, v in payment_data.items() if v])
             
-            # Generate signature using SIMPLE method (no complex URL encoding)
-            # This is the most reliable method for PayFast form integration
+            # Generate signature using PayFast official method
+            # Based on PayFast FAQ: "The most-likely cause is if you generated the MD5 hashed string with the variables in the wrong order"
+            # Must use URL encoding for signature generation and ensure proper field order
             signature_params = []
             for key, value in payment_data.items():
                 if key != 'merchant_key' and key != 'signature':  # Exclude merchant_key and signature from signature
-                    # Use simple string conversion, no URL encoding for signature
-                    signature_params.append(f'{key}={str(value)}')
+                    # PayFast requires URL encoding for signature generation
+                    encoded_value = urllib.parse.quote_plus(str(value))
+                    signature_params.append(f'{key}={encoded_value}')
             
-            # Add passphrase to signature string if provided
+            # Create signature string with proper encoding
             signature_string = '&'.join(signature_params)
             if PASSPHRASE:
-                signature_string += f'&passphrase={PASSPHRASE}'
+                # Passphrase must also be URL encoded
+                signature_string += f'&passphrase={urllib.parse.quote_plus(PASSPHRASE)}'
             
-            signature = hashlib.md5(signature_string.encode()).hexdigest()
+            # Ensure signature string is trimmed and generate MD5 hash in lowercase
+            signature_string = signature_string.strip()
+            signature = hashlib.md5(signature_string.encode()).hexdigest().lower()
             payment_data['signature'] = signature
             
             return Response({
@@ -169,18 +174,22 @@ class PaymentTransactionViewSet(viewsets.ModelViewSet):
             # Remove signature from data for verification (and merchant_key if present)
             data_for_signature = {k: v for k, v in payment_data.items() if k not in ['signature', 'merchant_key']}
             
-            # Use SIMPLE signature verification (same as form generation)
+            # Use PayFast official signature verification method (same as form generation)
             signature_params = []
             for key, value in data_for_signature.items():  # Preserve original order
-                signature_params.append(f'{key}={str(value)}')
+                # PayFast requires URL encoding for signature verification
+                encoded_value = urllib.parse.quote_plus(str(value))
+                signature_params.append(f'{key}={encoded_value}')
             
             signature_string = '&'.join(signature_params)
             
             # Add passphrase to signature string if provided
             if PASSPHRASE:
-                signature_string += f'&passphrase={PASSPHRASE}'
+                signature_string += f'&passphrase={urllib.parse.quote_plus(PASSPHRASE)}'
             
-            calculated_signature = hashlib.md5(signature_string.encode()).hexdigest()
+            # Ensure signature string is trimmed and generate MD5 hash in lowercase
+            signature_string = signature_string.strip()
+            calculated_signature = hashlib.md5(signature_string.encode()).hexdigest().lower()
             
             if signature != calculated_signature:
                 return HttpResponse('INVALID_SIGNATURE', status=400)
