@@ -1,6 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { navigateTo, currentPage } from '../lib/router';
+
+  // Declare global navigation function
+  declare global {
+    var navigateTo: ((path: string) => void) | undefined;
+  }
 
   let nav: HTMLElement;
   let isScrolled = false;
@@ -19,12 +23,17 @@
   });
 
   function handleNavigation(path: string) {
-    navigateTo(path);
+    if (globalThis.navigateTo) {
+      globalThis.navigateTo(path);
+    } else {
+      window.location.href = path;
+    }
   }
 
   function scrollToSection(sectionId: string) {
-    if ($currentPage !== 'home') {
-      navigateTo('/');
+    const currentPath = window.location.pathname;
+    if (currentPath !== '/') {
+      handleNavigation('/');
       setTimeout(() => {
         const element = document.getElementById(sectionId);
         if (element) {

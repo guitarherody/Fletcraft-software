@@ -1,8 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { currentPage, initRouter } from './lib/router';
-  // Temporarily removing stores dependency to fix build issues
-  // import { isLoading, scrollProgress, currentSection, soundEnabled } from './lib/stores';
   import gsap from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
   
@@ -15,30 +12,26 @@
   import PricingPage from './components/PricingPage.svelte';
   import PaymentSuccess from './components/PaymentSuccess.svelte';
   
-  // Glass Morphism Components
-  import LiquidGlass from './components/LiquidGlass.svelte';
-  
   // Simple Components
   import ParticleSystem from './components/ParticleSystem.svelte';
-  
-  // Temporarily disabled - problematic components
-  // import AIChat from './components/AIChat.svelte';
-  // import Portfolio from './components/Portfolio.svelte';
-  // import Analytics from './components/Analytics.svelte';
 
-  // Local state instead of stores
-  let isLoading = false;
+  // Local state for routing
+  let currentPage = 'home';
   let scrollProgress = 0;
 
   gsap.registerPlugin(ScrollTrigger);
 
   onMount(() => {
-    // Initialize router
-    initRouter();
+    // Simple routing based on URL
+    const path = window.location.pathname;
+    if (path === '/pricing') {
+      currentPage = 'pricing';
+    } else if (path === '/payment/success') {
+      currentPage = 'success';
+    } else {
+      currentPage = 'home';
+    }
     
-    // Remove artificial loading delay for better performance
-    isLoading = false;
-
     // Track scroll progress
     const updateScrollProgress = () => {
       const scrollTop = window.pageYOffset;
@@ -53,12 +46,25 @@
       window.removeEventListener('scroll', updateScrollProgress);
     };
   });
+
+  // Simple navigation function
+  function navigateTo(path: string) {
+    window.history.pushState({}, '', path);
+    if (path === '/pricing') {
+      currentPage = 'pricing';
+    } else if (path === '/payment/success') {
+      currentPage = 'success';
+    } else {
+      currentPage = 'home';
+    }
+  }
+
+  // Expose navigation function globally for components
+  globalThis.navigateTo = navigateTo;
 </script>
 
-<!-- Simple loading indicator (removed artificial delay) -->
-
-<!-- Enhanced Scroll Progress Indicator with Liquid Glass -->
-{#if $currentPage === 'home'}
+<!-- Enhanced Scroll Progress Indicator -->
+{#if currentPage === 'home'}
 <div class="fixed top-0 left-0 w-full h-1 z-40">
   <div class="relative w-full h-full bg-glass-primary-5 backdrop-blur-lg border-b border-glass-primary-10">
     <div 
@@ -77,15 +83,15 @@
   <Navigation />
   
   <!-- Route-based content -->
-  {#if $currentPage === 'home'}
+  {#if currentPage === 'home'}
     <!-- Main Home Sections -->
     <Hero />
     <Services />
     <Team />
     <Contact />
-  {:else if $currentPage === 'pricing'}
+  {:else if currentPage === 'pricing'}
     <PricingPage />
-  {:else if $currentPage === 'success'}
+  {:else if currentPage === 'success'}
     <PaymentSuccess />
   {:else}
     <!-- Default to home -->
@@ -94,9 +100,6 @@
     <Team />
     <Contact />
   {/if}
-  
-  <!-- AI Chat Assistant -->
-  <!-- <AIChat /> -->
 </main>
 
 <style>

@@ -1,6 +1,17 @@
 <script lang="ts">
-  import { navigateTo } from '../lib/router';
-  
+  // Declare global navigation function
+  declare global {
+    var navigateTo: ((path: string) => void) | undefined;
+  }
+
+  function handleNavigation(path: string) {
+    if (globalThis.navigateTo) {
+      globalThis.navigateTo(path);
+    } else {
+      window.location.href = path;
+    }
+  }
+
   // Simple hero component with CSS-only animations
 </script>
 
@@ -34,7 +45,7 @@
     <!-- CTA Buttons -->
     <div class="animate-in flex flex-col sm:flex-row gap-4 justify-center items-center" style="animation-delay: 600ms;">
       <button 
-        on:click={() => navigateTo('/pricing')}
+        on:click={() => handleNavigation('/pricing')}
         class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-300 shadow-lg hover:shadow-purple-500/25 hover:scale-105"
       >
         Get Started
