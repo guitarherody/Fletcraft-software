@@ -64,7 +64,7 @@ class OrderViewSet(viewsets.ModelViewSet):
             
             # Build proper URLs for PayFast - MATCH HTML TEST EXACTLY
             base_url = getattr(settings, 'FRONTEND_URL', 'https://fletcraft.co.za')
-            return_url = f'{base_url}/payment/success'
+            return_url = f'{base_url}/#success'  # Use hash for better compatibility
             cancel_url = f'{base_url}/payment/cancel'
             # CRITICAL: Use Byron's exact notify_url format
             notify_url = 'https://fletcraft-software.onrender.com/api/payfast/itn/'

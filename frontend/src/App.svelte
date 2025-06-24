@@ -22,30 +22,75 @@
   gsap.registerPlugin(ScrollTrigger);
 
   onMount(() => {
-    // Simple routing based on URL with debugging
+    // Enhanced routing with multiple fallback methods
     function updateRoute() {
       const path = window.location.pathname;
+      const hash = window.location.hash;
       const searchParams = new URLSearchParams(window.location.search);
-      console.log('Current path:', path); // Debug logging
-      console.log('Search params:', searchParams.toString()); // Debug logging
       
-      if (path === '/pricing') {
-        currentPage = 'pricing';
-        console.log('Set page to pricing');
-      } else if (path === '/payment/success' || searchParams.has('pf_payment_id') || searchParams.has('m_payment_id')) {
+      console.log('=== ROUTING DEBUG ===');
+      console.log('Full URL:', window.location.href);
+      console.log('Path:', path);
+      console.log('Hash:', hash);
+      console.log('Search params:', searchParams.toString());
+      console.log('Has PayFast params:', searchParams.has('pf_payment_id') || searchParams.has('m_payment_id'));
+      
+      // Multiple ways to detect success page
+      const isSuccessPage = 
+        path === '/payment/success' ||
+        path.includes('/payment/success') ||
+        hash === '#success' ||
+        hash === '#payment/success' ||
+        searchParams.has('pf_payment_id') ||
+        searchParams.has('m_payment_id') ||
+        path.includes('success');
+      
+      const isPricingPage = 
+        path === '/pricing' || 
+        path.includes('/pricing') || 
+        hash === '#pricing';
+      
+      if (isSuccessPage) {
         currentPage = 'success';
-        console.log('Set page to success - PayFast return detected');
+        console.log('✅ SUCCESS PAGE DETECTED!');
+        // Also update URL to clean version
+        if (path !== '/payment/success') {
+          window.history.replaceState({}, '', '/payment/success' + window.location.search);
+        }
+      } else if (isPricingPage) {
+        currentPage = 'pricing';
+        console.log('📄 Pricing page detected');
       } else {
         currentPage = 'home';
-        console.log('Set page to home');
+        console.log('🏠 Home page (default)');
       }
+      
+      console.log('Current page set to:', currentPage);
+      console.log('==================');
     }
     
     // Initial route detection
     updateRoute();
     
-    // Listen for browser navigation
+    // Listen for all navigation events
     window.addEventListener('popstate', updateRoute);
+    window.addEventListener('hashchange', updateRoute);
+    
+    // Also check every second for the first 10 seconds (in case of async redirects)
+    let checkCount = 0;
+    const intervalId = setInterval(() => {
+      checkCount++;
+      if (checkCount >= 10) {
+        clearInterval(intervalId);
+        return;
+      }
+      
+      const searchParams = new URLSearchParams(window.location.search);
+      if ((searchParams.has('pf_payment_id') || searchParams.has('m_payment_id')) && currentPage !== 'success') {
+        console.log('🔄 Delayed PayFast parameter detection');
+        updateRoute();
+      }
+    }, 1000);
     
     // Track scroll progress
     const updateScrollProgress = () => {
@@ -60,6 +105,8 @@
     return () => {
       window.removeEventListener('scroll', updateScrollProgress);
       window.removeEventListener('popstate', updateRoute);
+      window.removeEventListener('hashchange', updateRoute);
+      clearInterval(intervalId);
     };
   });
 
