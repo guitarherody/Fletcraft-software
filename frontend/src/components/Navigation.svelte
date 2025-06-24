@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { navigateTo, currentPage } from '../lib/router';
 
   let nav: HTMLElement;
   let isScrolled = false;
@@ -16,6 +17,27 @@
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   });
+
+  function handleNavigation(path: string) {
+    navigateTo(path);
+  }
+
+  function scrollToSection(sectionId: string) {
+    if ($currentPage !== 'home') {
+      navigateTo('/');
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }
 </script>
 
 <nav bind:this={nav} class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-11/12 max-w-4xl transition-all duration-300">
@@ -36,25 +58,25 @@
 
       <!-- Navigation Links -->
       <div class="hidden md:flex items-center space-x-1">
-        <a href="#home" class="nav-link px-4 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">
+        <button on:click={() => scrollToSection('home')} class="nav-link px-4 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">
           Home
-        </a>
-        <a href="#services" class="nav-link px-4 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">
+        </button>
+        <button on:click={() => scrollToSection('services')} class="nav-link px-4 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">
           Services
-        </a>
-        <a href="#team" class="nav-link px-4 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">
+        </button>
+        <button on:click={() => scrollToSection('team')} class="nav-link px-4 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">
           Team
-        </a>
-        <a href="#contact" class="nav-link px-4 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">
+        </button>
+        <button on:click={() => scrollToSection('contact')} class="nav-link px-4 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">
           Contact
-        </a>
+        </button>
       </div>
 
       <!-- CTA Button -->
       <div class="flex items-center space-x-4">
-        <a href="/pricing" class="cta-button px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 transition-all duration-200">
+        <button on:click={() => handleNavigation('/pricing')} class="cta-button px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 transition-all duration-200">
           Get Started
-        </a>
+        </button>
         
         <!-- Mobile Menu Button -->
         <button class="md:hidden menu-button p-2 rounded-xl bg-white/10 text-white hover:bg-white/20 transition-colors duration-200">

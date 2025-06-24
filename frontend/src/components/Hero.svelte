@@ -1,8 +1,10 @@
 <script lang="ts">
+  import { navigateTo } from '../lib/router';
+  
   // Simple hero component with CSS-only animations
 </script>
 
-<section class="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
+<section id="home" class="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
   <!-- Simple background gradient -->
   <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-purple-900/20 to-blue-900/20"></div>
   
@@ -31,18 +33,18 @@
 
     <!-- CTA Buttons -->
     <div class="animate-in flex flex-col sm:flex-row gap-4 justify-center items-center" style="animation-delay: 600ms;">
-      <a 
-        href="/pricing"
+      <button 
+        on:click={() => navigateTo('/pricing')}
         class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-300 shadow-lg hover:shadow-purple-500/25 hover:scale-105"
       >
         Get Started
-      </a>
-      <a 
-        href="#services"
+      </button>
+      <button 
+        on:click={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
         class="px-8 py-4 bg-white/10 text-white rounded-lg font-semibold backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
       >
         Learn More
-      </a>
+      </button>
     </div>
 
     <!-- Simple feature highlights -->
