@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PayFast Test - Byron's Method + Real Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1a73e8;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: #1a73e8;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 PayFast Test - Byron's Method + Real Data</h1>
+        
+        <p><strong>Customer:</strong> Sarah Johnson</p>
+        <p><strong>Order:</strong> ORD-12345</p>
+        <p><strong>Amount:</strong> R150.00</p>
+        <p><strong>Service:</strong> Cybersecurity</p>
+        <p><strong>Method:</strong> Byron's proven field order + include merchant_key</p>
+        <p><strong>Signature:</strong> cee053490c49471f2c00591102a06ddb</p>
+
+        <form action="https://www.payfast.co.za/eng/process" method="post">
+            <input type="hidden" name="merchant_id" value="13245841"/>
+            <input type="hidden" name="merchant_key" value="kzyobsh5zlvrw"/>
+            <input type="hidden" name="return_url" value="https://fletcraft.co.za/payment/success"/>
+            <input type="hidden" name="cancel_url" value="https://fletcraft.co.za/payment/cancel"/>
+            <input type="hidden" name="notify_url" value="https://fletcraft-software.onrender.com/api/payfast/itn/"/>
+            <input type="hidden" name="name_first" value="Sarah"/>
+            <input type="hidden" name="name_last" value="Johnson"/>
+            <input type="hidden" name="email_address" value="sarah.johnson@example.com"/>
+            <input type="hidden" name="m_payment_id" value="ORD-12345"/>
+            <input type="hidden" name="amount" value="150.00"/>
+            <input type="hidden" name="item_name" value="Cybersecurity"/>
+            <input type="hidden" name="item_description" value="Comprehensive cybersecurity assessment and protection"/>
+            <input type="hidden" name="custom_int1" value="1"/>
+            <input type="hidden" name="custom_str1" value="order_reference_ORD-12345"/>
+            <input type="hidden" name="custom_str2" value="fletcraft_service"/>
+            <input type="hidden" name="custom_str3" value="web_development"/>
+            <input type="hidden" name="signature" value="cee053490c49471f2c00591102a06ddb"/>
+            
+            <button type="submit" class="btn">🚀 Test PayFast Payment with Byron's Method</button>
+        </form>
+    </div>
+</body>
+</html>

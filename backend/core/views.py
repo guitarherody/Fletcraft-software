@@ -66,59 +66,62 @@ class OrderViewSet(viewsets.ModelViewSet):
             base_url = getattr(settings, 'FRONTEND_URL', 'https://fletcraft.co.za')
             return_url = f'{base_url}/payment/success'
             cancel_url = f'{base_url}/payment/cancel'
-            # CRITICAL: Use EXACT notify_url that works with proven signature
-            notify_url = 'https://fletcraft-software.onrender.com/api/payment/notify/'
+            # CRITICAL: Use Byron's exact notify_url format
+            notify_url = 'https://fletcraft-software.onrender.com/api/payfast/itn/'
             
             # Split customer name properly with validation
             name_parts = order.customer_name.strip().split(' ') if order.customer_name else ['Customer']
             first_name = name_parts[0][:50]  # PayFast limit: 50 chars
             last_name = (' '.join(name_parts[1:]) if len(name_parts) > 1 else 'Customer')[:50]  # PayFast limit: 50 chars
             
-            # Build payment data using PROVEN WORKING METHOD (alphabetical order)
-            # This matches our verified working signature: af56c3af5b370b758404085b7e0ca363
-            payment_data = {
-                'merchant_id': MERCHANT_ID,
-                'merchant_key': MERCHANT_KEY,
-                'return_url': return_url,
-                'cancel_url': cancel_url,
-                'notify_url': notify_url,
-                'name_first': first_name,
-                'name_last': last_name,
-                'email_address': order.customer_email[:100],
-                'm_payment_id': str(order.order_id)[:100],
-                'amount': f'{float(order.amount):.2f}',
-                'item_name': order.service.title[:100],
-                'item_description': (order.service.description[:200] if order.service.description else order.service.title[:200]),
-            }
+            # Build payment data using BYRON'S EXACT WORKING METHOD
+            # Byron's proven approach: FORM FIELD ORDER + INCLUDE merchant_key in signature
+            from collections import OrderedDict
+            payment_data = OrderedDict([
+                ('merchant_id', MERCHANT_ID),
+                ('merchant_key', MERCHANT_KEY),
+                ('return_url', return_url),
+                ('cancel_url', cancel_url),
+                ('notify_url', notify_url),
+                ('name_first', first_name),
+                ('name_last', last_name),
+                ('email_address', order.customer_email[:100]),
+                ('m_payment_id', str(order.order_id)[:100]),
+                ('amount', f'{float(order.amount):.2f}'),
+                ('item_name', order.service.title[:100]),
+                ('item_description', (order.service.description[:200] if order.service.description else order.service.title[:200])),
+            ])
             
-            # Add optional fields if they exist
+            # Add optional fields in Byron's order if they exist
             if order.customer_phone:
                 clean_phone = ''.join(filter(str.isdigit, order.customer_phone))
                 if len(clean_phone) >= 10:
                     payment_data['cell_number'] = clean_phone[-10:]
             
-            # Add custom fields using working test format
-            payment_data['custom_str1'] = str(order.id)[:255]
-            payment_data['custom_str2'] = order.service.title[:255]
-            payment_data['custom_str3'] = 'Fletcraft'[:255]
+            # Add custom fields using Byron's EXACT format with real order data
+            payment_data['custom_int1'] = '1'  # Byron's exact format
+            payment_data['custom_str1'] = f'order_reference_{order.order_id}'[:255]  # Byron's format
+            payment_data['custom_str2'] = 'fletcraft_service'[:255]                  # Byron's exact value
+            payment_data['custom_str3'] = 'web_development'[:255]                    # Byron's exact value
             
-            # Remove empty values
-            payment_data = {k: v for k, v in payment_data.items() if v}
+            # Remove empty values while preserving order
+            payment_data = OrderedDict([(k, v) for k, v in payment_data.items() if v])
             
-            # Generate signature using PROVEN WORKING METHOD (alphabetical order, exclude merchant_key)
-            # This is the EXACT method that generates signature: af56c3af5b370b758404085b7e0ca363
-            signature_data = {k: v for k, v in payment_data.items() if k != 'merchant_key'}
-            
-            # Sort alphabetically and URL encode (PROVEN WORKING METHOD)
+            # Generate signature using BYRON'S EXACT METHOD (form field order + INCLUDE merchant_key)
+            # This is Byron's proven working signature generation method
             encoded_params = []
-            for key, value in sorted(signature_data.items()):
-                encoded_params.append(f'{key}={urllib.parse.quote_plus(str(value))}')
+            for key, value in payment_data.items():
+                # URL encode each value exactly like Byron did
+                encoded_value = urllib.parse.quote_plus(str(value))
+                encoded_params.append(f'{key}={encoded_value}')
             
+            # Create signature string in Byron's exact field order
             signature_string = '&'.join(encoded_params)
             if PASSPHRASE:
-                signature_string += f'&passphrase={urllib.parse.quote_plus(PASSPHRASE)}'
+                # Add passphrase exactly as Byron did (not URL encoded)
+                signature_string += f'&passphrase={PASSPHRASE}'
             
-            # Generate MD5 hash in lowercase
+            # Generate MD5 hash exactly like Byron's method
             signature_string = signature_string.strip()
             signature = hashlib.md5(signature_string.encode()).hexdigest().lower()
             payment_data['signature'] = signature
@@ -171,17 +174,17 @@ class PaymentTransactionViewSet(viewsets.ModelViewSet):
             # Remove signature from data for verification 
             data_for_signature = {k: v for k, v in payment_data.items() if k not in ['signature']}
             
-            # Use PROVEN WORKING signature verification method (alphabetical order)
+            # Use BYRON'S EXACT signature verification method (form field order)
             # Must match the exact method that generated the original signature
             encoded_params = []
-            for key, value in sorted(data_for_signature.items()):
+            for key, value in data_for_signature.items():
                 encoded_params.append(f'{key}={urllib.parse.quote_plus(str(value))}')
             
             signature_string = '&'.join(encoded_params)
             
-            # Add passphrase to signature string if provided
+            # Add passphrase to signature string if provided (Byron's method: not URL encoded)
             if PASSPHRASE:
-                signature_string += f'&passphrase={urllib.parse.quote_plus(PASSPHRASE)}'
+                signature_string += f'&passphrase={PASSPHRASE}'
             
             # Ensure signature string is trimmed and generate MD5 hash in lowercase
             signature_string = signature_string.strip()
