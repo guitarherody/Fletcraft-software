@@ -73,8 +73,8 @@ class OrderViewSet(viewsets.ModelViewSet):
             first_name = name_parts[0][:50]  # PayFast limit: 50 chars
             last_name = (' '.join(name_parts[1:]) if len(name_parts) > 1 else 'Customer')[:50]  # PayFast limit: 50 chars
             
-            # Build payment data in EXACT FORM FIELD ORDER (Byron Adams solution)
-            # CRITICAL: Use form field order, NOT alphabetical (that's for API integration)
+            # Build payment data in EXACT FORM FIELD ORDER (Byron Adams working solution)
+            # This is the EXACT order that Byron used successfully: merchant_id, merchant_key, return_url, etc.
             from collections import OrderedDict
             payment_data = OrderedDict([
                 ('merchant_id', MERCHANT_ID),
@@ -91,42 +91,37 @@ class OrderViewSet(viewsets.ModelViewSet):
                 ('item_description', (order.service.description[:200] if order.service.description else order.service.title[:200])),
             ])
             
-            # Add optional fields only if they exist
+            # Add optional fields in Byron's order if they exist
             if order.customer_phone:
                 clean_phone = ''.join(filter(str.isdigit, order.customer_phone))
                 if len(clean_phone) >= 10:
                     payment_data['cell_number'] = clean_phone[-10:]
             
-            # Add custom fields for tracking
+            # Add custom fields exactly as Byron did
+            payment_data['custom_int1'] = '1'  # Byron used this
             payment_data['custom_str1'] = str(order.id)[:255]
-            payment_data['custom_str2'] = order.service.title[:255]
+            payment_data['custom_str2'] = order.service.title[:255] 
             payment_data['custom_str3'] = 'Fletcraft Software'[:255]
             
             # Remove empty values while preserving order
             payment_data = OrderedDict([(k, v) for k, v in payment_data.items() if v])
             
-            # Generate signature using ALPHABETICAL ORDER (API method)
-            # Try alphabetical field order instead of form field order
-            signature_data = {}
-            for key, value in payment_data.items():
-                if key != 'merchant_key' and key != 'signature':  # Exclude merchant_key and signature from signature
-                    signature_data[key] = value
-            
-            # Sort fields alphabetically
+            # Generate signature using Byron's EXACT method (form field order + merchant_key included)
+            # This matches Byron's working signature string exactly
             signature_params = []
-            for key in sorted(signature_data.keys()):
-                value = signature_data[key]
-                # PayFast requires URL encoding for signature generation
-                encoded_value = urllib.parse.quote_plus(str(value))
-                signature_params.append(f'{key}={encoded_value}')
+            for key, value in payment_data.items():
+                if key != 'signature':  # Exclude only signature field (include merchant_key like Byron)
+                    # PayFast requires URL encoding for signature generation
+                    encoded_value = urllib.parse.quote_plus(str(value))
+                    signature_params.append(f'{key}={encoded_value}')
             
-            # Create signature string with proper encoding
+            # Create signature string exactly like Byron's working example
             signature_string = '&'.join(signature_params)
             if PASSPHRASE:
-                # Passphrase must also be URL encoded
+                # Add passphrase exactly as Byron did
                 signature_string += f'&passphrase={urllib.parse.quote_plus(PASSPHRASE)}'
             
-            # Ensure signature string is trimmed and generate MD5 hash in lowercase
+            # Generate MD5 hash in lowercase exactly like Byron's method
             signature_string = signature_string.strip()
             signature = hashlib.md5(signature_string.encode()).hexdigest().lower()
             payment_data['signature'] = signature
@@ -176,14 +171,14 @@ class PaymentTransactionViewSet(viewsets.ModelViewSet):
             if missing_fields:
                 return HttpResponse(f'MISSING_FIELDS: {", ".join(missing_fields)}', status=400)
             
-            # Remove signature from data for verification (and merchant_key if present)
-            data_for_signature = {k: v for k, v in payment_data.items() if k not in ['signature', 'merchant_key']}
+            # Remove signature from data for verification 
+            data_for_signature = {k: v for k, v in payment_data.items() if k not in ['signature']}
             
-            # Use ALPHABETICAL ORDER signature verification method (same as form generation)
+            # Use Byron's EXACT signature verification method (same as payment creation)
+            # Must match the exact method that generated the original signature
             signature_params = []
-            # Sort fields alphabetically for signature verification
-            for key in sorted(data_for_signature.keys()):
-                value = data_for_signature[key]
+            # Use the same field order as Byron's working example
+            for key, value in data_for_signature.items():
                 # PayFast requires URL encoding for signature verification
                 encoded_value = urllib.parse.quote_plus(str(value))
                 signature_params.append(f'{key}={encoded_value}')

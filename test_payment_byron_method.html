@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>PayFast Test - Byron's Working Method</title>
+    <meta charset="UTF-8">
+</head>
+<body onLoad="document.payfast_form.submit();">
+    <h1>Testing PayFast Payment with Byron's Working Method</h1>
+    <p>Using exact form field order and signature method that Byron confirmed works...</p>
+    
+    <form action="https://www.payfast.co.za/eng/process" method="post" name="payfast_form">
+        <!-- Exact field order as Byron's working example -->
+        <input type="hidden" name="merchant_id" value="13245841"/>
+        <input type="hidden" name="merchant_key" value="kzyobsh5zlvrw"/>
+        <input type="hidden" name="return_url" value="https://www.fletcraft.co.za/payment/success"/>
+        <input type="hidden" name="cancel_url" value="https://www.fletcraft.co.za/payment/cancel"/>
+        <input type="hidden" name="notify_url" value="https://fletcraft-backend.onrender.com/api/payfast/itn/"/>
+        <input type="hidden" name="name_first" value="John"/>
+        <input type="hidden" name="name_last" value="Doe"/>
+        <input type="hidden" name="email_address" value="test@example.com"/>
+        <input type="hidden" name="m_payment_id" value="TEST_ORDER_123456"/>
+        <input type="hidden" name="amount" value="100.00"/>
+        <input type="hidden" name="item_name" value="Web Development Service"/>
+        <input type="hidden" name="item_description" value="Custom website development and design"/>
+        <input type="hidden" name="custom_int1" value="1"/>
+        <input type="hidden" name="custom_str1" value="order_reference_123"/>
+        <input type="hidden" name="custom_str2" value="fletcraft_service"/>
+        <input type="hidden" name="custom_str3" value="web_development"/>
+        <!-- Signature generated using Byron's exact method -->
+        <input type="hidden" name="signature" value="a9a66e684a5d6c20d202496b5f132f94"/>
+        
+        <p><strong>If auto-submit doesn't work, click the button below:</strong></p>
+        <input type="submit" value="Pay with PayFast" style="background: #1a73e8; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+    </form>
+    
+    <div style="margin-top: 20px; padding: 15px; background: #f0f8ff; border-left: 4px solid #1a73e8;">
+        <h3>Test Details:</h3>
+        <ul>
+            <li><strong>Method:</strong> Byron Adams' confirmed working approach</li>
+            <li><strong>Field Order:</strong> Exact form field order (not alphabetical)</li>
+            <li><strong>Signature:</strong> Generated using merchant_key + passphrase</li>
+            <li><strong>Email:</strong> test@example.com (avoiding merchant account emails)</li>
+            <li><strong>Amount:</strong> R100.00</li>
+        </ul>
+    </div>
+</body>
+</html> 
